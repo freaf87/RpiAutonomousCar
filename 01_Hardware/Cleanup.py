@@ -21,6 +21,10 @@ try:
             for file in glob.glob("*.l#*"):
                 os.remove(file)
                 deleteditems.append(file)
+            for file in glob.glob("*.job"):
+                os.remove(file)
+                deleteditems.append(file)
+
             os.chdir(os.path.dirname(currentdir))
 
     if deleteditems:
