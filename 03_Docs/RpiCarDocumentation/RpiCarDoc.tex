@@ -170,13 +170,15 @@ Let’s discuss the pinout for the TB6612FNG:
 
 
 \newcolumntype{b}{X}
-\newcolumntype{s}{>{\hsize=.5\hsize}X}
+\newcolumntype{s}{>{\hsize=.3\hsize}X}
+\newcolumntype{m}{>{\hsize=.5\hsize}X}
 
 \begin{table}[hbt]
-\begin{adjustwidth}{-3cm}{}
 \caption{MCP3004 SPI connection}
 \centering
-\begin{tabularx}{18cm}{ssb}
+\begin{adjustwidth}{-1cm}{}
+\resizebox{16cm}{!} {%
+\begin{tabularx}{18cm}{smb}
 \toprule
 Pin Label & Function & Notes \\
 \midrule
@@ -190,9 +192,9 @@ PWMA/PWMB & PWM input for channels A/B & PWM input that controls the speed\\
 A01/B01 & Output 1 for channels A/B  & One of the two outputs to connect the motor\\
 A02/B02 & Output 2 for channels A/B  & One of the two outputs to connect the motor\\
 \bottomrule
-\end{tabularx}
-\label{tab:label}
+\end{tabularx} } 
 \end{adjustwidth}
+\label{tab:label}
 \end{table}
 
 When the outputs are set to High/Low your motor will run. When they are set to Low/High the motor will run in the opposite direction. In both cases, the speed is controlled by the PWM input.
@@ -214,6 +216,17 @@ L    & L   & H   & OFF  & OFF  & Stop\\
 \end{tabular}
 \label{tab:label}
 \end{table}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
