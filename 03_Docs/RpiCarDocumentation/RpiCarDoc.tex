@@ -52,7 +52,7 @@ BCOR5mm, % Binding correction
 %----------------------------------------------------------------------------------------
 
 \section*{Abstract} % This section will not appear in the table of contents due to the star (\section*)
-The purpose of this document is to give the reader an overview about the RpiCar 's hardware. RpiCar will be used as learning plattform for FSE 2017. The principal hardware's components and interface will be briefly described.
+The purpose of this document is to give the reader an overview about the RpiAutonomousCar 's hardware. RpiCar will be used as learning plattform for FSE 2017. The principal hardware's components and interfaces will be briefly described.
 
 %
 \newpage
@@ -63,13 +63,13 @@ The purpose of this document is to give the reader an overview about the RpiCar 
 %----------------------------------------------------------------------------------------
 
 \section{Introduction}
-Goal of FSE 2017 will be to build with the students an autonomous car with obstacle avoidanve capability.
+Goal of FSE 2017 will be to build with the students an autonomous car with obstacle avoidanve capability. The robot should be able to drive 2 brushed DC motor, an ultrasonic sensor for distance measurements and a servo motor. Therefor an additional board needs to be designed since the raspberry Pi doesn't have possibities per default.
 
 %----------------------------------------------------------------------------------------
 %	MECHANIC
 %----------------------------------------------------------------------------------------
 
-\section{RpiCar 's mechanic}
+\section{RpiAutonomousCar 's mechanic}
 As shown in Figure~\vref{fig:Mechanic1} and ~\vref{fig:Mechanic2}, mechanical structure is simple and easy to build. The kit can be used with other sensors and actuators to realize obstacle avoidance or wireless remote control. It includes:
 \begin{itemize}
 \item 1 x Car Chassis 
@@ -97,7 +97,7 @@ As shown in Figure~\vref{fig:Mechanic1} and ~\vref{fig:Mechanic2}, mechanical st
 %----------------------------------------------------------------------------------------
 %	ELECTRONIC
 %----------------------------------------------------------------------------------------
-\section{RpiCar 's electronic}
+\section{RpiAutonomousCar 's electronic}
 \subsection{Analog Inputs for Raspberry Pi Using the MCP3004}
 The MCP3008 is a low cost 4-channel 10-bit analog to digital converter.  with 4 channels. The MCP3004 connects to the Raspberry Pi using a SPI serial connection. You can use either the hardware SPI bus (remember to connect GPIO07 and GPIO25 together), or any four GPIO pins and software SPI to communicate to the MCP3004. Software SPI is a little more flexible since it can work with any pins on the Pi, whereas hardware SPI is slightly faster but less flexible because it only works with specific pins. The RpiCar board gives the possibility to try both methods since it is wired to the raspberry pi hardware SPI.
 
@@ -135,7 +135,7 @@ In case of channel 3:
 Please note that the analog channel 3 is connected per default via a jumper (SJ1) to the robot's supply voltage. Remove the jumper to be able to connect another voltage source to channel 3. 
 
 \subsection{8-channel Bi-directional Logic Level Converter - TXB0108}
-Precautions have to be taken when connecting 5V devices to the raspberry pi because it'is vot 5V tolerant. There are many simple ways to handle this issue like voltage dividers.Handling bidirectional signals or high speed transfers can be tough.That's where this lovely chip, the TXB0108 bi-directional level converter comes in! This chip perform bidirectional level shifting from pretty much any voltage to any voltage and will auto-detect the direction 
+Precautions have to be taken when connecting 5V devices to the raspberry pi since the Pi is not 5V tolerant. There are many simple ways to handle this issue like voltage dividers.Handling bidirectional signals or high speed transfers can be tough.That's where this lovely chip, the TXB0108 bi-directional level converter comes in! This chip perform bidirectional level shifting from pretty much any voltage to any voltage and will auto-detect the direction 
 
 \begin{figure}[!htb]
 \centering
