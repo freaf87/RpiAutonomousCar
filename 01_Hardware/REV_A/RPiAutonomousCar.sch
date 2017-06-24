@@ -15843,8 +15843,8 @@ Source: www.kingbright.com</description>
 <part name="R8" library="rcl" deviceset="R-EU_" device="R0603" value="1K"/>
 <part name="R9" library="rcl" deviceset="R-EU_" device="R0603" value="1K"/>
 <part name="C8" library="rcl" deviceset="C-EU" device="C0603" value="10n"/>
-<part name="R11" library="rcl" deviceset="R-EU_" device="R0603" value="10K"/>
-<part name="R12" library="rcl" deviceset="R-EU_" device="R0603" value="22K"/>
+<part name="R11" library="rcl" deviceset="R-EU_" device="R0603" value="22k"/>
+<part name="R12" library="rcl" deviceset="R-EU_" device="R0603" value="10k"/>
 <part name="C9" library="rcl" deviceset="C-EU" device="C0603" value="10n"/>
 <part name="GND10" library="supply1" deviceset="GND" device=""/>
 <part name="+3V7" library="supply1" deviceset="+3V3" device=""/>

@@ -29,8 +29,8 @@
 <layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="yes"/>
 <layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="yes"/>
 <layer number="21" name="tPlace" color="16" fill="1" visible="yes" active="yes"/>
-<layer number="22" name="bPlace" color="14" fill="1" visible="no" active="yes"/>
-<layer number="23" name="tOrigins" color="15" fill="1" visible="no" active="yes"/>
+<layer number="22" name="bPlace" color="14" fill="1" visible="yes" active="yes"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
 <layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="yes"/>
 <layer number="25" name="tNames" color="7" fill="1" visible="no" active="yes"/>
 <layer number="26" name="bNames" color="7" fill="1" visible="no" active="yes"/>
@@ -55,11 +55,11 @@
 <layer number="45" name="Holes" color="7" fill="1" visible="no" active="yes"/>
 <layer number="46" name="Milling" color="3" fill="1" visible="no" active="yes"/>
 <layer number="47" name="Measures" color="7" fill="1" visible="no" active="yes"/>
-<layer number="48" name="Document" color="7" fill="1" visible="no" active="yes"/>
-<layer number="49" name="Reference" color="7" fill="1" visible="no" active="yes"/>
+<layer number="48" name="Document" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="50" name="dxf" color="7" fill="1" visible="no" active="yes"/>
-<layer number="51" name="tDocu" color="6" fill="1" visible="no" active="yes"/>
-<layer number="52" name="bDocu" color="7" fill="1" visible="no" active="yes"/>
+<layer number="51" name="tDocu" color="6" fill="1" visible="yes" active="yes"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="53" name="tGND_GNDA" color="7" fill="9" visible="no" active="no"/>
 <layer number="54" name="bGND_GNDA" color="1" fill="9" visible="no" active="no"/>
 <layer number="56" name="wert" color="7" fill="1" visible="no" active="yes"/>
@@ -2400,8 +2400,8 @@ Covered vias can be set in Masks (Limit).
 <element name="R8" library="rcl" package="R0603" value="1K" x="25.654" y="6.096" rot="R270"/>
 <element name="R9" library="rcl" package="R0603" value="1K" x="27.178" y="6.096" rot="R90"/>
 <element name="C8" library="rcl" package="C0603" value="10n" x="28.702" y="6.096" rot="R270"/>
-<element name="R11" library="rcl" package="R0603" value="10K" x="32.512" y="5.334" rot="R270"/>
-<element name="R12" library="rcl" package="R0603" value="22K" x="34.29" y="4.318" rot="R90"/>
+<element name="R11" library="rcl" package="R0603" value="22k" x="32.512" y="5.334" rot="R270"/>
+<element name="R12" library="rcl" package="R0603" value="10k" x="34.29" y="4.318" rot="R90"/>
 <element name="C9" library="rcl" package="C0603" value="10n" x="35.814" y="4.318" rot="R270"/>
 <element name="C12" library="rcl" package="C0603" value="100n" x="10.16" y="19.304" rot="R180"/>
 <element name="C13" library="rcl" package="C0603" value="100n" x="6.858" y="8.89" rot="R270"/>
