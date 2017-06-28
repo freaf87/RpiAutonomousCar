@@ -1,27 +1,31 @@
 import time
 import RPi.GPIO as GPIO
 
-pin = 21
+class LED():
+    def __init__(self):
+        self._LedPin = 21
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self._LedPin, GPIO.OUT)
 
-def setup():
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(pin, GPIO.OUT)
+    def ledOn(self):
+        GPIO.output(self._LedPin,1)
 
-def loop():
-    while True:
-        GPIO.output(pin, GPIO.LOW)
-        time.sleep(0.5)
-        GPIO.output(pin, GPIO.HIGH)
-        time.sleep(0.5)
+    def ledOff(self):
+        GPIO.output(self._LedPin,0)
 
-
-def destroy():
-    GPIO.cleanup()
+    def destroy(self):
+        GPIO.cleanup()
 
 if __name__ == "__main__":
-    setup()
+
+    led = LED()
     try:
-        loop()
+        while 1:
+            led.ledOn()
+            time.sleep(0.5)
+            led.ledOff()
+            time.sleep(0.5)
+
     except KeyboardInterrupt:
-        destroy()
+        led.destroy()
 

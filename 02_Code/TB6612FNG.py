@@ -28,54 +28,54 @@ class TB6612FNG():
         GPIO.setup(self._STBYPin  , GPIO.OUT)
 
         # Initialise and start SW pwm engine
-        #self._M1Pwm = GPIO.PWM(self._M1PWMPin, 500)
-        #self._M1Pwm.start(0)
-        #self._M2Pwm = GPIO.PWM(self._M2PWMPin, 500)
-        #self._M2Pwm.start(0)
+        self._M1Pwm = GPIO.PWM(self._M1PWMPin, 10000)
+        self._M1Pwm.start(0)
+        self._M2Pwm = GPIO.PWM(self._M2PWMPin, 10000)
+        self._M2Pwm.start(0)
 
-    def forward(self):
+    def forward(self, dutyCycle = 30):
         GPIO.output(self._M1Dir1Pin, 0)
         GPIO.output(self._M1Dir2Pin, 1)
-        GPIO.output(self._M1PWMPin,  1)
+        self._M1Pwm.ChangeDutyCycle(dutyCycle)
 
         GPIO.output(self._M2Dir1Pin, 1)
         GPIO.output(self._M2Dir2Pin, 0)
-        GPIO.output(self._M2PWMPin,  1)
+        self._M2Pwm.ChangeDutyCycle(dutyCycle)
 
         GPIO.output(self._STBYPin ,  1)
 
-    def reverse(self):
+    def reverse(self,dutyCycle= 30):
         GPIO.output(self._M1Dir1Pin, 1)
         GPIO.output(self._M1Dir2Pin, 0)
-        GPIO.output(self._M1PWMPin,  1)
+        self._M1Pwm.ChangeDutyCycle(dutyCycle)
 
         GPIO.output(self._M2Dir1Pin, 0)
         GPIO.output(self._M2Dir2Pin, 1)
-        GPIO.output(self._M2PWMPin,  1)
+        self._M2Pwm.ChangeDutyCycle(dutyCycle)
 
         GPIO.output(self._STBYPin ,  1)
 
 
-    def left(self):
-        GPIO.output(self._M1Dir1Pin, 0)
+    def left(self,dutyCycle = 30):
+        GPIO.output(self._M1Dir1Pin, 1)
         GPIO.output(self._M1Dir2Pin, 0)
-        GPIO.output(self._M1PWMPin,  0)
+        self._M1Pwm.ChangeDutyCycle(10)
 
         GPIO.output(self._M2Dir1Pin, 1)
         GPIO.output(self._M2Dir2Pin, 0)
-        GPIO.output(self._M2PWMPin,  1)
+        self._M2Pwm.ChangeDutyCycle(10)
 
         GPIO.output(self._STBYPin ,  1)
 
 
-    def right(self):
+    def right(self,dutyCycle = 30):
         GPIO.output(self._M1Dir1Pin, 0)
         GPIO.output(self._M1Dir2Pin, 1)
-        GPIO.output(self._M1PWMPin,  1)
+        self._M1Pwm.ChangeDutyCycle(10)
 
         GPIO.output(self._M2Dir1Pin, 0)
-        GPIO.output(self._M2Dir2Pin, 0)
-        GPIO.output(self._M2PWMPin,  0)
+        GPIO.output(self._M2Dir2Pin, 1)
+        self._M2Pwm.ChangeDutyCycle(10)
 
         GPIO.output(self._STBYPin ,  1)
 
@@ -83,11 +83,13 @@ class TB6612FNG():
     def stop(self):
         GPIO.output(self._M1Dir1Pin, 0)
         GPIO.output(self._M1Dir2Pin, 0)
-        GPIO.output(self._M1PWMPin,  0)
+        #self._M1Pwm.stop()
+        self._M1Pwm.ChangeDutyCycle(0)
 
         GPIO.output(self._M2Dir1Pin, 0)
         GPIO.output(self._M2Dir2Pin, 0)
-        GPIO.output(self._M2PWMPin,  0)
+        #self._M2Pwm.stop()
+        self._M2Pwm.ChangeDutyCycle(0)
 
         GPIO.output(self._STBYPin ,  0)
 
@@ -101,28 +103,29 @@ if __name__ == '__main__':
     try:
         while True:
             tb6612fng.forward()
-            time.sleep(4)
+            time.sleep(1)
 
             tb6612fng.stop()
             time.sleep(1)
 
             tb6612fng.reverse()
-            time.sleep(4)
+            time.sleep(1)
 
             tb6612fng.stop()
             time.sleep(1)
 
             tb6612fng.left()
-            time.sleep(4)
+            time.sleep(1)
 
             tb6612fng.stop()
             time.sleep(1)
 
             tb6612fng.right()
-            time.sleep(4)
+            time.sleep(1)
 
             tb6612fng.stop()
             time.sleep(1)
+            print("done")
 
 
 
