@@ -33,7 +33,7 @@ class TB6612FNG():
         self._M2Pwm = GPIO.PWM(self._M2PWMPin, 10000)
         self._M2Pwm.start(0)
 
-    def forward(self, dutyCycle = 30):
+    def forward(self, dutyCycle = 20):
         GPIO.output(self._M1Dir1Pin, 0)
         GPIO.output(self._M1Dir2Pin, 1)
         self._M1Pwm.ChangeDutyCycle(dutyCycle)
@@ -44,7 +44,7 @@ class TB6612FNG():
 
         GPIO.output(self._STBYPin ,  1)
 
-    def reverse(self,dutyCycle= 30):
+    def reverse(self,dutyCycle = 20):
         GPIO.output(self._M1Dir1Pin, 1)
         GPIO.output(self._M1Dir2Pin, 0)
         self._M1Pwm.ChangeDutyCycle(dutyCycle)
@@ -56,26 +56,26 @@ class TB6612FNG():
         GPIO.output(self._STBYPin ,  1)
 
 
-    def left(self,dutyCycle = 30):
+    def left(self,dutyCycle = 8):
         GPIO.output(self._M1Dir1Pin, 1)
         GPIO.output(self._M1Dir2Pin, 0)
-        self._M1Pwm.ChangeDutyCycle(10)
+        self._M1Pwm.ChangeDutyCycle(dutyCycle)
 
         GPIO.output(self._M2Dir1Pin, 1)
         GPIO.output(self._M2Dir2Pin, 0)
-        self._M2Pwm.ChangeDutyCycle(10)
+        self._M2Pwm.ChangeDutyCycle(dutyCycle)
 
         GPIO.output(self._STBYPin ,  1)
 
 
-    def right(self,dutyCycle = 30):
+    def right(self,dutyCycle = 8):
         GPIO.output(self._M1Dir1Pin, 0)
         GPIO.output(self._M1Dir2Pin, 1)
-        self._M1Pwm.ChangeDutyCycle(10)
+        self._M1Pwm.ChangeDutyCycle(dutyCycle)
 
         GPIO.output(self._M2Dir1Pin, 0)
         GPIO.output(self._M2Dir2Pin, 1)
-        self._M2Pwm.ChangeDutyCycle(10)
+        self._M2Pwm.ChangeDutyCycle(dutyCycle)
 
         GPIO.output(self._STBYPin ,  1)
 
@@ -94,7 +94,9 @@ class TB6612FNG():
         GPIO.output(self._STBYPin ,  0)
 
 
-    def cleanup(self):
+    def destroy(self):
+        self._M1Pwm.stop()
+        self._M2Pwm.stop()
         GPIO.cleanup()
 
 
@@ -102,25 +104,25 @@ if __name__ == '__main__':
     tb6612fng = TB6612FNG()
     try:
         while True:
-            tb6612fng.forward()
+            tb6612fng.forward(10)
             time.sleep(1)
 
             tb6612fng.stop()
             time.sleep(1)
 
-            tb6612fng.reverse()
+            tb6612fng.reverse(10)
             time.sleep(1)
 
             tb6612fng.stop()
             time.sleep(1)
 
-            tb6612fng.left()
+            tb6612fng.left(5)
             time.sleep(1)
 
             tb6612fng.stop()
             time.sleep(1)
 
-            tb6612fng.right()
+            tb6612fng.right(5)
             time.sleep(1)
 
             tb6612fng.stop()
@@ -130,7 +132,7 @@ if __name__ == '__main__':
 
 
     except KeyboardInterrupt:
-        tb6612fng.cleanup()
+        tb6612fng.destroy()
         sys.exit(0)
 
 

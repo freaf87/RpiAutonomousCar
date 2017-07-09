@@ -12,23 +12,23 @@ def setup():
 def loop(hcsr04, tb6612fng, led):
     distance  = 0
     qualifier = 0
+    DutyCycle = 4
 
     while 1:
-
         qualifier,distance =  hcsr04.get_averageDistance()
-        print 'Distance = '+ str(distance)
+        #print 'Distance = '+ str(distance)
         if qualifier == 1:
             if distance < 20:
                 robotDrive.stop()
-                time.sleep(0.1)
-                robotDrive.reverse()
-                time.sleep(0.5)
-                robotDrive.left()
+                time.sleep(0.01)
+                robotDrive.reverse(DutyCycle-2)
                 time.sleep(0.25)
-                robotDrive.forward()
+                robotDrive.left(DutyCycle-2)
+                time.sleep(0.25)
+                robotDrive.forward(DutyCycle)
             else:
                 robotDrive.forward()
-                print 'forward'
+
         else:
             pass
 
