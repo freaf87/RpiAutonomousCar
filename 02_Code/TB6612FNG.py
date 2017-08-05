@@ -92,7 +92,7 @@ class TB6612FNG():
         GPIO.output(self._STBYPin ,  0)
 
 
-    def cleanup(self):
+    def destroy(self):
         GPIO.cleanup()
 
 
@@ -127,7 +127,7 @@ if __name__ == '__main__':
 
 
     except KeyboardInterrupt:
-        tb6612fng.cleanup()
+        tb6612fng.destroy()
         sys.exit(0)
 
 

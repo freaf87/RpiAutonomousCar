@@ -52,7 +52,7 @@ BCOR5mm, % Binding correction
 %----------------------------------------------------------------------------------------
 
 \section*{Abstract} % This section will not appear in the table of contents due to the star (\section*)
-The purpose of this document is to give the reader an overview about the RpiAutonomousCar 's hardware. RpiCar will be used as learning plattform for FSE 2017. The principal hardware's components and interfaces will be briefly described.
+The purpose of this document is to give the reader an overview about the RpiAutonomousCar 's hardware. It will be used as learning plattform for FSE 2017. The principal hardware components of the board and interfaces will be briefly described.
 
 %
 \newpage
@@ -63,7 +63,7 @@ The purpose of this document is to give the reader an overview about the RpiAuto
 %----------------------------------------------------------------------------------------
 
 \section{Introduction}
-Goal of FSE 2017 will be to build with the students an autonomous car with obstacle avoidanve capability. The robot should be able to drive 2 brushed DC motor, an ultrasonic sensor for distance measurements and a servo motor. Therefor an additional board needs to be designed since the raspberry Pi doesn't have possibities per default.
+Goal of FSE 2017 will be to build with the students an autonomous car with obstacle avoidanve capability. The robot should be able to drive 2 brushed DC motor, an ultrasonic sensor for distance measurements and a servo motor. Therefor an additional board needs to be designed since the Raspberry Pi doesn't have possibities per default.
 
 %----------------------------------------------------------------------------------------
 %	MECHANIC
@@ -98,8 +98,9 @@ As shown in Figure~\vref{fig:Mechanic1} and ~\vref{fig:Mechanic2}, mechanical st
 %	ELECTRONIC
 %----------------------------------------------------------------------------------------
 \section{RpiAutonomousCar 's electronic}
+Board's electronic is kept simple to ease traning. The board is so designed that, students can use the same board to design other embedded system examples.
 \subsection{Analog Inputs for Raspberry Pi Using the MCP3004}
-The MCP3008 is a low cost 4-channel 10-bit analog to digital converter.  with 4 channels. The MCP3004 connects to the Raspberry Pi using a SPI serial connection. You can use either the hardware SPI bus (remember to connect GPIO07 and GPIO25 together), or any four GPIO pins and software SPI to communicate to the MCP3004. Software SPI is a little more flexible since it can work with any pins on the Pi, whereas hardware SPI is slightly faster but less flexible because it only works with specific pins. The RpiCar board gives the possibility to try both methods since it is wired to the raspberry pi hardware SPI.
+The MCP3008 is a low cost 4-channel 10-bit analog to digital converter. The MCP3004 connects to the Raspberry Pi using a SPI serial connection. You can use either the hardware SPI bus (remember to connect GPIO07 and GPIO25 together via a jumper cable if you have the first version of the board), or any four GPIO pins and software SPI to communicate to the MCP3004. Software SPI is a little more flexible since it can work with any pins on the Pi, whereas hardware SPI is slightly faster but less flexible because it only works with specific pins. The board gives you the possibility to try both methods since it is also wired to the Raspberry Pi hardware SPI.
 
 \begin{figure}[!htb]
 \centering
@@ -218,8 +219,7 @@ L    & L   & H   & OFF  & OFF  & Stop\\
 \end{table}
 
 
-
-
+\subsection{Servo interface}
 
 
 
