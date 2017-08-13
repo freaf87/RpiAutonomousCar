@@ -1,75 +1,84 @@
 #!/usr/bin/env python
-import RPi.GPIO as GPIO
 import time
 
-class HCSR04():
-    """
-    This class provides functions to interface with an ultrasonic  range sensor
-    """
+import RPi.GPIO as GPIO
+
+
+class UltrasonicRanger():
+
+    """Interface with an HCSR04 ultrasonic range sensor."""
+
     def __init__(self):
-        self._TRIGPin = 15
-        self._ECHOPin = 14
+        # TODO: These are static, make these class attributes
+        self._trigger_pin = 15
+        self._echo_pin = 14
         self._timeout  = 0.10 #[s]
-        self._averageCount = 10
+        self._average_count = 10
 
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(self._TRIGPin, GPIO.OUT)
-        GPIO.setup(self._ECHOPin, GPIO.IN)
+        GPIO.setup(self._trigger_pin, GPIO.OUT)
+        GPIO.setup(self._echo_pin, GPIO.IN)
 
     def get_distance(self):
         #send impulse
-        GPIO.output(self._TRIGPin, 0)
+        GPIO.output(self._trigger_pin, 0)
         time.sleep(0.000002)
 
-        GPIO.output(self._TRIGPin, 1)
+        GPIO.output(self._trigger_pin, 1)
         time.sleep(0.00001)
-        GPIO.output(self._TRIGPin, 0)
+        GPIO.output(self._trigger_pin, 0)
 
         #timeout
         timeout_end = time.time()+ self._timeout
 
         #wait for response
-        while GPIO.input(self._ECHOPin) == 0:
+        while GPIO.input(self._echo_pin) == 0:
             if time.time() > timeout_end:
                 return -1, -1
         time1 = time.time()
-        while GPIO.input(self._ECHOPin) == 1:
+        while GPIO.input(self._echo_pin) == 1:
             if time.time() > timeout_end:
                 return -1, -1
         time2 = time.time()
 
         #calculate the distance
         during = time2 - time1
+        # TODO: Don't return a tuple, return the value. First item not needed
+        #  as if function is non-nominal an error is raised.
         return 1, during * 340.0 / 2.0 * 100
 
-    def get_averageDistance(self):
+    def get_average_distance(self):
         i = 0
         distance = 0
+        # TODO: PEP8
         errorCount = 0
-        while i < self._averageCount:
+        while i < self._average_count:
             qualifier, tmp = self.get_distance()
             if qualifier != -1:
+                # TODO: Replace these with += operator
                 i = i + 1
                 distance = distance + tmp
             else:
                 errorCount = errorCount
             if errorCount > 3:
                 return -1, -1
-        return 1, distance/(self._averageCount*1.0)
+        # TODO: No tuple, return actual value
+        # TODO: Cast to float, don't multiply by 1.0
+        return 1, distance/(self._average_count * 1.0)
 
     def destroy(self):
         GPIO.cleanup()
 
 
 if __name__ == "__main__":
-    ultrasonic = HCSR04()
+    ultrasonic = UltrasonicRanger()
     try:
         while True:
-            qualifier,dis = ultrasonic.get_averageDistance()
+            qualifier,dis = ultrasonic.get_average_distance()
             if qualifier == 1:
                 print dis, 'cm'
             else:
-                print "Error duringn reading"
+                print "Error during reading"
 
             time.sleep(1)
 

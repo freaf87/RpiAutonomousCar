@@ -1,27 +1,31 @@
-#!/usr/bin/env python()
-import time
-from HCSR04    import HCSR04
-from MCP3004   import MCP3004
-from TB6612FNG import TB6612FNG
-from LED       import LED
-from threading import Thread
+#!/usr/bin/env python
 import socket
-import RPi.GPIO as GPIO
+import time
+from threading import Thread
+
+from LED import LED
+from MotorDriver import MotorDriver
+from UltrasonicRanger import UltrasonicRanger
 
 VERBOSE = False
 IP_PORT = 22000
 
 
-UltrasonicObj = HCSR04()
+# TODO: These are not constants, they're used in the script, so move it down
+# to the main.
+# TODO: These looks like classes. PEP8.
+UltrasonicObj = UltrasonicRanger()
 LedObj = LED()
-RobotDriveObj = TB6612FNG()
+RobotDriveObj = MotorDriver()
 
+# TODO: Docstrings!
 class SocketHandler(Thread):
     def __init__(self, conn):
         Thread.__init__(self)
         self.conn = conn
 
     def run(self):
+        # TODO: No globals.
         global isConnected
         debug("SocketHandler started")
         while True:
@@ -43,6 +47,7 @@ class SocketHandler(Thread):
         debug("SocketHandler terminated")
 
     def executeCommand(self, cmd):
+        # TODO: No globals!
         global RobotDrive
 
         #debug("Calling executeCommand() with  cmd: " + cmd)
@@ -51,6 +56,7 @@ class SocketHandler(Thread):
         self.conn.sendall(state + "\0")
         self.conn.sendall(state + "\0")
 
+        # TODO: This is modified later to use new API
         if state == "forward":
             RobotDriveObj.forward()
         elif state == "reverse":
@@ -64,14 +70,17 @@ class SocketHandler(Thread):
         else:
             RobotDriveObj.stop()
 
+# TODO: What's the point?
 def setup():
     pass
 
+# TODO: Replace with debug from logging, also mentioned elsewhere
 def debug(text):
     if VERBOSE:
         print "Debug:---", text
 
 def loop():
+    # TODO: PEP8
     serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # close port when process exits:
     serverSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -81,6 +90,8 @@ def loop():
     try:
         serverSocket.bind((HOSTNAME, IP_PORT))
     except socket.error as msg:
+        # TODO: Raise an exception, don't sys.exit(). You never know who'll
+        # import this code and sys.exit kills the whole process.
         print "Bind failed", msg[0], msg[1]
         sys.exit()
     serverSocket.listen(10)
@@ -98,6 +109,7 @@ def loop():
         socketHandler.setDaemon(True)
         socketHandler.start()
         t = 0
+        # TODO: This never terminates. What's the point of isConnected?
         while isConnected:
             print "Server connected at", t, "s"
             time.sleep(10)
