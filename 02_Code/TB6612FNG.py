@@ -7,6 +7,8 @@ class TB6612FNG():
     """
     Class to represent TB6612FNG DC Motor driver
     """
+    DIST_PER_SEC  = 35.0 # cm/s
+    SEC_PER_TURN  = 2.087
     def __init__(self):
         GPIO.setmode(GPIO.BCM)
         # Initialise inputs & outputs pins
@@ -80,7 +82,7 @@ class TB6612FNG():
         GPIO.output(self._STBYPin ,  1)
 
 
-    def stop(self):
+    def stop(self, delayTime = 1):
         GPIO.output(self._M1Dir1Pin, 0)
         GPIO.output(self._M1Dir2Pin, 0)
         #self._M1Pwm.stop()
@@ -88,10 +90,10 @@ class TB6612FNG():
 
         GPIO.output(self._M2Dir1Pin, 0)
         GPIO.output(self._M2Dir2Pin, 0)
-        #self._M2Pwm.stop()
-        self._M2Pwm.ChangeDutyCycle(0)
+        #self._M2Pwm.stop()self._M2Pwm.ChangeDutyCycle(0)
 
         GPIO.output(self._STBYPin ,  0)
+        time.sleep(delayTime)
 
 
     def destroy(self):
