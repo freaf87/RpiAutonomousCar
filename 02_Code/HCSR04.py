@@ -10,7 +10,7 @@ class HCSR04():
         self._TRIGPin = 15
         self._ECHOPin = 14
         self._timeout  = 0.10 #[s]
-        self._averageCount = 10
+        self._averageCount = 1
 
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self._TRIGPin, GPIO.OUT)
