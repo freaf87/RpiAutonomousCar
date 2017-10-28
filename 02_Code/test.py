@@ -16,23 +16,25 @@ class TestRobotMovement(object):
 
     def test_back_and_forth(self):
         """Test y-axis motion."""
-        print("Clear path in front of and behind robot for 5 cm.")
+        raw_input("Clear path in front of and behind robot for 5 cm "
+                  "and press Enter.")
         motions = [1, -2, 1]
         for motion in motions:
             self.r.drive(motion)
         report = raw_input("Did robot move as follows? {} \n"
-                           "(y/n): ".format(motions))
-        assert(report.lower() == 'y')
+                           "(Y/n): ".format(motions))
+        assert(not report or report.lower() == 'y')
 
-    def _test_turning(self):
+    def test_turning(self):
         """Test turning."""
-        self.r.turn(10)
-        self.r.turn(340)
-        self.r.turn(10)
-        report = raw_input("Did robot turn 10° clockwise, then "
+        raw_input("Press Enter when robot rotation is ready.")
+        self.r.turn(45)
+        self.r.turn(-450)
+        self.r.turn(45)
+        report = raw_input("Did robot turn 45° clockwise, then 450° "
                            "counterclockwise, then back to start? \n"
-                           "(y/n): ")
-        assert(report.lower() == 'y')
+                           "(Y/n): ")
+        assert(not report or report.lower() == 'y')
 
     def _test_drive_arc(self):
         """Drive in arcs."""

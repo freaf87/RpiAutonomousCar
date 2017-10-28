@@ -11,24 +11,42 @@ class Robot(object):
 
     """The robot used for FSE 2017."""
 
+    _time_for_circle_turn = 3
+
     def __init__(self):
         self.ultrasonic = UltrasonicRanger()
         self.led = LED()
         self.motor = MotorDriver()
         self.duty_cycle = 4
 
-    def drive(self, distance):
+    def drive(self, seconds):
         """
-        Drive a given distance.
+        Drive for a given duration.
 
-        distance is signed - positive for forwards, negative for backwards.
+        seconds is signed - positive for driving forwards, negative for
+        backwards.
         """
-        if distance > 0:
+        if seconds > 0:
             self.motor.forward(self.duty_cycle)
-        elif distance < 0:
+        elif seconds < 0:
             self.motor.reverse(self.duty_cycle)
-        time.sleep(abs(distance))
+        time.sleep(abs(seconds))
         self.motor.stop()
+
+    def turn(self, degrees):
+        """
+        Turn a number of degrees.
+
+        Positive is clockwise, negative is counterclockwise.
+        """
+        turn_time = self._time_for_circle_turn * (degrees / 360.0)
+        if degrees > 0:
+            self.motor.right(self.duty_cycle)
+        elif degrees < 0:
+            self.motor.left(self.duty_cycle)
+        time.sleep(abs(turn_time))
+        self.motor.stop()
+
 
     def destroy(self):
         """Release internally used resources."""
