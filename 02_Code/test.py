@@ -12,7 +12,7 @@ class TestRobotMovement(object):
         self.r = Robot()
 
     def teardown(self):
-        self.r.destroy()
+        self.r.__exit__()
 
     def test_back_and_forth(self):
         """Test y-axis motion."""
@@ -49,12 +49,12 @@ class TestRobotMovement(object):
                        "(y/n): ")
         assert(report.lower() == 'y')
 
-    def _test_obstacle_detection(self):
+    def test_obstacle_detection(self):
         """Report obstacles correctly."""
-        raw_input("Place obstacle in front of robot and press enter.")
-        assert(self.r.obstacle is not None)
+        raw_input("Place obstacle within 20 cm of robot and press enter.")
+        assert(self.r.obstacle < 20)
         raw_input("Clear ground before robot and press enter.")
-        assert(self.r.obstacle is None)
+        assert(self.r.obstacle > 20)
 
 
 if __name__ == "__main__":
