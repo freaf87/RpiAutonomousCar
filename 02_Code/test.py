@@ -16,8 +16,8 @@ class TestRobotMovement(object):
 
     def test_back_and_forth(self):
         """Test y-axis motion."""
-        raw_input("DRIVE TEST: Clear path in front of and behind robot for 5 "
-                  "cm and press Enter.")
+        raw_input("DRIVE TEST: Clear path in front of and behind robot "
+                  "for 5 cm and press Enter.")
         motions = [1, -2, 1]
         for motion in motions:
             self.r.drive(motion)
@@ -36,9 +36,11 @@ class TestRobotMovement(object):
                            "(Y/n): ")
         assert(not report or report.lower() == 'y')
 
+
     def test_drive_arc(self):
         """Drive in arcs."""
-        raw_input("ARC TEST: Clear ground 15cm to right and front.")
+        raw_input("ARC TEST: Clear ground 15cm to right and front and "
+                  "press Enter.")
         self.r.drive_curve(2, 90)
         self.r.drive_curve(2, -90)
         self.r.turn(-135)
@@ -51,7 +53,8 @@ class TestRobotMovement(object):
 
     def test_obstacle_detection(self):
         """Report obstacles correctly."""
-        raw_input("Place obstacle within 20 cm of robot and press enter.")
+        raw_input("ULTRASONIC TEST: Place obstacle within 20 cm of robot "
+                  "and press Enter.")
         assert(self.r.obstacle < 20)
         raw_input("Clear ground before robot and press enter.")
         assert(self.r.obstacle > 20)
@@ -65,6 +68,9 @@ if __name__ == "__main__":
                  callable(getattr(suite, fun)) and
                  fun.startswith("test")]
         for test in tests:
-            getattr(suite, test)()
+            try:
+                getattr(suite, test)()
+            except KeyboardInterrupt:
+                print("\nSkipping test.")
     finally:
         suite.teardown()
