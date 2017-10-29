@@ -13,11 +13,11 @@ class Robot(object):
 
     _time_for_circle_turn = 3
 
-    def __init__(self):
+    def __init__(self, duty_cycle=4):
         self.ultrasonic = UltrasonicRanger()
         self.led = LED()
         self.motor = MotorDriver()
-        self.duty_cycle = 4
+        self.duty_cycle = duty_cycle
 
     def drive(self, seconds):
         """
@@ -46,6 +46,16 @@ class Robot(object):
             self.motor.left(self.duty_cycle)
         time.sleep(abs(turn_time))
         self.motor.stop()
+
+    @property
+    def obstacle(self):
+        """Return distance to nearest obstacle in cm or None."""
+        _, distance = self.ultrasonic.get_average_distance()
+        if _ == 1:
+            pass
+        else:
+            distance = None
+        return distance
 
 
     def destroy(self):
