@@ -47,6 +47,15 @@ class Robot(object):
         time.sleep(abs(turn_time))
         self.motor.stop()
 
+    def drive_curve(self, seconds, angle):
+        """Drive for a time while turning."""
+        increment = 1
+        if angle < 0:
+            increment = -1
+        for degree in range(0, int(round(angle)), increment):
+            self.drive(float(seconds) / abs(angle))
+            self.turn(increment)
+
     @property
     def obstacle(self):
         """Return distance to nearest obstacle in cm or None."""

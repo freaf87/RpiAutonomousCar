@@ -16,8 +16,8 @@ class TestRobotMovement(object):
 
     def test_back_and_forth(self):
         """Test y-axis motion."""
-        raw_input("Clear path in front of and behind robot for 5 cm "
-                  "and press Enter.")
+        raw_input("DRIVE TEST: Clear path in front of and behind robot for 5 "
+                  "cm and press Enter.")
         motions = [1, -2, 1]
         for motion in motions:
             self.r.drive(motion)
@@ -27,7 +27,7 @@ class TestRobotMovement(object):
 
     def test_turning(self):
         """Test turning."""
-        raw_input("Press Enter when robot rotation is ready.")
+        raw_input("TURN TEST: Press Enter when robot rotation is ready.")
         self.r.turn(45)
         self.r.turn(-450)
         self.r.turn(45)
@@ -36,18 +36,18 @@ class TestRobotMovement(object):
                            "(Y/n): ")
         assert(not report or report.lower() == 'y')
 
-    def _test_drive_arc(self):
+    def test_drive_arc(self):
         """Drive in arcs."""
-        print("Clear ground 15cm to right and front.")
-        self.r.drive_curve(10, 90)
-        self.r.drive_curve(10, -90)
+        raw_input("ARC TEST: Clear ground 15cm to right and front.")
+        self.r.drive_curve(2, 90)
+        self.r.drive_curve(2, -90)
         self.r.turn(-135)
-        self.r.drive(18)
+        self.r.drive(3.6)
         self.r.turn(135)
-        report = input("Did robot drive 10 cm arc to right, "
-                       "then to left, then return to start? \n"
-                       "(y/n): ")
-        assert(report.lower() == 'y')
+        report = raw_input("Did robot drive an arc to right, "
+                           "then to left, then return to start? \n"
+                           "(Y/n): ")
+        assert(not report or report.lower() == 'y')
 
     def test_obstacle_detection(self):
         """Report obstacles correctly."""
