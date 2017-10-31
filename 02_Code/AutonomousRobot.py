@@ -15,44 +15,20 @@
 # You should have received a copy of the GNU General Public License
 # along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
-import time
+"""Demonstrate basic autonomous driving."""
 
-from LED import LED
-from MotorDriver import MotorDriver
-from UltrasonicRanger import UltrasonicRanger
+import sys
 
-
-def loop(sensor, drive):
-    duty_cycle = 4
-
-    while True:
-        # TODO: Replace with try-except clause, e.g.
-        # try:
-        #      distance = sensor.get_average_distance()
-        # except BadDistanceException:
-        #      pass
-        qualifier, distance = sensor.get_average_distance()
-        if qualifier == 1:
-            if distance < 20:
-                drive.stop()
-                time.sleep(0.01)
-                drive.reverse(duty_cycle - 2)
-                time.sleep(0.25)
-                drive.left(duty_cycle - 2)
-                time.sleep(0.25)
-                drive.forward(duty_cycle)
-            else:
-                drive.forward()
-
-        else:
-            pass
-
+from RpiAutonomousCar import Robot
 
 if __name__ == "__main__":
     try:
-        ultrasonic = UltrasonicRanger()
-        led = LED()
-        robot_drive = MotorDriver()
-        loop(ultrasonic, robot_drive)
+        with Robot() as r:
+            while True:
+                distance = r.obstacle
+                if distance > 20:
+                    r.drive(0.2)
+                else:
+                    r.turn(90 - distance)
     except KeyboardInterrupt:
-        ultrasonic.destroy()
+        sys.exit(0)

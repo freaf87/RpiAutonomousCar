@@ -81,6 +81,9 @@ class Robot(object):
             distance = None
         return distance
 
+    def __enter__(self):
+        return self
+
     def __exit__(self, *args):
         """Release internally used resources."""
         self.ultrasonic.destroy()
