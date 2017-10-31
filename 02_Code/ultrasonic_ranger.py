@@ -17,14 +17,18 @@
 
 import time
 
-import RPi.GPIO as GPIO
+import wiringpi
+
+GPIO_OUT = 1
+GPIO_IN = 0
+INPUT_MODE = 0
 
 
 class UltrasonicTimeoutError(Exception):
     """UltrasonicRanger does not measure response to ping."""
 
 
-class UltrasonicRanger():
+class UltrasonicRanger(object):
     """Interface with an HCSR04 ultrasonic range sensor."""
 
     _trigger_pin = 15
@@ -33,26 +37,27 @@ class UltrasonicRanger():
     _average_count = 1
 
     def __init__(self):
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(self._trigger_pin, GPIO.OUT)
-        GPIO.setup(self._echo_pin, GPIO.IN)
+        # TODO: Setup should be made once, not multiple times
+        wiringpi.wiringPiSetupGpio()
+        wiringpi.pinMode(self._trigger_pin, GPIO_OUT)
+        wiringpi.pinMode(self._echo_pin, GPIO_IN)
 
     def get_distance(self):
         """Measure time between sent impulse and measured reflectance."""
 
-        def sense_echo_pin_change(initial_state, timeout_end):
+        def sense_echo_pin_change(initial_state, timeout):
             """Return time at which the echo pin's state changed."""
-            while GPIO.input(self._echo_pin) == initial_state:
-                if time.time() > timeout_end:
+            while wiringpi.digitalRead(self._echo_pin) == initial_state:
+                if time.time() > timeout:
                     raise UltrasonicTimeoutError("No response measured before "
                                                  "timeout.")
             return time.time()
 
-        GPIO.output(self._trigger_pin, 0)
+        wiringpi.digitalWrite(self._trigger_pin, 0)
         time.sleep(0.000002)
-        GPIO.output(self._trigger_pin, 1)
+        wiringpi.digitalWrite(self._trigger_pin, 1)
         time.sleep(0.00001)
-        GPIO.output(self._trigger_pin, 0)
+        wiringpi.digitalWrite(self._trigger_pin, 0)
 
         timeout_end = time.time() + self._timeout
 
@@ -60,7 +65,8 @@ class UltrasonicRanger():
         time2 = sense_echo_pin_change(1, timeout_end)
 
         duration = time2 - time1
-        return duration * 340.0 / 2.0 * 100
+        distance = duration * 340.0 / 2.0 * 100
+        return distance
 
     def get_average_distance(self):
         """Average multiple distance measurements."""
@@ -72,7 +78,7 @@ class UltrasonicRanger():
                 distance_sum += distance
             except UltrasonicTimeoutError:
                 error_count += 1
-            if error_count > 3:
+            if error_count > min(3, self._average_count) or distance_sum == 0:
                 raise UltrasonicTimeoutError("3 consecutive bad soundings.")
         return distance_sum / self._average_count
 
@@ -80,7 +86,9 @@ class UltrasonicRanger():
         return self
 
     def __exit__(self, *args):
-        GPIO.cleanup()
+        for pin in self._trigger_pin, self._echo_pin:
+            wiringpi.digitalWrite(pin, 0)
+            wiringpi.pinMode(pin, INPUT_MODE)
 
 
 if __name__ == "__main__":
