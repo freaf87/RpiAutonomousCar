@@ -36,7 +36,6 @@ class MotorDriver():
     # TODO: Class attributes go here
 
     def __init__(self):
-        GPIO.setmode(GPIO.BCM)
         # Initialise inputs & outputs pins
         # TODO: These are shared across all objects, so make them class
         # attributes rather than setting them on initialization
@@ -137,41 +136,49 @@ class MotorDriver():
     # TODO: Rename to __exit__ so that this is called on exceptions or when
     # exiting context
     def destroy(self):
-        self._M1Pwm.stop()
-        self._M2Pwm.stop()
-        GPIO.cleanup()
+        gpio.pwmWrite(self._M1PWMPin , 0)
+        gpio.pinMode (self._M1PWMPin , 0)
+        gpio.pwmWrite(self._M2PWMPin , 0)
+        gpio.pinMode (self._M2PWMPin , 0)
+        gpio.pinMode (self._M1Dir1Pin, 0)
+        gpio.pinMode (self._M1Dir2Pin, 0)
+        gpio.pinMode (self._M2Dir1Pin, 0)
+        gpio.pinMode (self._M2Dir2Pin, 0)
 
 
 if __name__ == '__main__':
     tb6612fng = MotorDriver()
     try:
         while True:
-            tb6612fng.forward(10)
-            time.sleep(1)
+
+            print "forward"
+            tb6612fng.forward()
+            time.sleep(3)
 
             tb6612fng.stop()
-            time.sleep(1)
+            time.sleep(3)
 
-            tb6612fng.reverse(10)
-            time.sleep(1)
-
-            tb6612fng.stop()
-            time.sleep(1)
-
-            tb6612fng.left(5)
-            time.sleep(1)
+            print "reverse"
+            tb6612fng.reverse()
+            time.sleep(3)
 
             tb6612fng.stop()
-            time.sleep(1)
+            time.sleep(3)
 
-            tb6612fng.right(5)
-            time.sleep(1)
+            print "left"
+            tb6612fng.left()
+            time.sleep(3)
 
             tb6612fng.stop()
-            time.sleep(1)
-            print("done")
+            time.sleep(3)
 
+            print "right"
+            tb6612fng.right()
+            time.sleep(3)
 
+            tb6612fng.stop()
+            time.sleep(3)
+            print "Done!"
 
     except KeyboardInterrupt:
         tb6612fng.destroy()

@@ -29,7 +29,7 @@ class UltrasonicRanger():
         self._trigger_pin = 15
         self._echo_pin = 14
         self._timeout  = 0.10 #[s]
-        self._average_count = 10
+        self._average_count = 1
 
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self._trigger_pin, GPIO.OUT)
