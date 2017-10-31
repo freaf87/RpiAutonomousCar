@@ -34,6 +34,13 @@ class Robot(object):
         self.motor = MotorDriver()
         self.duty_cycle = duty_cycle
 
+    def set_drive_mode(self, direction):
+        """Drive forwards if direction > 0, otherwise backwards."""
+        if direction > 0:
+            self.motor.forward(self.duty_cycle)
+        elif direction < 0:
+            self.motor.reverse(self.duty_cycle)
+
     def drive(self, seconds):
         """
         Drive for a given duration.
@@ -42,9 +49,9 @@ class Robot(object):
         backwards.
         """
         if seconds > 0:
-            self.motor.forward(self.duty_cycle)
+            self.set_drive_mode(1)
         elif seconds < 0:
-            self.motor.reverse(self.duty_cycle)
+            self.set_drive_mode(-1)
         time.sleep(abs(seconds))
         self.motor.stop()
 

@@ -27,7 +27,7 @@ if __name__ == "__main__":
             while True:
                 distance = r.obstacle
                 if distance > 20:
-                    r.drive(0.2)
+                    r.set_drive_mode(1)
                 else:
                     r.turn(90 - distance)
     except KeyboardInterrupt:
