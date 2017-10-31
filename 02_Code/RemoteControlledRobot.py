@@ -21,7 +21,7 @@ from threading import Thread
 
 from LED import LED
 from MotorDriver import MotorDriver
-from UltrasonicRanger import UltrasonicRanger
+from ultrasonic_ranger import UltrasonicRanger
 
 VERBOSE = False
 IP_PORT = 22000

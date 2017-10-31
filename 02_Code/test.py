@@ -17,7 +17,7 @@
 
 """Tests for all movement functions of the FSE 2017 robot's public API."""
 
-from RpiAutonomousCar import Robot
+from robot import Robot
 
 
 class TestRobotMovement(object):

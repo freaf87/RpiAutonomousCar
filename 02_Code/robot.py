@@ -19,7 +19,7 @@ import time
 
 from LED import LED
 from MotorDriver import MotorDriver
-from UltrasonicRanger import UltrasonicRanger
+from ultrasonic_ranger import UltrasonicRanger, UltrasonicTimeoutError
 
 
 class Robot(object):
@@ -81,10 +81,9 @@ class Robot(object):
     @property
     def obstacle(self):
         """Return distance to nearest obstacle in cm or None."""
-        _, distance = self.ultrasonic.get_average_distance()
-        if _ == 1:
-            pass
-        else:
+        try:
+            distance = self.ultrasonic.get_average_distance()
+        except UltrasonicTimeoutError:
             distance = None
         return distance
 
@@ -93,5 +92,5 @@ class Robot(object):
 
     def __exit__(self, *args):
         """Release internally used resources."""
-        self.ultrasonic.destroy()
+        self.ultrasonic.__exit__()
 
