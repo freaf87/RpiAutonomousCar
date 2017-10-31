@@ -16,7 +16,7 @@ BCOR5mm, % Binding correction
 %----------------------------------------------------------------------------------------
 
 \title{\normalfont\spacedallcaps{RPi based autonomous Car}} % The article title
-\author{\spacedlowsmallcaps{Fullstack Embedded (2017)}} 
+\author{\spacedlowsmallcaps{Fullstack Embedded (2017)} \\\spacedlowsmallcaps{Frederic Afadjigla}} 
 \date{} % An optional date to appear under the author(s)
 
 %----------------------------------------------------------------------------------------
@@ -36,23 +36,20 @@ BCOR5mm, % Binding correction
 %----------------------------------------------------------------------------------------
 %	TABLE OF CONTENTS & LISTS OF FIGURES AND TABLES
 %----------------------------------------------------------------------------------------
-
 \maketitle % Print the title/author/date block
 
 \setcounter{tocdepth}{2} % Set the depth of the table of contents to show sections and subsections only
 
 \tableofcontents % Print the table of contents
-
 \listoffigures % Print the list of figures
-
-\listoftables % Print the list of tables
+%\listoftables % Print the list of tables
 
 %----------------------------------------------------------------------------------------
 %	ABSTRACT
 %----------------------------------------------------------------------------------------
 
 \section*{Abstract} % This section will not appear in the table of contents due to the star (\section*)
-The purpose of this document is to give the reader an overview about the RpiAutonomousCar 's hardware. It will be used as learning plattform for FSE 2017. The principal hardware components of the board and interfaces will be briefly described.
+The purpose of this document is to give the reader an overview about the RpiAutonomousCar 's hardware. This will be the learning platform for the FSE 2017 Workshop in Lomé and Accra. The principal hardware components of the board and interfaces will be briefly described.
 
 %
 \newpage
@@ -63,14 +60,14 @@ The purpose of this document is to give the reader an overview about the RpiAuto
 %----------------------------------------------------------------------------------------
 
 \section{Introduction}
-Goal of FSE 2017 will be to build with the students an autonomous car with obstacle avoidanve capability. The robot should be able to drive 2 brushed DC motor, an ultrasonic sensor for distance measurements and a servo motor. Therefor an additional board needs to be designed since the Raspberry Pi doesn't have possibities per default.
+Goal of FSE 2017 will be to build with the students an autonomous car with obstacle avoidanve capability. The robot should be able to drive 2 brushed DC motor, an ultrasonic sensor for distance measurement and a servo motor. To be able to fullfill these requirements with a Raspberry Pi, an additional board will be designed.
 
 %----------------------------------------------------------------------------------------
 %	MECHANIC
 %----------------------------------------------------------------------------------------
 
 \section{RpiAutonomousCar 's mechanic}
-As shown in Figure~\vref{fig:Mechanic1} and ~\vref{fig:Mechanic2}, mechanical structure is simple and easy to build. The kit can be used with other sensors and actuators to realize obstacle avoidance or wireless remote control. It includes:
+As shown in Figure~\vref{fig:Mechanic1} and ~\vref{fig:Mechanic2}, the mechanical structure is simple and easy to build. The kit includes:
 \begin{itemize}
 \item 1 x Car Chassis 
 \item 2 x Gear Motor(1:48) 
@@ -98,7 +95,7 @@ As shown in Figure~\vref{fig:Mechanic1} and ~\vref{fig:Mechanic2}, mechanical st
 %	ELECTRONIC
 %----------------------------------------------------------------------------------------
 \section{RpiAutonomousCar 's electronic}
-Board's electronic is kept simple to ease traning. The board is so designed that, students can use the same board to design other embedded system examples.
+The Board's electronic is kept simple to ease traning. It is so designed that, students can use the same board to design other embedded system examples.
 \subsection{Analog Inputs for Raspberry Pi Using the MCP3004}
 The MCP3008 is a low cost 4-channel 10-bit analog to digital converter. The MCP3004 connects to the Raspberry Pi using a SPI serial connection. You can use either the hardware SPI bus (remember to connect GPIO07 and GPIO25 together via a jumper cable if you have the first version of the board), or any four GPIO pins and software SPI to communicate to the MCP3004. Software SPI is a little more flexible since it can work with any pins on the Pi, whereas hardware SPI is slightly faster but less flexible because it only works with specific pins. The board gives you the possibility to try both methods since it is also wired to the Raspberry Pi hardware SPI.
 
@@ -145,6 +142,25 @@ Precautions have to be taken when connecting 5V devices to the raspberry pi sinc
 \label{fig:TX0108PWR}
 \end{figure}
 
+\begin{table}[hbt]
+\caption{TX0108PWR connection}
+\centering
+\begin{tabular}{cc}
+\toprule
+Pins & RPi pin \\
+\midrule
+1  & GPIO10 \\
+2  & GPIO09 \\
+3  & GPIO11 \\
+4  & GPIO08 \\
+5  & GPIO02 \\
+6  & GPIO03 \\
+7  & GPIO14 \\
+8  & GPIO15 \\
+\bottomrule
+\end{tabular}
+\label{tab:label}
+\end{table}
 \subsection {DC Motor driver - tb6612fng}
 The TB6612FNG motor driver can control up to two DC motors at a constant current of 1.2A (3.2A peak). Two input signals (IN1 and IN2) can be used to control the motor in one of four function modes - CW, CCW, short-brake, and stop. The two motor outputs (A and B) can be separately controlled, the speed of each motor is controlled via a PWM input signal with a frequency up to 100kHz. The STBY pin should be pulled high to take the motor out of standby mode.
 

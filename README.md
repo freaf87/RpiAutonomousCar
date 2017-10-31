@@ -9,3 +9,5 @@ This board bring those additional functions below to the Raspberry pi:
 Top                                                                      |  Bottom
 :-----------------------------------------------------------------------:|:--------------------------------------------------------------:
 ![Alt text](03_Docs/Components/top_gold_with_mask.png?raw=true "Top")  |  ![Alt text](03_Docs/Components/bot_gold_with_mask.png?raw=true "Bottom")
+
+Author: Frederic Afadjigla, 2017
