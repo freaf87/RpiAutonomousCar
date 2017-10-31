@@ -45,7 +45,7 @@ class TestRobotMovement(object):
         raw_input("TURN TEST: Press Enter when robot rotation is ready.")
         self.r.turn(45)
         self.r.turn(-450)
-        self.r.turn(45)
+        self.r.turn(405)
         report = raw_input("Did robot turn 45° clockwise, then 450° "
                            "counterclockwise, then back to start? \n"
                            "(Y/n): ")
