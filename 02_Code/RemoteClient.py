@@ -23,7 +23,16 @@ import socket, time, sys
 IP_ADDRESS = "192.168.0.31"
 IP_PORT = 22000
 
+KEY_TEXT = {
+    pygame.K_UP: "forward",
+    pygame.K_DOWN: "reverse",
+    pygame.K_LEFT: "left",
+    pygame.K_RIGHT: "right"
+}
+
 class Receiver(Thread):
+    BUFFER_SIZE = 4096
+    END_OF_MESSAGE_INDICATOR = "\0"
 
     def __init__(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -34,86 +43,33 @@ class Receiver(Thread):
             debug("Connection failed.")
             raise RuntimeError(
                 "Connection to {}:{:d} failed".format(IP_ADDRESS, IP_PORT))
-        debug("Starting Receiver thread")
-        self.start()
-
-    def run(self):
-        debug("Receiver thread started")
-        while True:
-            try:
-                rx_data = self.readServerData()
-            except:
-                debug("Exception in Receiver.run()")
-                self.close_connection()
-                break
-
-        debug("Receiver thread terminated")
-
-
-    def readServerData(self):
-        debug("Calling readResponse")
-        bufSize = 4096
-        data = ""
-        while data[-1:] != "\0": # reply with end-of-message indicator
-            try:
-                blk = sock.recv(bufSize)
-                if blk != None:
-                    debug("Received data block from server, len: " + \
-                        str(len(blk)))
-                else:
-                    debug("sock.recv() returned with None")
-            except:
-                raise Exception("Exception from blocking sock.recv()")
-            data += blk
-        print "Data received:", data
 
     def close_connection(self):
         debug("Closing socket")
         self.sock.close()
 
-
-# TODO: Escape need for global by passing in connection to send command to
-def sendCommand(cmd, receiver):
-    debug("sendCommand() with cmd = " + cmd)
-    try:
-        # append \0 as end-of-message indicator
-        sock.sendall(cmd + "\0")
-    except:
-        debug("Exception in sendCommand()")
-        receiver.close_connection()
-
-
+    def send_command(self, cmd):
+        debug("sendCommand() with cmd = " + cmd)
+        try:
+            self.sock.sendall(cmd + self.END_OF_MESSAGE_INDICATOR)
+        except socket.error:
+            debug("Exception in sendCommand()")
+            self.close_connection()
 
 
 if __name__ == "__main__":
     try:
-
-        sock = None
-        isConnected = False
-
         pygame.init()
-        pygame.display.set_mode((1,1))
+        pygame.display.set_mode((1, 1))
         pygame.key.set_repeat(100, 100)
 
-        r = Receiver()
-        # TODO: PEP8
-        isConnected = True
-        print "Connection established"
-        time.sleep(1)
-        while isConnected:
+        with Receiver() as r:
+            print("Connection established")
+            time.sleep(1)
             for event in pygame.event.get():
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_UP:
-                        sendCommand("forward", r)
-                    elif event.key == pygame.K_DOWN:
-                        sendCommand("reverse", r)
-                    elif event.key == pygame.K_LEFT:
-                        sendCommand("left", r)
-                    elif event.key == pygame.K_RIGHT:
-                        sendCommand("right", r)
                 if event.type == pygame.KEYUP:
-                    sendCommand("stop", r)
-    except (KeyboardInterrupt, SystemExit):
-        r.close_connection()
+                    r.send_command("stop")
+                else:
+                    r.send_command(KEY_TEXT[event.key])
+    except KeyboardInterrupt:
         sys.exit(0)
-
