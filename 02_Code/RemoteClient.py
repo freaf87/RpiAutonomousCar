@@ -26,7 +26,6 @@ IP_PORT = 22000
 class Receiver(Thread):
 
     def __init__(self):
-        # TODO: No globals. Eliminate the need by returning it.
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         debug("Connecting...")
         try:
@@ -35,7 +34,8 @@ class Receiver(Thread):
             debug("Connection failed.")
             raise RuntimeError(
                 "Connection to {}:{:d} failed".format(IP_ADDRESS, IP_PORT))
-        startReceiver()
+        debug("Starting Receiver thread")
+        self.start()
 
     def run(self):
         debug("Receiver thread started")
@@ -44,7 +44,7 @@ class Receiver(Thread):
                 rx_data = self.readServerData()
             except:
                 debug("Exception in Receiver.run()")
-                self.closeConnection()
+                self.close_connection()
                 break
 
         debug("Receiver thread terminated")
@@ -67,15 +67,10 @@ class Receiver(Thread):
             data += blk
         print "Data received:", data
 
-    # TODO: PEP8
-    def closeConnection(self):
+    def close_connection(self):
         debug("Closing socket")
         self.sock.close()
 
-def startReceiver():
-    debug("Starting Receiver thread")
-    receiver = Receiver()
-    receiver.start()
 
 # TODO: Escape need for global by passing in connection to send command to
 def sendCommand(cmd, receiver):
@@ -85,7 +80,7 @@ def sendCommand(cmd, receiver):
         sock.sendall(cmd + "\0")
     except:
         debug("Exception in sendCommand()")
-        receiver.closeConnection()
+        receiver.close_connection()
 
 
 
@@ -119,6 +114,6 @@ if __name__ == "__main__":
                 if event.type == pygame.KEYUP:
                     sendCommand("stop", r)
     except (KeyboardInterrupt, SystemExit):
-        r.closeConnection()
+        r.close_connection()
         sys.exit(0)
 
