@@ -19,28 +19,26 @@ import time
 
 import wiringpi
 
-GPIO_OUT = 1
-GPIO_IN = 0
-INPUT_MODE = 0
+from gpio_manager import GPIO_Manager
 
 
 class UltrasonicTimeoutError(Exception):
     """UltrasonicRanger does not measure response to ping."""
 
 
-class UltrasonicRanger(object):
+class UltrasonicRanger(GPIO_Manager):
     """Interface with an HCSR04 ultrasonic range sensor."""
 
     _trigger_pin = 15
     _echo_pin = 14
+    _pins = [_trigger_pin, _echo_pin]
     _timeout = 0.1  # seconds
     _average_count = 1
 
     def __init__(self):
-        # TODO: Setup should be made once, not multiple times
-        wiringpi.wiringPiSetupGpio()
-        wiringpi.pinMode(self._trigger_pin, GPIO_OUT)
-        wiringpi.pinMode(self._echo_pin, GPIO_IN)
+        super(UltrasonicRanger, self).__init__()
+        wiringpi.pinMode(self._trigger_pin, self.GPIO_OUT)
+        wiringpi.pinMode(self._echo_pin, self.GPIO_IN)
 
     def get_distance(self):
         """Measure time between sent impulse and measured reflectance."""
@@ -53,18 +51,18 @@ class UltrasonicRanger(object):
                                                  "timeout.")
             return time.time()
 
-        wiringpi.digitalWrite(self._trigger_pin, 0)
+        wiringpi.digitalWrite(self._trigger_pin, self.GPIO_IN)
         time.sleep(0.000002)
-        wiringpi.digitalWrite(self._trigger_pin, 1)
+        wiringpi.digitalWrite(self._trigger_pin, self.GPIO_OUT)
         time.sleep(0.00001)
-        wiringpi.digitalWrite(self._trigger_pin, 0)
+        wiringpi.digitalWrite(self._trigger_pin, self.GPIO_IN)
 
         timeout_end = time.time() + self._timeout
 
-        time1 = sense_echo_pin_change(0, timeout_end)
-        time2 = sense_echo_pin_change(1, timeout_end)
+        start = sense_echo_pin_change(0, timeout_end)
+        end = sense_echo_pin_change(1, timeout_end)
 
-        duration = time2 - time1
+        duration = end - start
         distance = duration * 340.0 / 2.0 * 100
         return distance
 
@@ -81,14 +79,6 @@ class UltrasonicRanger(object):
             if error_count > min(3, self._average_count) or distance_sum == 0:
                 raise UltrasonicTimeoutError("3 consecutive bad soundings.")
         return distance_sum / self._average_count
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, *args):
-        for pin in self._trigger_pin, self._echo_pin:
-            wiringpi.digitalWrite(pin, 0)
-            wiringpi.pinMode(pin, INPUT_MODE)
 
 
 if __name__ == "__main__":
