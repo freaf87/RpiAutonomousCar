@@ -42,7 +42,8 @@ class UltrasonicRanger(GPIO_Manager):
         wiringpi.pinMode(self._trigger_pin, self.GPIO_OUT)
         wiringpi.pinMode(self._echo_pin, self.GPIO_IN)
 
-    def get_distance(self):
+    @property
+    def distance(self):
         """Measure time between sent impulse and measured reflectance."""
 
         def sense_echo_pin_change(initial_state, timeout):
@@ -68,13 +69,14 @@ class UltrasonicRanger(GPIO_Manager):
         distance = duration * 340.0 / 2.0 * 100
         return distance
 
+    @property
     def get_average_distance(self):
         """Average multiple distance measurements."""
         distance_sum = 0.0
         error_count = 0
         for i in range(self._average_count):
             try:
-                distance = self.get_distance()
+                distance = self.distance
                 distance_sum += distance
             except UltrasonicTimeoutError:
                 error_count += 1
