@@ -15,22 +15,13 @@
 # You should have received a copy of the GNU General Public License
 # along with FSE 2017.  If not, see <http://www.gnu.org/licenses/>.
 
-# DataClient1.py
 import pygame
 from threading import Thread
+from logging import debug
 import socket, time, sys, os
 
-VERBOSE = False
 IP_ADDRESS = "192.168.0.31"
 IP_PORT = 22000
-
-# TODO: Replace this with logging.debug. Easiest is like this:
-# >>> from logging import debug
-# Then you don't have to modify the code which calls this.
-def debug(text):
-    if VERBOSE:
-        print "Debug:---", text
-
 
 class Receiver(Thread):
     def run(self):
