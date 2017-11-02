@@ -1,12 +1,13 @@
 #!/usr/bin/env python()
-from threading import Thread
-import RPi.GPIO as GPIO
-from HCSR04    import HCSR04
-from MCP3004   import MCP3004
-from TB6612FNG import TB6612FNG
-from infrared import InfraredSensor
-from led       import LED
 import time
+from threading import Thread
+
+import RPi.GPIO as GPIO
+from HCSR04 import HCSR04  # This is the ultrasonic ranger
+
+from drivers.TB6612FNG import TB6612FNG
+from drivers.infrared import InfraredSensor
+from drivers.led import LED
 
 
 class HeartBeat:

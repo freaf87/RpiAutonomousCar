@@ -20,7 +20,6 @@
 import time
 
 import wiringpi
-
 from gpio_manager import GPIO_Manager
 
 

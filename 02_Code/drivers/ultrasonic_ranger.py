@@ -20,7 +20,6 @@
 import time
 
 import wiringpi
-
 from gpio_manager import GPIO_Manager
 
 
@@ -70,7 +69,7 @@ class UltrasonicRanger(GPIO_Manager):
         return distance
 
     @property
-    def get_average_distance(self):
+    def average_distance(self):
         """Average multiple distance measurements."""
         distance_sum = 0.0
         error_count = 0
@@ -89,7 +88,7 @@ if __name__ == "__main__":
     with UltrasonicRanger() as ultrasonic:
         while True:
             try:
-                dis = ultrasonic.get_average_distance()
+                dis = ultrasonic.average_distance
                 print(dis)
             except UltrasonicTimeoutError:
                 print("Error during reading.")

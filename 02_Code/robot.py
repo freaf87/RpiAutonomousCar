@@ -17,9 +17,9 @@
 
 import time
 
-from led import LED
-from MotorDriver import MotorDriver
-from ultrasonic_ranger import UltrasonicRanger, UltrasonicTimeoutError
+from drivers.motor_driver import MotorDriver
+from drivers.led import LED
+from drivers.ultrasonic_ranger import UltrasonicRanger, UltrasonicTimeoutError
 
 
 class Robot(object):

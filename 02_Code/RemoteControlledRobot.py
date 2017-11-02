@@ -19,9 +19,9 @@ import socket
 import time
 from threading import Thread
 
-from led import LED
-from MotorDriver import MotorDriver
-from ultrasonic_ranger import UltrasonicRanger
+from drivers.led import LED
+from drivers.motor_driver import MotorDriver
+from drivers.ultrasonic_ranger import UltrasonicRanger
 
 VERBOSE = False
 IP_PORT = 22000

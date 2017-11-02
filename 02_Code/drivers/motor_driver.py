@@ -48,6 +48,7 @@ class MotorDriver():
         self._STBYPin = 13
 
         # Set all the drive pins as output pins
+        GPIO.setmode(GPIO.BCM)
         GPIO.setup(self._M1Dir1Pin, GPIO.OUT)
         GPIO.setup(self._M1Dir2Pin, GPIO.OUT)
         GPIO.setup(self._M1PWMPin, GPIO.OUT)

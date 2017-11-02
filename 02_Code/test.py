@@ -38,7 +38,7 @@ class TestRobotMovement(object):
             self.r.drive(motion)
         report = raw_input("Did robot move as follows? {} \n"
                            "(Y/n): ".format(motions))
-        assert(not report or report.lower() == 'y')
+        assert (not report or report.lower() == 'y')
 
     def test_turning(self):
         """Test turning."""
@@ -49,8 +49,7 @@ class TestRobotMovement(object):
         report = raw_input("Did robot turn 45° clockwise, then 450° "
                            "counterclockwise, then back to start? \n"
                            "(Y/n): ")
-        assert(not report or report.lower() == 'y')
-
+        assert (not report or report.lower() == 'y')
 
     def test_drive_arc(self):
         """Drive in arcs."""
@@ -64,15 +63,15 @@ class TestRobotMovement(object):
         report = raw_input("Did robot drive an arc to right, "
                            "then to left, then return to start? \n"
                            "(Y/n): ")
-        assert(not report or report.lower() == 'y')
+        assert (not report or report.lower() == 'y')
 
     def test_obstacle_detection(self):
         """Report obstacles correctly."""
         raw_input("ULTRASONIC TEST: Place obstacle within 20 cm of robot "
                   "and press Enter.")
-        assert(self.r.obstacle < 20)
+        assert (self.r.obstacle < 20)
         raw_input("Clear ground before robot and press enter.")
-        assert(self.r.obstacle > 20)
+        assert (self.r.obstacle > 20)
 
 
 if __name__ == "__main__":
