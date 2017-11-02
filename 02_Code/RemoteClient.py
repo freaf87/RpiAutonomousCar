@@ -18,7 +18,7 @@
 import pygame
 from threading import Thread
 from logging import debug
-import socket, time, sys, os
+import socket, time, sys
 
 IP_ADDRESS = "192.168.0.31"
 IP_PORT = 22000
@@ -27,11 +27,10 @@ class Receiver(Thread):
 
     def __init__(self):
         # TODO: No globals. Eliminate the need by returning it.
-        global sock
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         debug("Connecting...")
         try:
-            sock.connect((IP_ADDRESS, IP_PORT))
+            self.sock.connect((IP_ADDRESS, IP_PORT))
         except socket.gaierror as error:
             debug("Connection failed.")
             raise RuntimeError(
@@ -42,11 +41,10 @@ class Receiver(Thread):
         debug("Receiver thread started")
         while True:
             try:
-                rxData = self.readServerData()
+                rx_data = self.readServerData()
             except:
                 debug("Exception in Receiver.run()")
-                isReceiverRunning = False
-                closeConnection()
+                self.closeConnection()
                 break
 
         debug("Receiver thread terminated")
@@ -69,6 +67,10 @@ class Receiver(Thread):
             data += blk
         print "Data received:", data
 
+    # TODO: PEP8
+    def closeConnection(self):
+        debug("Closing socket")
+        self.sock.close()
 
 def startReceiver():
     debug("Starting Receiver thread")
@@ -76,24 +78,15 @@ def startReceiver():
     receiver.start()
 
 # TODO: Escape need for global by passing in connection to send command to
-def sendCommand(cmd):
+def sendCommand(cmd, receiver):
     debug("sendCommand() with cmd = " + cmd)
     try:
         # append \0 as end-of-message indicator
         sock.sendall(cmd + "\0")
     except:
         debug("Exception in sendCommand()")
-        closeConnection()
+        receiver.closeConnection()
 
-# TODO: PEP8
-def closeConnection():
-    # TODO: No globals.
-    global isConnected
-    debug("Closing socket")
-    sock.close()
-    # TODO: Don't set this here. Don't use globals. Set after closing socket
-    # in main.
-    isConnected = False
 
 
 
@@ -116,16 +109,16 @@ if __name__ == "__main__":
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
-                        sendCommand("forward")
+                        sendCommand("forward", r)
                     elif event.key == pygame.K_DOWN:
-                        sendCommand("reverse")
+                        sendCommand("reverse", r)
                     elif event.key == pygame.K_LEFT:
-                        sendCommand("left")
+                        sendCommand("left", r)
                     elif event.key == pygame.K_RIGHT:
-                        sendCommand("right")
+                        sendCommand("right", r)
                 if event.type == pygame.KEYUP:
-                    sendCommand("stop")
+                    sendCommand("stop", r)
     except (KeyboardInterrupt, SystemExit):
-        closeConnection()
+        r.closeConnection()
         sys.exit(0)
 
