@@ -17,7 +17,7 @@
 
 import time
 
-from LED import LED
+from led import LED
 from MotorDriver import MotorDriver
 from ultrasonic_ranger import UltrasonicRanger, UltrasonicTimeoutError
 

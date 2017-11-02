@@ -19,7 +19,7 @@ import socket
 import time
 from threading import Thread
 
-from LED import LED
+from led import LED
 from MotorDriver import MotorDriver
 from ultrasonic_ranger import UltrasonicRanger
 

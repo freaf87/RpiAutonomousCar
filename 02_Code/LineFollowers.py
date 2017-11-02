@@ -5,7 +5,7 @@ from HCSR04    import HCSR04
 from MCP3004   import MCP3004
 from TB6612FNG import TB6612FNG
 from IRModule import IRModule
-from LED       import LED
+from led       import LED
 import time
 
 
@@ -19,9 +19,9 @@ class HeartBeat:
 
     def run(self):
         while self._running:
-            self._LED.ledOn()
+            self._LED.on()
             time.sleep(0.5)
-            self._LED.ledOff()
+            self._LED.off()
             time.sleep(0.5)
 
 class AutonomousDrive:

@@ -29,37 +29,41 @@ import RPi.GPIO as GPIO
 # reason, this would normally be called at the very end of a script. So we
 # don't have to solve this right at this moment, but if we have a lot of time
 # after refactoring we might think about how to cleanup the GPIOs the best way.
-class LED():
+class LED(object):
+    """Driver for an LED connected by GPIO."""
 
-    # TODO: Add docstring
+    _pin = 21
 
     def __init__(self):
-        # TODO: Move this attribute into class, it's always the same
-        self._LedPin = 21
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(self._LedPin, GPIO.OUT)
+        GPIO.setup(self._pin, GPIO.OUT)
+        self.state = False
 
-    # TODO: PEP8
-    def ledOn(self):
-        GPIO.output(self._LedPin,1)
+    def on(self):
+        GPIO.output(self._pin, 1)
+        self.state = True
 
-    def ledOff(self):
-        GPIO.output(self._LedPin,0)
+    def off(self):
+        GPIO.output(self._pin, 0)
+        self.state = False
 
-    # TODO: This goes into __exit__
-    def destroy(self):
+    def toggle(self):
+        if self.state:
+            self.off()
+        else:
+            self.on()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
         GPIO.cleanup()
 
+
 if __name__ == "__main__":
-
-    led = LED()
-    try:
+    with LED() as led:
         while 1:
-            led.ledOn()
+            led.on()
             time.sleep(0.5)
-            led.ledOff()
+            led.off()
             time.sleep(0.5)
-
-    except KeyboardInterrupt:
-        led.destroy()
-
