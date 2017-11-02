@@ -24,6 +24,20 @@ IP_ADDRESS = "192.168.0.31"
 IP_PORT = 22000
 
 class Receiver(Thread):
+
+    def __init__(self):
+        # TODO: No globals. Eliminate the need by returning it.
+        global sock
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        debug("Connecting...")
+        try:
+            sock.connect((IP_ADDRESS, IP_PORT))
+        except socket.gaierror as error:
+            debug("Connection failed.")
+            raise RuntimeError(
+                "Connection to {}:{:d} failed".format(IP_ADDRESS, IP_PORT))
+        startReceiver()
+
     def run(self):
         debug("Receiver thread started")
         while True:
@@ -81,19 +95,6 @@ def closeConnection():
     # in main.
     isConnected = False
 
-# TODO: Replace return False with exception
-def connect():
-    # TODO: No globals. Eliminate the need by returning it.
-    global sock
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    debug("Connecting...")
-    try:
-        sock.connect((IP_ADDRESS, IP_PORT))
-    except:
-        debug("Connection failed.")
-        return False
-    startReceiver()
-    return True
 
 
 if __name__ == "__main__":
@@ -106,29 +107,24 @@ if __name__ == "__main__":
         pygame.display.set_mode((1,1))
         pygame.key.set_repeat(100, 100)
 
-
-
-        if connect():
-            # TODO: PEP8
-            isConnected = True
-            print "Connection established"
-            time.sleep(1)
-            while isConnected:
-                for event in pygame.event.get():
-                    if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_UP:
-                            sendCommand("forward")
-                        elif event.key == pygame.K_DOWN:
-                            sendCommand("reverse")
-                        elif event.key == pygame.K_LEFT:
-                            sendCommand("left")
-                        elif event.key == pygame.K_RIGHT:
-                            sendCommand("right")
-                    if event.type == pygame.KEYUP:
-                        sendCommand("stop")
-        else:
-            print "Connection to %s:%d failed" % (IP_ADDRESS, IP_PORT)
-        print "done"
+        r = Receiver()
+        # TODO: PEP8
+        isConnected = True
+        print "Connection established"
+        time.sleep(1)
+        while isConnected:
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_UP:
+                        sendCommand("forward")
+                    elif event.key == pygame.K_DOWN:
+                        sendCommand("reverse")
+                    elif event.key == pygame.K_LEFT:
+                        sendCommand("left")
+                    elif event.key == pygame.K_RIGHT:
+                        sendCommand("right")
+                if event.type == pygame.KEYUP:
+                    sendCommand("stop")
     except (KeyboardInterrupt, SystemExit):
         closeConnection()
         sys.exit(0)
