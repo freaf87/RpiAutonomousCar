@@ -44,17 +44,19 @@ class Receiver(Thread):
             raise RuntimeError(
                 "Connection to {}:{:d} failed".format(IP_ADDRESS, IP_PORT))
 
-    def close_connection(self):
-        debug("Closing socket")
-        self.sock.close()
-
     def send_command(self, cmd):
         debug("sendCommand() with cmd = " + cmd)
         try:
             self.sock.sendall(cmd + self.END_OF_MESSAGE_INDICATOR)
         except socket.error:
             debug("Exception in sendCommand()")
-            self.close_connection()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        debug("Closing socket")
+        self.sock.close()
 
 
 if __name__ == "__main__":
