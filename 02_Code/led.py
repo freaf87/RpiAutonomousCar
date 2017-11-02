@@ -15,36 +15,32 @@
 # You should have received a copy of the GNU General Public License
 # along with FSE 2017.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Driver for a GPIO LED."""
+
 import time
 
-import RPi.GPIO as GPIO
+import wiringpi
+
+from gpio_manager import GPIO_Manager
 
 
-# TODO: This should be a context manager too. We might think about
-# subclassing these all into a common class that keeps track of its instances
-# and cleans up when the last of them is destroyed. See
-# https://sourceforge.net/p/raspberry-gpio-python/wiki/BasicUsage/
-# The reason for this is that it's a bit dangerous to be using GPIO.cleanup()
-# when other pins are in use because this clears all the pins. For this
-# reason, this would normally be called at the very end of a script. So we
-# don't have to solve this right at this moment, but if we have a lot of time
-# after refactoring we might think about how to cleanup the GPIOs the best way.
-class LED(object):
+class LED(GPIO_Manager):
     """Driver for an LED connected by GPIO."""
 
     _pin = 21
+    _pins = [_pin]
 
     def __init__(self):
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(self._pin, GPIO.OUT)
+        super(LED, self).__init__()
+        wiringpi.pinMode(self._pin, self.GPIO_OUT)
         self.state = False
 
     def on(self):
-        GPIO.output(self._pin, 1)
+        wiringpi.digitalWrite(self._pin, self.GPIO_OUT)
         self.state = True
 
     def off(self):
-        GPIO.output(self._pin, 0)
+        wiringpi.digitalWrite(self._pin, self.GPIO_IN)
         self.state = False
 
     def toggle(self):
@@ -52,12 +48,6 @@ class LED(object):
             self.off()
         else:
             self.on()
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, *args):
-        GPIO.cleanup()
 
 
 if __name__ == "__main__":

@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with FSE 2017.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Bookkeeper for GPIO devices."""
+
 import wiringpi
 
 
