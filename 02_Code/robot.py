@@ -82,7 +82,7 @@ class Robot(object):
     def obstacle(self):
         """Return distance to nearest obstacle in cm or None."""
         try:
-            distance = self.ultrasonic.get_average_distance()
+            distance = self.ultrasonic.average_distance
         except UltrasonicTimeoutError:
             distance = None
         return distance

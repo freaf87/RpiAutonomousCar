@@ -4,7 +4,7 @@ import RPi.GPIO as GPIO
 from HCSR04    import HCSR04
 from MCP3004   import MCP3004
 from TB6612FNG import TB6612FNG
-from IRModule import IRModule
+from infrared import InfraredSensor
 from led       import LED
 import time
 
@@ -55,7 +55,7 @@ class AutonomousDrive:
 class LineFollower:
     def __init__(self):
         self._running = True
-        self._IR = IRModule()
+        self._IR = InfraredSensor()
         self._MotorDrive = TB6612FNG()
         self._USonic = HCSR04()
         self._loopCount = 0
@@ -84,8 +84,8 @@ class LineFollower:
                 #self._loopCount += 1
 
                 #read IR Sensor
-                statusLeft  = self._IR.getStatusMiddle()
-                statusRight = self._IR.getStatusRight()
+                statusLeft  = self._IR.middle
+                statusRight = self._IR.right
 
                 if USonicDist > 10:
                     if statusLeft and statusRight:
