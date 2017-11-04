@@ -34,7 +34,7 @@ class InfraredSensor(GPIO_Manager):
     def __init__(self):
         super(InfraredSensor, self).__init__()
         for pin in self._pins:
-            wiringpi.pinMode(pin, self.GPIO_IN)
+            wiringpi.pinMode(pin, wiringpi.INPUT)
 
     @property
     def left(self):

@@ -23,8 +23,6 @@ import wiringpi
 class GPIO_Manager(object):
     """A manager to bundle bookkeeping work with GPIO pins."""
 
-    GPIO_OUT = 1
-    GPIO_IN = 0
     devices = []
     # To be implemented by subclasses
     _pins = []
@@ -43,4 +41,4 @@ class GPIO_Manager(object):
         self.devices.remove(self)
         for pin in self._pins:
             wiringpi.digitalWrite(pin, 0)
-            wiringpi.pinMode(pin, self.GPIO_IN)
+            wiringpi.pinMode(pin, wiringpi.INPUT)

@@ -93,4 +93,5 @@ class Robot(object):
     def __exit__(self, *args):
         """Release internally used resources."""
         self.ultrasonic.__exit__()
+        self.led.__exit__()
 

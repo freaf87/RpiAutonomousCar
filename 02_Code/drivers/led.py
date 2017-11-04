@@ -31,15 +31,15 @@ class LED(GPIO_Manager):
 
     def __init__(self):
         super(LED, self).__init__()
-        wiringpi.pinMode(self._pin, self.GPIO_OUT)
+        wiringpi.pinMode(self._pin, wiringpi.OUTPUT)
         self.state = False
 
     def on(self):
-        wiringpi.digitalWrite(self._pin, self.GPIO_OUT)
+        wiringpi.digitalWrite(self._pin, wiringpi.OUTPUT)
         self.state = True
 
     def off(self):
-        wiringpi.digitalWrite(self._pin, self.GPIO_IN)
+        wiringpi.digitalWrite(self._pin, wiringpi.INPUT)
         self.state = False
 
     def toggle(self):

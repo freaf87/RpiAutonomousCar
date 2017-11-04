@@ -38,8 +38,8 @@ class UltrasonicRanger(GPIO_Manager):
 
     def __init__(self):
         super(UltrasonicRanger, self).__init__()
-        wiringpi.pinMode(self._trigger_pin, self.GPIO_OUT)
-        wiringpi.pinMode(self._echo_pin, self.GPIO_IN)
+        wiringpi.pinMode(self._trigger_pin, wiringpi.OUTPUT)
+        wiringpi.pinMode(self._echo_pin, wiringpi.INPUT)
 
     @property
     def distance(self):
@@ -53,11 +53,11 @@ class UltrasonicRanger(GPIO_Manager):
                                                  "timeout.")
             return time.time()
 
-        wiringpi.digitalWrite(self._trigger_pin, self.GPIO_IN)
+        wiringpi.digitalWrite(self._trigger_pin, wiringpi.INPUT)
         time.sleep(0.000002)
-        wiringpi.digitalWrite(self._trigger_pin, self.GPIO_OUT)
+        wiringpi.digitalWrite(self._trigger_pin, wiringpi.OUTPUT)
         time.sleep(0.00001)
-        wiringpi.digitalWrite(self._trigger_pin, self.GPIO_IN)
+        wiringpi.digitalWrite(self._trigger_pin, wiringpi.INPUT)
 
         timeout_end = time.time() + self._timeout
 
