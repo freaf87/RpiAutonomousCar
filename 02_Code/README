@@ -1,0 +1,18 @@
+# FSE 2017 Robot
+
+This package showcases how to work with the robot developed in the course of
+Full Stack Embedded's 2017 courses taking place in Accra, Ghana and Lome, Togo.
+Use these lines as inspiration for your own code or use it directly, e.g. as
+follows:
+
+    import time
+    from fse_2017_robot import Robot
+    with Robot() as r:
+        r.led.on()
+        r.set_drive_mode(1)
+        while not r.obstacle < 50:
+            r.led.toggle()
+            time.sleep(0.25)
+
+This drives the robot forward with its LED blinking on and off until an obstacle
+is detected less than 50 cm away.

@@ -15,18 +15,4 @@
 # You should have received a copy of the GNU General Public License
 # along with FSE 2017.  If not, see <http://www.gnu.org/licenses/>.
 
-from distutils.core import setup
-
-setup(
-    name='fse2017_robot',
-    version='v0.1.0',
-    packages=['fse2017_robot',
-              'fse2017_robot.drivers',
-              'fse2017_robot.controllers'],
-    url='https://fullstackembedded.com',
-    license='GNU GPL',
-    author='Daniel Lee',
-    author_email='erget2005@gmail.com',
-    description="Drivers and various driving aids for FSE 2017\'s Raspberry "
-                "Pi-based robot."
-)
+"""Hardware drivers for the FSE 2017 robot."""
