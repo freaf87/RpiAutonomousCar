@@ -15,10 +15,13 @@
 # You should have received a copy of the GNU General Public License
 # along with FSE 2017.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Driver for motor drivers."""
+
 import sys
 import time
 
-import RPi.GPIO as GPIO
+import wiringpi
+from gpio_manager import GPIO_Manager
 
 
 # TODO: DRY this code (WET)
@@ -29,39 +32,27 @@ import RPi.GPIO as GPIO
 # ...
 # When an exception occurs or the with-block is completed, the object cleans
 # up after itself automatically.
-class MotorDriver():
 
-    """Class to represent TB6612FNG DC Motor driver."""
-    # TODO: Define method __enter__ which returns self for use in with clause
-    # TODO: Class attributes go here
+# TODO: Maybe break this down into the component motors with forward and back
+#  methods
+class MotorDriver(GPIO_Manager):
+    """Interface with a TB6612FNG DC Motor driver."""
+
+    _M1Dir1Pin = 6
+    _M1Dir2Pin = 12
+    _M1PWMPin = 5
+    _M2Dir1Pin = 19
+    _M2Dir2Pin = 16
+    _M2PWMPin = 26
+    _STBYPin = 13
+    pins = [_M1Dir1Pin, _M1Dir2Pin, _M1PWMPin, _M2Dir1Pin, _M2Dir2Pin,
+            _M2PWMPin, _STBYPin]
 
     def __init__(self):
-        # Initialise inputs & outputs pins
-        # TODO: These are shared across all objects, so make them class
-        # attributes rather than setting them on initialization
-        self._M1Dir1Pin = 6
-        self._M1Dir2Pin = 12
-        self._M1PWMPin = 5
-        self._M2Dir1Pin = 19
-        self._M2Dir2Pin = 16
-        self._M2PWMPin = 26
-        self._STBYPin = 13
-
-        # Set all the drive pins as output pins
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(self._M1Dir1Pin, GPIO.OUT)
-        GPIO.setup(self._M1Dir2Pin, GPIO.OUT)
-        GPIO.setup(self._M1PWMPin, GPIO.OUT)
-        GPIO.setup(self._M2Dir1Pin, GPIO.OUT)
-        GPIO.setup(self._M2Dir2Pin, GPIO.OUT)
-        GPIO.setup(self._M2PWMPin, GPIO.OUT)
-        GPIO.setup(self._STBYPin, GPIO.OUT)
-
-        # Initialise and start SW pwm engine
-        self._M1Pwm = GPIO.PWM(self._M1PWMPin, 10000)
-        self._M1Pwm.start(0)
-        self._M2Pwm = GPIO.PWM(self._M2PWMPin, 10000)
-        self._M2Pwm.start(0)
+        for pin in self.pins:
+            wiringpi.pinMode(pin, wiringpi.OUTPUT)
+        wiringpi.softPwmCreate(self._M1PWMPin, 0, 100)
+        wiringpi.softPwmCreate(self._M2PWMPin, 0, 100)
 
     # TODO: Each direction sets 4 GPIOs, we can store these in the class, e.g.
     # >>> md = MotorDriver()
@@ -76,111 +67,95 @@ class MotorDriver():
     #  where each inner tuple would store the pin and the value it should be
     # set to.
 
-    # TODO: argument PEP8
-    def forward(self, dutyCycle=20):
-        GPIO.output(self._M1Dir1Pin, 0)
-        GPIO.output(self._M1Dir2Pin, 1)
-        self._M1Pwm.ChangeDutyCycle(dutyCycle)
+    def forward(self, duty_cycle=20):
+        wiringpi.digitalWrite(self._M1Dir1Pin, wiringpi.INPUT)
+        wiringpi.digitalWrite(self._M1Dir2Pin, wiringpi.OUTPUT)
+        wiringpi.softPwmWrite(self._M1PWMPin, duty_cycle)
 
-        GPIO.output(self._M2Dir1Pin, 1)
-        GPIO.output(self._M2Dir2Pin, 0)
-        self._M2Pwm.ChangeDutyCycle(dutyCycle)
+        wiringpi.digitalWrite(self._M2Dir1Pin, wiringpi.OUTPUT)
+        wiringpi.digitalWrite(self._M2Dir2Pin, wiringpi.INPUT)
+        wiringpi.softPwmWrite(self._M2PWMPin, duty_cycle)
 
-        GPIO.output(self._STBYPin, 1)
+        wiringpi.digitalWrite(self._STBYPin, wiringpi.OUTPUT)
 
-    def reverse(self, dutyCycle=20):
-        GPIO.output(self._M1Dir1Pin, 1)
-        GPIO.output(self._M1Dir2Pin, 0)
-        self._M1Pwm.ChangeDutyCycle(dutyCycle)
+    def reverse(self, duty_cycle=20):
+        wiringpi.digitalWrite(self._M1Dir1Pin, wiringpi.OUTPUT)
+        wiringpi.digitalWrite(self._M1Dir2Pin, wiringpi.INPUT)
+        wiringpi.softPwmWrite(self._M1Pwm, duty_cycle)
 
-        GPIO.output(self._M2Dir1Pin, 0)
-        GPIO.output(self._M2Dir2Pin, 1)
-        self._M2Pwm.ChangeDutyCycle(dutyCycle)
+        wiringpi.digitalWrite(self._M2Dir1Pin, wiringpi.INPUT)
+        wiringpi.digitalWrite(self._M2Dir2Pin, wiringpi.OUTPUT)
+        wiringpi.softPwmWrite(self._M2Pwm, duty_cycle)
 
-        GPIO.output(self._STBYPin, 1)
+        wiringpi.digitalWrite(self._STBYPin, wiringpi.OUTPUT)
 
-    def left(self, dutyCycle=8):
-        GPIO.output(self._M1Dir1Pin, 1)
-        GPIO.output(self._M1Dir2Pin, 0)
-        self._M1Pwm.ChangeDutyCycle(dutyCycle)
+    def left(self, duty_cycle=8):
+        wiringpi.digitalWrite(self._M1Dir1Pin, wiringpi.OUTPUT)
+        wiringpi.digitalWrite(self._M1Dir2Pin, wiringpi.INPUT)
+        wiringpi.softPwmWrite(self._M1Pwm, duty_cycle)
 
-        GPIO.output(self._M2Dir1Pin, 1)
-        GPIO.output(self._M2Dir2Pin, 0)
-        self._M2Pwm.ChangeDutyCycle(dutyCycle)
+        wiringpi.digitalWrite(self._M2Dir1Pin, wiringpi.OUTPUT)
+        wiringpi.digitalWrite(self._M2Dir2Pin, wiringpi.INPUT)
+        wiringpi.softPwmWrite(self._M2Pwm, duty_cycle)
 
-        GPIO.output(self._STBYPin, 1)
+        wiringpi.digitalWrite(self._STBYPin, wiringpi.OUTPUT)
 
-    def right(self, dutyCycle=8):
-        GPIO.output(self._M1Dir1Pin, 0)
-        GPIO.output(self._M1Dir2Pin, 1)
-        self._M1Pwm.ChangeDutyCycle(dutyCycle)
+    def right(self, duty_cycle=8):
+        wiringpi.digitalWrite(self._M1Dir1Pin, wiringpi.INPUT)
+        wiringpi.digitalWrite(self._M1Dir2Pin, wiringpi.OUTPUT)
+        wiringpi.softPwmWrite(self._M1Pwm, duty_cycle)
 
-        GPIO.output(self._M2Dir1Pin, 0)
-        GPIO.output(self._M2Dir2Pin, 1)
-        self._M2Pwm.ChangeDutyCycle(dutyCycle)
+        wiringpi.digitalWrite(self._M2Dir1Pin, wiringpi.INPUT)
+        wiringpi.digitalWrite(self._M2Dir2Pin, wiringpi.OUTPUT)
+        wiringpi.softPwmWrite(self._M2Pwm, duty_cycle)
 
-        GPIO.output(self._STBYPin, 1)
+        wiringpi.digitalWrite(self._STBYPin, wiringpi.OUTPUT)
 
     def stop(self):
-        GPIO.output(self._M1Dir1Pin, 0)
-        GPIO.output(self._M1Dir2Pin, 0)
+        wiringpi.digitalWrite(self._M1Dir1Pin, wiringpi.INPUT)
+        wiringpi.digitalWrite(self._M1Dir2Pin, wiringpi.INPUT)
         # self._M1Pwm.stop()
-        self._M1Pwm.ChangeDutyCycle(0)
+        wiringpi.softPwmWrite(self._M1Pwm, wiringpi.INPUT)
 
-        GPIO.output(self._M2Dir1Pin, 0)
-        GPIO.output(self._M2Dir2Pin, 0)
+        wiringpi.digitalWrite(self._M2Dir1Pin, wiringpi.INPUT)
+        wiringpi.digitalWrite(self._M2Dir2Pin, wiringpi.INPUT)
         # self._M2Pwm.stop()
-        self._M2Pwm.ChangeDutyCycle(0)
+        wiringpi.softPwmWrite(self._M2Pwm, wiringpi.INPUT)
 
-        GPIO.output(self._STBYPin, 0)
-
-    # TODO: Rename to __exit__ so that this is called on exceptions or when
-    # exiting context
-    def destroy(self):
-        gpio.pwmWrite(self._M1PWMPin , 0)
-        gpio.pinMode (self._M1PWMPin , 0)
-        gpio.pwmWrite(self._M2PWMPin , 0)
-        gpio.pinMode (self._M2PWMPin , 0)
-        gpio.pinMode (self._M1Dir1Pin, 0)
-        gpio.pinMode (self._M1Dir2Pin, 0)
-        gpio.pinMode (self._M2Dir1Pin, 0)
-        gpio.pinMode (self._M2Dir2Pin, 0)
+        wiringpi.digitalWrite(self._STBYPin, wiringpi.INPUT)
 
 
 if __name__ == '__main__':
     tb6612fng = MotorDriver()
     try:
-        while True:
+        print "forward"
+        time.sleep(3)
+        tb6612fng.forward()
 
-            print "forward"
-            tb6612fng.forward()
-            time.sleep(3)
+        tb6612fng.stop()
+        time.sleep(3)
 
-            tb6612fng.stop()
-            time.sleep(3)
+        print "reverse"
+        time.sleep(3)
+        tb6612fng.reverse()
 
-            print "reverse"
-            tb6612fng.reverse()
-            time.sleep(3)
+        tb6612fng.stop()
+        time.sleep(3)
 
-            tb6612fng.stop()
-            time.sleep(3)
+        print "left"
+        time.sleep(3)
+        tb6612fng.left()
 
-            print "left"
-            tb6612fng.left()
-            time.sleep(3)
+        tb6612fng.stop()
+        time.sleep(3)
 
-            tb6612fng.stop()
-            time.sleep(3)
+        print "right"
+        time.sleep(3)
+        tb6612fng.right()
 
-            print "right"
-            tb6612fng.right()
-            time.sleep(3)
-
-            tb6612fng.stop()
-            time.sleep(3)
-            print "Done!"
+        tb6612fng.stop()
+        time.sleep(3)
+        print "Done!"
 
     except KeyboardInterrupt:
-        tb6612fng.destroy()
-        sys.exit(0)
+        tb6612fng.__exit__()
