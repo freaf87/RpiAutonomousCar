@@ -17,6 +17,8 @@
 
 """Tests for all movement functions of the FSE 2017 robot's public API."""
 
+from time import sleep
+
 from robot import Robot
 
 
@@ -72,6 +74,20 @@ class TestRobotMovement(object):
         assert (self.r.obstacle < 20)
         raw_input("Clear ground before robot and press enter.")
         assert (self.r.obstacle > 20)
+
+    def test_led(self):
+        """Blink LED on and off."""
+        raw_input("LED TEST: LED will blink on and off twice.")
+        self.r.led.on()
+        sleep(0.5)
+        self.r.led.off()
+        sleep(0.5)
+        self.r.led.toggle()
+        sleep(0.5)
+        self.r.led.toggle()
+        report = raw_input("Did LED blink on and off twice, once every half "
+                           "second? (Y/n")
+        assert (not report or report.lower() == 'y')
 
 
 if __name__ == "__main__":
