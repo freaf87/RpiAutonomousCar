@@ -79,7 +79,7 @@ As shown in Figure~\vref{fig:Mechanic1} and ~\vref{fig:Mechanic2}, the mechanica
 \item All Necessary Screw And Nut
 \end{itemize}
 
-\begin{figure}[!htb]
+\begin{figure}[h]
 \minipage{0.48\textwidth}
   \includegraphics[width=\linewidth]{Mechanic2.png}
   \caption{Robot's components}\label{fig:Mechanic2}
@@ -99,14 +99,14 @@ The Board's electronic is kept simple to ease traning. It is so designed that, s
 \subsection{Analog Inputs for Raspberry Pi Using the MCP3004}
 The MCP3008 is a low cost 4-channel 10-bit analog to digital converter. The MCP3004 connects to the Raspberry Pi using a SPI serial connection. You can use either the hardware SPI bus (remember to connect GPIO07 and GPIO25 together via a jumper cable if you have the first version of the board), or any four GPIO pins and software SPI to communicate to the MCP3004. Software SPI is a little more flexible since it can work with any pins on the Pi, whereas hardware SPI is slightly faster but less flexible because it only works with specific pins. The board gives you the possibility to try both methods since it is also wired to the Raspberry Pi hardware SPI.
 
-\begin{figure}[!htb]
+\begin{figure}[h]
 \centering
 \includegraphics[width=1\columnwidth]{MPC3004} 
 \caption[MPC3004 schematic]{MPC3004 schematic}
 \label{fig:MPC3004}
 \end{figure}
 
-\begin{table}[hbt]
+\begin{table}[H]
 \caption{MCP3004 SPI connection}
 \centering
 \begin{tabular}{lr}
@@ -135,14 +135,14 @@ Please note that the analog channel 3 is connected per default via a jumper (SJ1
 \subsection{8-channel Bi-directional Logic Level Converter - TXB0108}
 Precautions have to be taken when connecting 5V devices to the raspberry pi since the Pi is not 5V tolerant. There are many simple ways to handle this issue like voltage dividers.Handling bidirectional signals or high speed transfers can be tough.That's where this lovely chip, the TXB0108 bi-directional level converter comes in! This chip perform bidirectional level shifting from pretty much any voltage to any voltage and will auto-detect the direction 
 
-\begin{figure}[!htb]
+\begin{figure}[h]
 \centering
-\includegraphics[width=0.8\columnwidth]{TX0108PWR} 
+\includegraphics[width=0.6\columnwidth]{TX0108PWR} 
 \caption[TX0108PWR schematic]{TX0108PWR schematic}
 \label{fig:TX0108PWR}
 \end{figure}
 
-\begin{table}[hbt]
+\begin{table}[H]
 \caption{TX0108PWR connection}
 \centering
 \begin{tabular}{cc}
@@ -177,7 +177,7 @@ Features:
 \item[•] Filtering capacitors on both supply lines
 \end{itemize}
 
-\begin{figure}[!htb]
+\begin{figure}[H]
 \centering
 \includegraphics[width=1\columnwidth]{TB6612FNG} 
 \caption[TB6612FNG schematic]{TB6612FNG schematic}
@@ -190,8 +190,8 @@ Let’s discuss the pinout for the TB6612FNG:
 \newcolumntype{s}{>{\hsize=.3\hsize}X}
 \newcolumntype{m}{>{\hsize=.5\hsize}X}
 
-\begin{table}[hbt]
-\caption{MCP3004 SPI connection}
+\begin{table}[H]
+\caption{TB6612FNG connection}
 \centering
 \begin{adjustwidth}{-1cm}{}
 \resizebox{16cm}{!} {%
@@ -216,8 +216,8 @@ A02/B02 & Output 2 for channels A/B  & One of the two outputs to connect the mot
 
 When the outputs are set to High/Low your motor will run. When they are set to Low/High the motor will run in the opposite direction. In both cases, the speed is controlled by the PWM input.
 
-\begin{table}[hbt]
-\caption{MCP3004 SPI connection}
+\begin{table}[H]
+\caption{TB6612FNG Logic}
 \centering
 \begin{tabular}{llllll}
 \toprule
@@ -234,16 +234,20 @@ L    & L   & H   & OFF  & OFF  & Stop\\
 \label{tab:label}
 \end{table}
 
+\section{Wiring the RpiCar}
+\subsection{Connecting Robot's components}
 
-\subsection{Servo interface}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\columnwidth]{RpiPinOut} 
+\caption[Raspberry Pi Pinout]{Raspberry Pi Pinout \footnotemark}
+\label{fig:Raspberry Pi Pinout}
+\end{figure}
+\footnotetext{\url{https://de.pinout.xyz/pinout/}}
 
 
 
-
-
-
-
-
+\subsection{Connecting additional components}
 
 
 \end{document}
