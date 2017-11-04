@@ -17,8 +17,8 @@
 
 import time
 
-from drivers.motor_driver import MotorDriver
 from drivers.led import LED
+from drivers.motor_driver import MotorDriver
 from drivers.ultrasonic_ranger import UltrasonicRanger, UltrasonicTimeoutError
 
 
