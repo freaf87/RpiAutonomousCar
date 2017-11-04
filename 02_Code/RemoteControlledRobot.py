@@ -139,7 +139,7 @@ if __name__ == "__main__":
         setup()
         loop()
     except KeyboardInterrupt:
-        UltrasonicObj.destroy()
-        LedObj.destroy()
-        RobotDriveObj().destroy()
+        UltrasonicObj.__exit__()
+        LedObj.__exit__()
+        RobotDriveObj.__exit__()
 
