@@ -24,17 +24,24 @@ from gpio_manager import GPIO_Manager
 
 class TB6612FNG(GPIO_Manager):
     """Interface with a TB6612FNG DC Motor driver."""
+   # Motor1 configuration
     _m1_dir1_pin = 6
     _m1_dir2_pin = 12
     _m1_pwm_pin_annex = 5  # solve error mapping (Vers.01)
     _m1_pwm_pin = 18
+
+    # Motor2 configuration
     _m2_dir1_pin = 19
     _m2_dir2_pin = 16
     _m2_pwm_pin_annex = 26  # solve error mapping (Vers.01)
     _m2_pwm_pin = 13
+
     _standby_pin = 20
+
     PWM_OUTPUTS = [_m1_pwm_pin, _m2_pwm_pin]
+
     INPUT_PINS = [_m1_pwm_pin_annex, _m2_pwm_pin_annex]
+
     OUTPUT_PINS = [_m1_dir1_pin, _m1_dir2_pin,
                    _m2_dir1_pin, _m2_dir2_pin,
                    _standby_pin]
@@ -48,10 +55,13 @@ class TB6612FNG(GPIO_Manager):
         super(TB6612FNG, self).__init__()
         for pin in self.OUTPUT_PINS:
             wiringpi.pinMode(pin, wiringpi.OUTPUT)
+
         for pin in self.PWM_OUTPUTS:
             wiringpi.pinMode(pin, wiringpi.PWM_OUTPUT)
+
         for pin in self.INPUT_PINS:
             wiringpi.pinMode(pin, wiringpi.INPUT)
+            wiringpi.pullUpDnControl(pin,wiringpi.PUD_DOWN) # make sure all annex_pin are set LOW
 
     def right_forward(self):
         """Drive right motor forward."""
@@ -73,7 +83,7 @@ class TB6612FNG(GPIO_Manager):
         wiringpi.digitalWrite(self._m2_dir1_pin, wiringpi.LOW)
         wiringpi.digitalWrite(self._m2_dir2_pin, wiringpi.HIGH)
 
-    def forward(self, duty_cycle=20):
+    def forward(self, duty_cycle=25):
         """Drive chassis forward."""
         self.right_forward()
         self.left_forward()
@@ -81,7 +91,7 @@ class TB6612FNG(GPIO_Manager):
         wiringpi.pwmWrite(self._m2_pwm_pin, self.to_dc(duty_cycle))
         wiringpi.digitalWrite(self._standby_pin, wiringpi.HIGH)
 
-    def reverse(self, duty_cycle=20):
+    def reverse(self, duty_cycle=25):
         """Drive chassis back."""
         self.right_back()
         self.left_back()
@@ -89,7 +99,7 @@ class TB6612FNG(GPIO_Manager):
         wiringpi.pwmWrite(self._m2_pwm_pin, self.to_dc(duty_cycle))
         wiringpi.digitalWrite(self._standby_pin, wiringpi.HIGH)
 
-    def right(self, duty_cycle=20):
+    def right(self, duty_cycle=25):
         """Turn chassis clockwise."""
         self.right_forward()
         self.left_back()
@@ -97,7 +107,7 @@ class TB6612FNG(GPIO_Manager):
         wiringpi.pwmWrite(self._m2_pwm_pin, self.to_dc(duty_cycle))
         wiringpi.digitalWrite(self._standby_pin, wiringpi.HIGH)
 
-    def left(self, duty_cycle=20):
+    def left(self, duty_cycle=25):
         """Turn chassis counterclockwise."""
         self.right_back()
         self.left_forward()
@@ -112,7 +122,7 @@ class TB6612FNG(GPIO_Manager):
         for pin in self.OUTPUT_PINS:
             wiringpi.digitalWrite(pin, wiringpi.LOW)
 
-    def __exit__(self):
+    def __exit__(self, *args):
         wiringpi.pwmWrite(self._m1_pwm_pin, 0)
         wiringpi.pwmWrite(self._m2_pwm_pin, 0)
         super(TB6612FNG, self).__exit__()
@@ -148,4 +158,5 @@ if __name__ == '__main__':
 
             tb6612fng.stop()
             time.sleep(3)
+
             print "Done!"
