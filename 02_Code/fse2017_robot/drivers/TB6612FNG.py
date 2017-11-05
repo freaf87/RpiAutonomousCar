@@ -50,52 +50,52 @@ class TB6612FNG(GPIO_Manager):
         wiringpi.pinMode(self._M2PWMPin_annex, wiringpi.INPUT)
         wiringpi.pinMode(self._STBY, wiringpi.OUTPUT)
 
-    def getDC(self, dc):
+    def to_dc(self, dc):
         return (1023 * dc) / 100
 
     def right_forward(self):
         wiringpi.digitalWrite(self._M1Dir1Pin, wiringpi.LOW)
-        wiringpi.digitalWrite(self._M1Dir2Pin, 1)
+        wiringpi.digitalWrite(self._M1Dir2Pin, wiringpi.HIGH)
 
     def right_back(self):
-        wiringpi.digitalWrite(self._M1Dir1Pin, 1)
+        wiringpi.digitalWrite(self._M1Dir1Pin, wiringpi.HIGH)
         wiringpi.digitalWrite(self._M1Dir2Pin, wiringpi.LOW)
 
     def left_back(self):
         wiringpi.digitalWrite(self._M2Dir1Pin, wiringpi.LOW)
-        wiringpi.digitalWrite(self._M2Dir2Pin, 1)
+        wiringpi.digitalWrite(self._M2Dir2Pin, wiringpi.HIGH)
 
     def left_forward(self):
-        wiringpi.digitalWrite(self._M2Dir1Pin, 1)
+        wiringpi.digitalWrite(self._M2Dir1Pin, wiringpi.HIGH)
         wiringpi.digitalWrite(self._M2Dir2Pin, wiringpi.LOW)
 
     def forward(self, duty_cycle=20):
         self.right_forward()
         self.left_forward()
-        wiringpi.pwmWrite(self._M1PWMPin, self.getDC(duty_cycle))
-        wiringpi.pwmWrite(self._M2PWMPin, self.getDC(duty_cycle))
-        wiringpi.digitalWrite(self._STBY, 1)
+        wiringpi.pwmWrite(self._M1PWMPin, self.to_dc(duty_cycle))
+        wiringpi.pwmWrite(self._M2PWMPin, self.to_dc(duty_cycle))
+        wiringpi.digitalWrite(self._STBY, wiringpi.HIGH)
 
     def reverse(self, duty_cycle=20):
         self.right_back()
         self.left_back()
-        wiringpi.pwmWrite(self._M1PWMPin, self.getDC(duty_cycle))
-        wiringpi.pwmWrite(self._M2PWMPin, self.getDC(duty_cycle))
-        wiringpi.digitalWrite(self._STBY, 1)
+        wiringpi.pwmWrite(self._M1PWMPin, self.to_dc(duty_cycle))
+        wiringpi.pwmWrite(self._M2PWMPin, self.to_dc(duty_cycle))
+        wiringpi.digitalWrite(self._STBY, wiringpi.HIGH)
 
     def right(self, duty_cycle=20):
         self.right_forward()
         self.left_back()
-        wiringpi.pwmWrite(self._M1PWMPin, self.getDC(duty_cycle))
-        wiringpi.pwmWrite(self._M2PWMPin, self.getDC(duty_cycle))
-        wiringpi.digitalWrite(self._STBY, 1)
+        wiringpi.pwmWrite(self._M1PWMPin, self.to_dc(duty_cycle))
+        wiringpi.pwmWrite(self._M2PWMPin, self.to_dc(duty_cycle))
+        wiringpi.digitalWrite(self._STBY, wiringpi.HIGH)
 
-    def left(self, duty_Cycle=20):
+    def left(self, duty_cycle=20):
         self.right_back()
         self.left_forward()
-        wiringpi.pwmWrite(self._M1PWMPin, self.getDC(duty_Cycle))
-        wiringpi.pwmWrite(self._M2PWMPin, self.getDC(duty_Cycle))
-        wiringpi.digitalWrite(self._STBY, 1)
+        wiringpi.pwmWrite(self._M1PWMPin, self.to_dc(duty_cycle))
+        wiringpi.pwmWrite(self._M2PWMPin, self.to_dc(duty_cycle))
+        wiringpi.digitalWrite(self._STBY, wiringpi.HIGH)
 
     def stop(self):
         wiringpi.digitalWrite(self._M1Dir1Pin, wiringpi.LOW)
