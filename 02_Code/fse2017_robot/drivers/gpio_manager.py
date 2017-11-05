@@ -40,5 +40,5 @@ class GPIO_Manager(object):
         """Cleanup GPIOs if necessary."""
         self.devices.remove(self)
         for pin in self._pins:
-            wiringpi.digitalWrite(pin, 0)
+            wiringpi.digitalWrite(pin, wiringpi.LOW)
             wiringpi.pinMode(pin, wiringpi.INPUT)
