@@ -24,97 +24,102 @@ from gpio_manager import GPIO_Manager
 
 class TB6612FNG(GPIO_Manager):
     """Interface with a TB6612FNG DC Motor driver."""
-    _M1Dir1Pin = 6
-    _M1Dir2Pin = 12
-    _M1PWMPin_annex = 5  # solve error mapping (Vers.01)
-    _M1PWMPin = 18
-    _M2Dir1Pin = 19
-    _M2Dir2Pin = 16
-    _M2PWMPin_annex = 26  # solve error mapping (Vers.01)
-    _M2PWMPin = 13
-    _STBY = 20
-    pins = [_M1Dir1Pin, _M1Dir2Pin, _M1PWMPin_annex, _M1PWMPin, _M2Dir1Pin,
-            _M2Dir2Pin, _M2PWMPin_annex, _M2PWMPin, _STBY]
+    _m1_dir1_pin = 6
+    _m1_dir2_pin = 12
+    _m1_pwm_pin_annex = 5  # solve error mapping (Vers.01)
+    _m1_pwm_pin = 18
+    _m2_dir1_pin = 19
+    _m2_dir2_pin = 16
+    _m2_pwm_pin_annex = 26  # solve error mapping (Vers.01)
+    _m2_pwm_pin = 13
+    _standby_pin = 20
+    PWM_OUTPUTS = [_m1_pwm_pin, _m2_pwm_pin]
+    INPUT_PINS = [_m1_pwm_pin_annex, _m2_pwm_pin_annex]
+    OUTPUT_PINS = [_m1_dir1_pin, _m1_dir2_pin,
+                   _m2_dir1_pin, _m2_dir2_pin,
+                   _standby_pin]
+    pins = PWM_OUTPUTS + INPUT_PINS + OUTPUT_PINS
+
+    @staticmethod
+    def to_dc(dc):
+        return (1023 * dc) / 100
 
     def __init__(self):
         super(TB6612FNG, self).__init__()
-        # Initialise inputs & outputs pins
-        # Configure TB6612GNG Pins
-        wiringpi.pinMode(self._M1Dir1Pin, wiringpi.OUTPUT)
-        wiringpi.pinMode(self._M1Dir2Pin, wiringpi.OUTPUT)
-        wiringpi.pinMode(self._M1PWMPin, wiringpi.PWM_OUTPUT)
-        wiringpi.pinMode(self._M1PWMPin_annex, wiringpi.INPUT)
-        wiringpi.pinMode(self._M2Dir1Pin, wiringpi.OUTPUT)
-        wiringpi.pinMode(self._M2Dir2Pin, wiringpi.OUTPUT)
-        wiringpi.pinMode(self._M2PWMPin, wiringpi.PWM_OUTPUT)
-        wiringpi.pinMode(self._M2PWMPin_annex, wiringpi.INPUT)
-        wiringpi.pinMode(self._STBY, wiringpi.OUTPUT)
-
-    def to_dc(self, dc):
-        return (1023 * dc) / 100
+        for pin in self.OUTPUT_PINS:
+            wiringpi.pinMode(pin, wiringpi.OUTPUT)
+        for pin in self.PWM_OUTPUTS:
+            wiringpi.pinMode(pin, wiringpi.PWM_OUTPUT)
+        for pin in self.INPUT_PINS:
+            wiringpi.pinMode(pin.wiringpi.INPUT)
 
     def right_forward(self):
-        wiringpi.digitalWrite(self._M1Dir1Pin, wiringpi.LOW)
-        wiringpi.digitalWrite(self._M1Dir2Pin, wiringpi.HIGH)
+        """Drive right motor forward."""
+        wiringpi.digitalWrite(self._m1_dir1_pin, wiringpi.LOW)
+        wiringpi.digitalWrite(self._m1_dir2_pin, wiringpi.HIGH)
 
     def right_back(self):
-        wiringpi.digitalWrite(self._M1Dir1Pin, wiringpi.HIGH)
-        wiringpi.digitalWrite(self._M1Dir2Pin, wiringpi.LOW)
-
-    def left_back(self):
-        wiringpi.digitalWrite(self._M2Dir1Pin, wiringpi.LOW)
-        wiringpi.digitalWrite(self._M2Dir2Pin, wiringpi.HIGH)
+        """Drive right motor back."""
+        wiringpi.digitalWrite(self._m1_dir1_pin, wiringpi.HIGH)
+        wiringpi.digitalWrite(self._m1_dir2_pin, wiringpi.LOW)
 
     def left_forward(self):
-        wiringpi.digitalWrite(self._M2Dir1Pin, wiringpi.HIGH)
-        wiringpi.digitalWrite(self._M2Dir2Pin, wiringpi.LOW)
+        """Drive left motor forward."""
+        wiringpi.digitalWrite(self._m2_dir1_pin, wiringpi.HIGH)
+        wiringpi.digitalWrite(self._m2_dir2_pin, wiringpi.LOW)
+
+    def left_back(self):
+        """Drive left motor back."""
+        wiringpi.digitalWrite(self._m2_dir1_pin, wiringpi.LOW)
+        wiringpi.digitalWrite(self._m2_dir2_pin, wiringpi.HIGH)
 
     def forward(self, duty_cycle=20):
+        """Drive chassis forward."""
         self.right_forward()
         self.left_forward()
-        wiringpi.pwmWrite(self._M1PWMPin, self.to_dc(duty_cycle))
-        wiringpi.pwmWrite(self._M2PWMPin, self.to_dc(duty_cycle))
-        wiringpi.digitalWrite(self._STBY, wiringpi.HIGH)
+        wiringpi.pwmWrite(self._m1_pwm_pin, self.to_dc(duty_cycle))
+        wiringpi.pwmWrite(self._m2_pwm_pin, self.to_dc(duty_cycle))
+        wiringpi.digitalWrite(self._standby_pin, wiringpi.HIGH)
 
     def reverse(self, duty_cycle=20):
+        """Drive chassis back."""
         self.right_back()
         self.left_back()
-        wiringpi.pwmWrite(self._M1PWMPin, self.to_dc(duty_cycle))
-        wiringpi.pwmWrite(self._M2PWMPin, self.to_dc(duty_cycle))
-        wiringpi.digitalWrite(self._STBY, wiringpi.HIGH)
+        wiringpi.pwmWrite(self._m1_pwm_pin, self.to_dc(duty_cycle))
+        wiringpi.pwmWrite(self._m2_pwm_pin, self.to_dc(duty_cycle))
+        wiringpi.digitalWrite(self._standby_pin, wiringpi.HIGH)
 
     def right(self, duty_cycle=20):
+        """Turn chassis clockwise."""
         self.right_forward()
         self.left_back()
-        wiringpi.pwmWrite(self._M1PWMPin, self.to_dc(duty_cycle))
-        wiringpi.pwmWrite(self._M2PWMPin, self.to_dc(duty_cycle))
-        wiringpi.digitalWrite(self._STBY, wiringpi.HIGH)
+        wiringpi.pwmWrite(self._m1_pwm_pin, self.to_dc(duty_cycle))
+        wiringpi.pwmWrite(self._m2_pwm_pin, self.to_dc(duty_cycle))
+        wiringpi.digitalWrite(self._standby_pin, wiringpi.HIGH)
 
     def left(self, duty_cycle=20):
+        """Turn chassis counterclockwise."""
         self.right_back()
         self.left_forward()
-        wiringpi.pwmWrite(self._M1PWMPin, self.to_dc(duty_cycle))
-        wiringpi.pwmWrite(self._M2PWMPin, self.to_dc(duty_cycle))
-        wiringpi.digitalWrite(self._STBY, wiringpi.HIGH)
+        wiringpi.pwmWrite(self._m1_pwm_pin, self.to_dc(duty_cycle))
+        wiringpi.pwmWrite(self._m2_pwm_pin, self.to_dc(duty_cycle))
+        wiringpi.digitalWrite(self._standby_pin, wiringpi.HIGH)
 
     def stop(self):
-        wiringpi.digitalWrite(self._M1Dir1Pin, wiringpi.LOW)
-        wiringpi.digitalWrite(self._M1Dir2Pin, wiringpi.LOW)
-        wiringpi.digitalWrite(self._M2Dir1Pin, wiringpi.LOW)
-        wiringpi.digitalWrite(self._M2Dir2Pin, wiringpi.LOW)
-        wiringpi.pwmWrite(self._M1PWMPin, 0)
-        wiringpi.pwmWrite(self._M2PWMPin, 0)
-        wiringpi.digitalWrite(self._STBY, wiringpi.LOW)
+        """Stop chassis."""
+        for pin in self.PWM_OUTPUTS:
+            wiringpi.pwmWrite(pin, 0)
+        for pin in self.OUTPUT_PINS:
+            wiringpi.digitalWrite(pin, wiringpi.LOW)
 
     def __exit__(self):
-        wiringpi.pwmWrite(self._M1PWMPin, 0)
-        wiringpi.pwmWrite(self._M2PWMPin, 0)
+        wiringpi.pwmWrite(self._m1_pwm_pin, 0)
+        wiringpi.pwmWrite(self._m2_pwm_pin, 0)
         super(TB6612FNG, self).__exit__()
 
 
 if __name__ == '__main__':
-    tb6612fng = TB6612FNG()
-    try:
+    with TB6612FNG() as tb6612fng:
         while True:
             print "forward"
             tb6612fng.forward()
@@ -145,6 +150,4 @@ if __name__ == '__main__':
             time.sleep(3)
             print "Done!"
 
-    except KeyboardInterrupt:
-        tb6612fng.__exit__()
-        sys.exit(0)
+
