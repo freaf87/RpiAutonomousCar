@@ -51,7 +51,7 @@ class TB6612FNG(GPIO_Manager):
         for pin in self.PWM_OUTPUTS:
             wiringpi.pinMode(pin, wiringpi.PWM_OUTPUT)
         for pin in self.INPUT_PINS:
-            wiringpi.pinMode(pin.wiringpi.INPUT)
+            wiringpi.pinMode(pin, wiringpi.INPUT)
 
     def right_forward(self):
         """Drive right motor forward."""
@@ -149,5 +149,3 @@ if __name__ == '__main__':
             tb6612fng.stop()
             time.sleep(3)
             print "Done!"
-
-
