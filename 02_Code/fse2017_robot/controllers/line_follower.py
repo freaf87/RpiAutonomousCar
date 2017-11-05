@@ -20,12 +20,9 @@
 import time
 from threading import Thread
 
-import RPi.GPIO as GPIO
-
-from ..drivers.TB6612FNG import TB6612FNG
+from .. import Robot
 from ..drivers.infrared import InfraredSensor
 from ..drivers.led import LED
-from ..drivers.ultrasonic_ranger import UltrasonicRanger
 
 
 class HeartBeat(object):
@@ -48,41 +45,34 @@ class HeartBeat(object):
 class LineFollower:
     def __init__(self):
         self._running = True
+        self._robot = Robot()
         self._ir = InfraredSensor()
-        self._motordrive = TB6612FNG()
-        self._ultrasonic = UltrasonicRanger()
 
     def __enter__(self):
         return self
 
     def __exit__(self, *args):
         self._running = False
-        for x in self._ir, self._motordrive, self._ultrasonic:
-            x.__exit__()
+        self._robot.__exit__()
 
     def run(self):
         state_left = False
         state_right = False
-        dc = 2
 
         while self._running:
-
-            # read IR Sensor
             state_left = self._ir.middle
             state_right = self._ir.right
-
-            distance = self._ultrasonic.obstacle
+            distance = self._robot.obstacle
             if distance > 10:
                 if state_left and state_right:
-                    self._motordrive.forward(dc)
+                    self._robot.drive(0.5)
                 elif state_left:
                     # line on the left => move left
-                    self._motordrive.left(dc - 1)
+                    self._robot.turn(-10)
                 elif state_right:
                     # line on the right => move right
-                    self._motordrive.right(dc - 1)
+                    self._robot.turn(10)
             else:
-                self._motordrive.stop(1)
                 print("Obstacle detected at " + str(distance))
             distance = self._ultrasonic
 
