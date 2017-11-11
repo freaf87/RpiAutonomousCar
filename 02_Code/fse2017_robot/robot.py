@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with FSE 2017.  If not, see <http://www.gnu.org/licenses/>.
 
+"""Robot interface combining ultrasonic, LED and motor drivers."""
+
 import time
 
 from drivers.led import LED
@@ -22,6 +24,7 @@ from drivers.motor_driver import MotorDriver
 from drivers.ultrasonic_ranger import UltrasonicRanger, UltrasonicTimeoutError
 
 
+# TODO: Add infrared interface
 class Robot(object):
 
     """The robot used for FSE 2017."""
