@@ -21,7 +21,6 @@ import time
 from threading import Thread
 
 from .. import Robot
-from ..drivers.infrared import InfraredSensor
 from ..drivers.led import LED
 
 
@@ -32,21 +31,24 @@ class HeartBeat(object):
         self._running = False
         self._LED = LED()
 
-    def __exit(self, *args):
-        self._running = False
-
     def run(self):
         self._running = True
         while self._running:
             self._LED.toggle()
             time.sleep(0.5)
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        self._running = False
+        self._LED.__exit__()
+
 
 class LineFollower:
     def __init__(self):
         self._running = True
         self._robot = Robot()
-        self._ir = InfraredSensor()
 
     def __enter__(self):
         return self
@@ -56,12 +58,9 @@ class LineFollower:
         self._robot.__exit__()
 
     def run(self):
-        state_left = False
-        state_right = False
-
         while self._running:
-            state_left = self._ir.middle
-            state_right = self._ir.right
+            state_left = self.robot.infrared.middle
+            state_right = self.robot.infrared.right
             distance = self._robot.obstacle
             if distance > 10:
                 if state_left and state_right:
@@ -74,11 +73,11 @@ class LineFollower:
                     self._robot.turn(10)
             else:
                 print("Obstacle detected at " + str(distance))
-            distance = self._ultrasonic
+            distance = self.robot.obstacle
 
 
 if __name__ == "__main__":
-    try:
+    with HeartBeat() as heartbeat, LineFollower() as line_follower:
         # Spawn threads
         heartbeat = HeartBeat()
         heartbeat_thread = Thread(target=heartbeat.run)
@@ -92,6 +91,3 @@ if __name__ == "__main__":
         while True:
             pass
 
-    except KeyboardInterrupt:
-        heartbeat.__exit__()
-        line_follower.__exit__()
