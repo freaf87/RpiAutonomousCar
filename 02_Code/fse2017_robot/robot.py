@@ -19,12 +19,12 @@
 
 import time
 
+from drivers.infrared import InfraredSensor
 from drivers.led import LED
 from drivers.motor_driver import MotorDriver
 from drivers.ultrasonic_ranger import UltrasonicRanger, UltrasonicTimeoutError
 
 
-# TODO: Add infrared interface
 class Robot(object):
 
     """The robot used for FSE 2017."""
@@ -34,6 +34,7 @@ class Robot(object):
     def __init__(self, duty_cycle=4):
         self.ultrasonic = UltrasonicRanger()
         self.led = LED()
+        self.infrared = InfraredSensor()
         self.motor = MotorDriver()
         self.duty_cycle = duty_cycle
 
@@ -97,4 +98,6 @@ class Robot(object):
         """Release internally used resources."""
         self.ultrasonic.__exit__()
         self.led.__exit__()
+        self.infrared.__exit__()
+        self.motor.__exit__()
 
