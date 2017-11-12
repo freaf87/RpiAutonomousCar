@@ -76,21 +76,20 @@ class SocketHandler(Thread):
 
 if __name__ == "__main__":
     with Robot() as r:
-        try:
-            server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            # Close port when process exits
-            server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            debug("Socket created")
-            HOSTNAME = ""  # Symbolic name for all available interfaces
-            server_socket.bind((HOSTNAME, IP_PORT))
-            server_socket.listen(10)
-            print("Waiting for a connecting client...")
+        server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        # Close port when process exits
+        server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        debug("Socket created")
+        HOSTNAME = ""  # Symbolic name for all available interfaces
+        server_socket.bind((HOSTNAME, IP_PORT))
+        server_socket.listen(10)
+        print("Waiting for a connecting client...")
 
-            while True:
-                debug("Calling blocking accept()...")
-                connection, address = server_socket.accept()
-                print("Connected with client at " + address[0])
-                socketHandler = SocketHandler(connection, r)
-                # Terminate socket handler with parent thread
-                socketHandler.setDaemon(True)
-                socketHandler.start()
+        while True:
+            debug("Calling blocking accept()...")
+            connection, address = server_socket.accept()
+            print("Connected with client at " + address[0])
+            socketHandler = SocketHandler(connection, r)
+            # Terminate socket handler with parent thread
+            socketHandler.setDaemon(True)
+            socketHandler.start()
