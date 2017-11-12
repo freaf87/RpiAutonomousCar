@@ -86,7 +86,7 @@ class TestRobotMovement(object):
         sleep(0.5)
         self.r.led.toggle()
         report = raw_input("Did LED blink on and off twice, once every half "
-                           "second? (Y/n")
+                           "second? (Y/n): ")
         assert (not report or report.lower() == 'y')
 
 
