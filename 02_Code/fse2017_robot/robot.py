@@ -31,7 +31,8 @@ class Robot(object):
 
     _time_for_circle_turn = 3
 
-    def __init__(self, duty_cycle=4):
+    def __init__(self, duty_cycle=20):
+        """duty_cycle is percent of maximum speed."""
         self.ultrasonic = UltrasonicRanger()
         self.led = LED()
         self.infrared = InfraredSensor()
