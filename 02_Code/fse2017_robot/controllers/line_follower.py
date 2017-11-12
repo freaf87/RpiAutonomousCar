@@ -74,7 +74,7 @@ class LineFollower:
                 else:
                     self._robot.motor.right()
             else:
-                print("Obstacle detected at " + str(distance))
+                self._robot.motor.stop()
             distance = self._robot.obstacle
 
 
