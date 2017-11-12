@@ -28,7 +28,7 @@ if __name__ == "__main__":
                 distance = r.obstacle
                 if distance > 20:
                     r.set_drive_mode(1)
-                else:
+                elif distance is not None:
                     r.turn(90 - distance)
     except KeyboardInterrupt:
         sys.exit(0)
