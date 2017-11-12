@@ -73,7 +73,7 @@ class LineFollower:
                     self._robot.turn(10)
             else:
                 print("Obstacle detected at " + str(distance))
-            distance = self.robot.obstacle
+            distance = self._robot.obstacle
 
 
 if __name__ == "__main__":
