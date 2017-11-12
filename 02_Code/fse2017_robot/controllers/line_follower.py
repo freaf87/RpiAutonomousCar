@@ -88,6 +88,10 @@ if __name__ == "__main__":
         line_follower_thread.start()
 
         # Keep running
-        while True:
-            pass
+        try:
+            while True:
+                time.sleep(0.5)
+        except KeyboardInterrupt:
+            heartbeat._running = False
+            line_follower._running = False
 
