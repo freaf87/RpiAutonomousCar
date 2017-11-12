@@ -26,7 +26,7 @@ class TestRobotMovement(object):
     """Interactive tests for robot motion."""
 
     def setup(self):
-        self.r = Robot(10)
+        self.r = Robot(20)
 
     def teardown(self):
         self.r.__exit__()
