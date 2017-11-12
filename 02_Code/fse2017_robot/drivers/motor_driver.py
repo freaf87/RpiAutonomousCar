@@ -55,7 +55,7 @@ class MotorDriver(GPIO_Manager):
         return (1023 * dc) / 100
 
     def __init__(self):
-        if not os.getuid():
+        if os.getuid():
             raise RuntimeError("MotorDriver can only be used by sudoer.")
         super(MotorDriver, self).__init__()
         for pin in self.OUTPUT_PINS:
