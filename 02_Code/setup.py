@@ -20,6 +20,7 @@ from distutils.core import setup
 setup(
     name='fse2017_robot',
     version='v0.1.0',
+    requires=['spidev', 'wiringpi'],
     packages=['fse2017_robot',
               'fse2017_robot.drivers',
               'fse2017_robot.controllers'],
