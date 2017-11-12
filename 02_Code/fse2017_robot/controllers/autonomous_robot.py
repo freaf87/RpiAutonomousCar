@@ -19,7 +19,7 @@
 
 import sys
 
-from ..robot import Robot
+from fse2017_robot import Robot
 
 if __name__ == "__main__":
     try:

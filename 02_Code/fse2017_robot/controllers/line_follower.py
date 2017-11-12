@@ -20,7 +20,7 @@
 import time
 from threading import Thread
 
-from .. import Robot
+from fse2017_robot import Robot
 from ..drivers.led import LED
 
 

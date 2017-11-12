@@ -21,7 +21,7 @@ import socket
 from logging import debug
 from threading import Thread
 
-from ..robot import Robot
+from fse2017_robot import Robot
 
 IP_PORT = 22000
 
