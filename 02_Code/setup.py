@@ -29,5 +29,6 @@ setup(
     author='Daniel Lee',
     author_email='erget2005@gmail.com',
     description="Drivers and various driving aids for FSE 2017\'s Raspberry "
-                "Pi-based robot."
+                "Pi-based robot.",
+    long_description=open('README').read()
 )

@@ -27,8 +27,8 @@ class InfraredSensor(GPIO_Manager):
     """A trisensor infrared ranger."""
 
     _left = 27
-    _middle = 18
-    _right = 17
+    _middle = 22
+    _right = 23
     _pins = [_left, _middle, _right]
 
     def __init__(self):
