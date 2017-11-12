@@ -17,6 +17,7 @@
 
 """Driver for 2 TB6612FNG DC motors mounted to a single chassis."""
 
+import os
 import time
 
 import wiringpi
@@ -54,6 +55,8 @@ class MotorDriver(GPIO_Manager):
         return (1023 * dc) / 100
 
     def __init__(self):
+        if not os.getuid():
+            raise RuntimeError("MotorDriver can only be used by sudoer.")
         super(MotorDriver, self).__init__()
         for pin in self.OUTPUT_PINS:
             wiringpi.pinMode(pin, wiringpi.OUTPUT)
