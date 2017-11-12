@@ -67,10 +67,12 @@ class LineFollower:
                     self._robot.drive(0.5)
                 elif state_left:
                     # line on the left => move left
-                    self._robot.turn(-10)
+                    self._robot.motor.left()
                 elif state_right:
                     # line on the right => move right
-                    self._robot.turn(10)
+                    self._robot.motor.right()
+                else:
+                    self._robot.motor.right()
             else:
                 print("Obstacle detected at " + str(distance))
             distance = self._robot.obstacle
