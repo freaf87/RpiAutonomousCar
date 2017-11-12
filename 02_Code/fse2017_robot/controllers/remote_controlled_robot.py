@@ -56,9 +56,9 @@ class SocketHandler(Thread):
         debug("SocketHandler terminated")
 
     def execute(self, cmd):
-        print("Reporting current state: {}".format(cmd))
+        print("Sending command: {}".format(cmd))
         self.conn.sendall(cmd)
-        self.conn.sendall(cmd)
+        cmd = cmd[:-1]
 
         if cmd == "forward":
             self.robot.motor.forward()

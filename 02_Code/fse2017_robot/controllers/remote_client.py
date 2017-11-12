@@ -24,7 +24,7 @@ from threading import Thread
 
 import pygame
 
-IP_ADDRESS = "192.168.0.31"
+IP_ADDRESS = "192.168.0.102"
 IP_PORT = 22000
 
 KEY_TEXT = {
@@ -47,6 +47,7 @@ class KeyListener(Thread):
         debug("Connecting...")
         try:
             self.sock.connect((IP_ADDRESS, IP_PORT))
+            self.connected = True
         except socket.gaierror as error:
             debug("Connection failed.")
             raise RuntimeError(
@@ -65,6 +66,7 @@ class KeyListener(Thread):
 
     def __exit__(self, *args):
         debug("Closing socket")
+        self.connected = False
         self.sock.close()
 
 
@@ -77,10 +79,13 @@ if __name__ == "__main__":
         with KeyListener() as listener:
             print("Connection established")
             time.sleep(1)
-            for event in pygame.event.get():
-                if event.type == pygame.KEYUP:
-                    listener.send_command("stop")
-                else:
-                    listener.send_command(KEY_TEXT[event.key])
+            while True:
+                for event in pygame.event.get():
+                    if event.type == pygame.KEYUP:
+                        listener.send_command("stop")
+                    elif event.type == pygame.KEYDOWN:
+                        listener.send_command(KEY_TEXT[event.key])
+                    else:
+                        pass
     except KeyboardInterrupt:
         pass
