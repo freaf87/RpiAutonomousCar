@@ -21,7 +21,7 @@ import time
 from threading import Thread
 
 from fse2017_robot import Robot
-from ..drivers.led import LED
+from fse2017_robot.drivers.led import LED
 
 
 class HeartBeat(object):
@@ -59,8 +59,8 @@ class LineFollower:
 
     def run(self):
         while self._running:
-            state_left = self.robot.infrared.middle
-            state_right = self.robot.infrared.right
+            state_left = self._robot.infrared.middle
+            state_right = self._robot.infrared.right
             distance = self._robot.obstacle
             if distance > 10:
                 if state_left and state_right:
