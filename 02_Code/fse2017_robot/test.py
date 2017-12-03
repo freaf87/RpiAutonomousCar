@@ -102,5 +102,6 @@ if __name__ == "__main__":
                 getattr(suite, test)()
             except KeyboardInterrupt:
                 print("\nSkipping test.")
-    finally:
-        suite.teardown()
+    except RuntimeError as e:
+        raise e
+    suite.teardown()
