@@ -48,7 +48,7 @@ class MotorDriver(GPIO_Manager):
     OUTPUT_PINS = [_m1_dir1_pin, _m1_dir2_pin,
                    _m2_dir1_pin, _m2_dir2_pin,
                    _standby_pin]
-    pins = PWM_OUTPUTS + INPUT_PINS + OUTPUT_PINS
+    _pins = PWM_OUTPUTS + INPUT_PINS + OUTPUT_PINS
 
     @staticmethod
     def to_dc(dc):
