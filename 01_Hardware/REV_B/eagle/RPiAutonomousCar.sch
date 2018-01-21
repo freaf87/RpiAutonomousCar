@@ -16274,14 +16274,9 @@ Source: www.kingbright.com</description>
 <pinref part="+3V4" gate="G$1" pin="+3V3"/>
 <pinref part="U$1" gate="G$1" pin="VCC"/>
 <wire x1="132.08" y1="93.98" x2="132.08" y2="99.06" width="0.1524" layer="91"/>
-<wire x1="106.68" y1="93.98" x2="116.84" y2="93.98" width="0.1524" layer="91"/>
 <pinref part="C3" gate="G$1" pin="1"/>
 <junction x="132.08" y="93.98"/>
-<pinref part="U$1" gate="G$1" pin="STBY"/>
-<wire x1="116.84" y1="93.98" x2="132.08" y2="93.98" width="0.1524" layer="91"/>
-<wire x1="106.68" y1="91.44" x2="116.84" y2="91.44" width="0.1524" layer="91"/>
-<wire x1="116.84" y1="91.44" x2="116.84" y2="93.98" width="0.1524" layer="91"/>
-<junction x="116.84" y="93.98"/>
+<wire x1="106.68" y1="93.98" x2="132.08" y2="93.98" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="C6" gate="G$1" pin="1"/>
@@ -16785,6 +16780,10 @@ Source: www.kingbright.com</description>
 <wire x1="149.86" y1="127" x2="147.32" y2="124.46" width="0.1524" layer="91"/>
 <wire x1="147.32" y1="124.46" x2="127" y2="124.46" width="0.1524" layer="91"/>
 <label x="134.62" y="124.46" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U$1" gate="G$1" pin="STBY"/>
+<wire x1="127" y1="91.44" x2="106.68" y2="91.44" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="RPI40" class="0">

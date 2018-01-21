@@ -5,6 +5,7 @@ oneside, % One page layout (no page indentation)
 %twoside, % Two page layout (page indentation for binding and different headers)
 headinclude,footinclude, % Extra spacing for the header and footer
 BCOR5mm, % Binding correction
+table,
 ]{scrartcl}
 
 \input{structure.tex} % Include the structure.tex file which specified the document structure and layout
@@ -21,6 +22,7 @@ BCOR5mm, % Binding correction
 
 %----------------------------------------------------------------------------------------
 
+\usepackage{graphicx}
 \begin{document}
 
 %----------------------------------------------------------------------------------------
@@ -49,7 +51,7 @@ BCOR5mm, % Binding correction
 %----------------------------------------------------------------------------------------
 
 \section*{Abstract} % This section will not appear in the table of contents due to the star (\section*)
-The purpose of this document is to give the reader an overview about the RpiAutonomousCar 's hardware. This will be the learning platform for the FSE 2017 Workshop in Lomé and Accra. The principal hardware components of the board and interfaces will be briefly described.
+The purpose of this document is to give the reader an overview about the RpiAutonomousCar's hardware. This will be the learning platform for the FSE 2017 Workshop in Lomé and Accra. The principal hardware components of the board and interfaces will be briefly described.
 
 %
 \newpage
@@ -60,13 +62,13 @@ The purpose of this document is to give the reader an overview about the RpiAuto
 %----------------------------------------------------------------------------------------
 
 \section{Introduction}
-Goal of FSE 2017 will be to build with the students an autonomous car with obstacle avoidanve capability. The robot should be able to drive 2 brushed DC motor, an ultrasonic sensor for distance measurement and a servo motor. To be able to fullfill these requirements with a Raspberry Pi, an additional board will be designed.
+Goal of FSE 2017 will be to build an autonomous car with obstacle avoidance capability with the students. The robot should be able to drive 2 brushed DC motors, an ultrasonic sensor for distance measurement and a servo motor. To be able to fullfill these requirements with a Raspberry Pi, an additional board will be designed.
 
 %----------------------------------------------------------------------------------------
 %	MECHANIC
 %----------------------------------------------------------------------------------------
 
-\section{RpiAutonomousCar 's mechanic}
+\section{RpiAutonomousCar's mechanic}
 As shown in Figure~\vref{fig:Mechanic1} and ~\vref{fig:Mechanic2}, the mechanical structure is simple and easy to build. The kit includes:
 \begin{itemize}
 \item 1 x Car Chassis 
@@ -94,10 +96,21 @@ As shown in Figure~\vref{fig:Mechanic1} and ~\vref{fig:Mechanic2}, the mechanica
 %----------------------------------------------------------------------------------------
 %	ELECTRONIC
 %----------------------------------------------------------------------------------------
-\section{RpiAutonomousCar 's electronic}
-The Board's electronic is kept simple to ease traning. It is so designed that, students can use the same board to design other embedded system examples.
+\section{RpiAutonomousCar's electronic}
+The Board's electronic is kept simple to ease training. It is designed so that students can use the same board to design other embedded system examples.
+
+\subsection{Led}
+The RpiAutonomousCar's board has one led connected to GPIO21.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.45]{Figures/Led.png}
+\caption{Led}
+\label{Led}
+\end{figure}
+
 \subsection{Analog Inputs for Raspberry Pi Using the MCP3004}
-The MCP3008 is a low cost 4-channel 10-bit analog to digital converter. The MCP3004 connects to the Raspberry Pi using a SPI serial connection. You can use either the hardware SPI bus (remember to connect GPIO07 and GPIO25 together via a jumper cable if you have the first version of the board), or any four GPIO pins and software SPI to communicate to the MCP3004. Software SPI is a little more flexible since it can work with any pins on the Pi, whereas hardware SPI is slightly faster but less flexible because it only works with specific pins. The board gives you the possibility to try both methods since it is also wired to the Raspberry Pi hardware SPI.
+The MCP3004 is a low cost 4-channel 10-bit analog to digital converter. The MCP3004 connects to the Raspberry Pi using a serial peripheral interface (SPI) serial connection. You can use either the hardware SPI bus (remember to connect GPIO07 and GPIO25 together via a jumper cable if you have the first version of the board), or any four GPIO pins and software SPI to communicate to the MCP3004. Software SPI is a little more flexible since it can work with any pins on the Pi, whereas hardware SPI is slightly faster but less flexible because it only works with specific pins. The board gives you the possibility to try both methods since it is also wired to the Raspberry Pi hardware SPI.
 
 \begin{figure}[h]
 \centering
@@ -107,21 +120,21 @@ The MCP3008 is a low cost 4-channel 10-bit analog to digital converter. The MCP3
 \end{figure}
 
 \begin{table}[H]
-\caption{MCP3004 SPI connection}
 \centering
 \begin{tabular}{lr}
-\toprule
+\hline
 SPI Pins & Raspberry Pi pin \\
-\midrule
+\hline
 SCLK (Serial Clock)        & GPIO11 \\
 MOSI (Master Out Slave In) & GPIO10 \\
 MISO (Master In Slave Out) & GPIO09 \\
 CS   (Chip Select)         & GPIO25 \\
-\bottomrule
+\hline
 \end{tabular}
 \label{tab:label}
+\caption{MCP3004 SPI connection}
 \end{table}
-Voltage that are allowed to be connected to the MCP3004 have to be selected so that \(V_{out}\) muss be less than 3.3V(\(V_{ref}\)). \(V_{out}\) is the voltage that can be measured after the voltage dividers. All channels except channel 3 are designed to have a measuring range of 0-5V DC. Channel 3 can mesaure up to 10V.
+Voltage that are allowed to be connected to the MCP3004 have to be selected so that \(V_{out}\) muss be less than 3.3V(\(V_{ref}\)). \(V_{out}\) is the voltage that can be measured after the voltage dividers. All channels except channel 3 are designed to have a measuring range of 0-5V DC. Channel 3 can measure up to 10V.
 \(V_{out[0-2]}\) for channels 0,1,2 can be calculated as:
 
 \[ V_{ out[0-2] } = \frac{ R_{6} }{ R_{5} + R_{6} } * V_{in}  = 0.5* V_{in}\]
@@ -133,22 +146,21 @@ In case of channel 3:
 Please note that the analog channel 3 is connected per default via a jumper (SJ1) to the robot's supply voltage. Remove the jumper to be able to connect another voltage source to channel 3. 
 
 \subsection{8-channel Bi-directional Logic Level Converter - TXB0108}
-Precautions have to be taken when connecting 5V devices to the raspberry pi since the Pi is not 5V tolerant. There are many simple ways to handle this issue like voltage dividers.Handling bidirectional signals or high speed transfers can be tough.That's where this lovely chip, the TXB0108 bi-directional level converter comes in! This chip perform bidirectional level shifting from pretty much any voltage to any voltage and will auto-detect the direction 
+Precautions have to be taken when connecting 5V devices to the raspberry pi since the Pi is not 5V tolerant. There are many simple ways to handle this issue like voltage dividers.Handling bidirectional signals or high speed transfers can be tough. That's where this lovely chip, the TXB0108 bi-directional level converter comes in! This chip performs bidirectional level shifting from pretty much any voltage to any voltage and will auto-detect the direction.  
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.6\columnwidth]{TX0108PWR} 
-\caption[TX0108PWR schematic]{TX0108PWR schematic}
+\caption[TX0108PWR schematic]{TXB0108PWR schematic}
 \label{fig:TX0108PWR}
 \end{figure}
 
 \begin{table}[H]
-\caption{TX0108PWR connection}
 \centering
-\begin{tabular}{cc}
-\toprule
+\begin{tabular}{|cc|}
+\hline
 Pins & RPi pin \\
-\midrule
+\hline
 1  & GPIO10 \\
 2  & GPIO09 \\
 3  & GPIO11 \\
@@ -157,14 +169,15 @@ Pins & RPi pin \\
 6  & GPIO03 \\
 7  & GPIO14 \\
 8  & GPIO15 \\
-\bottomrule
+\hline
 \end{tabular}
 \label{tab:label}
+\caption{TX0108PWR connection}
 \end{table}
-\subsection {DC Motor driver - tb6612fng}
-The TB6612FNG motor driver can control up to two DC motors at a constant current of 1.2A (3.2A peak). Two input signals (IN1 and IN2) can be used to control the motor in one of four function modes - CW, CCW, short-brake, and stop. The two motor outputs (A and B) can be separately controlled, the speed of each motor is controlled via a PWM input signal with a frequency up to 100kHz. The STBY pin should be pulled high to take the motor out of standby mode.
+\subsection {DC Motor driver - TB6612FNG}
+The TB6612FNG motor driver can control up to two DC motors at a constant current of 1.2A (3.2A peak). Two input signals (IN1 and IN2) can be used to control the motor in one of four function modes - clockwise (CW), counter-clockwise (CCW), short-brake, and stop. The two motor outputs (A and B) can be separately controlled, the speed of each motor is controlled via a PWM input signal with a frequency up to 100kHz. The STBY pin should be pulled high to take the motor out of standby mode.
 
-Logic supply voltage (VCC) can be in the range of 2.7-5.5VDC, while the motor supply (VM) is limited to a maximum voltage of 15VDC. The output current is rated up to 1.2A per channel (or up to 3.2A for a short, single pulse).
+Logic supply voltage (VCC) can be in the range of 2.7-5.5VDC, while the motor supply (VM) is limited to a maximum voltage of 15VDC. The output current is rated up to 1.2A per channel (or up to 3.2A for a short, single pulse).\\
 
 Features:
 \begin{itemize}
@@ -191,14 +204,13 @@ Let’s discuss the pinout for the TB6612FNG:
 \newcolumntype{m}{>{\hsize=.5\hsize}X}
 
 \begin{table}[H]
-\caption{TB6612FNG connection}
 \centering
 \begin{adjustwidth}{-1cm}{}
 \resizebox{16cm}{!} {%
 \begin{tabularx}{18cm}{smb}
-\toprule
+\hline
 Pin Label & Function & Notes \\
-\midrule
+\hline
 VM & Motor Voltage  & This is where you provide power for the motors (2.2V to 13.5V)\\
 VCC & Logic Voltage & This is the voltage to power the chip and talk to the microcontroller (2.7V to 5.5V)\\
 GND & Ground  & Common Ground for both motor voltage and logic voltage (all GND pins are connected)\\
@@ -208,29 +220,30 @@ AIN2/BIN2 & Input 2 for channels A/B   & One of the two inputs that determines t
 PWMA/PWMB & PWM input for channels A/B & PWM input that controls the speed\\
 A01/B01 & Output 1 for channels A/B  & One of the two outputs to connect the motor\\
 A02/B02 & Output 2 for channels A/B  & One of the two outputs to connect the motor\\
-\bottomrule
+\hline
 \end{tabularx} } 
 \end{adjustwidth}
 \label{tab:label}
+\caption{TB6612FNG connection}
 \end{table}
 
 When the outputs are set to High/Low your motor will run. When they are set to Low/High the motor will run in the opposite direction. In both cases, the speed is controlled by the PWM input.
 
 \begin{table}[H]
-\caption{TB6612FNG Logic}
 \centering
 \begin{tabular}{llllll}
-\toprule
+\hline
 In1  & In2 & PWM & Out1 & Out2 & Mode \\
-\midrule
+\hline
 H    & H   & H/L & L    &L     & Short brake\\
 L    & H   & H   & L    & H    & CCW\\
 L    & H   & L   & L    & L    & Short brake\\
 H    & L   & H   & H    & L    & CW\\
 H    & L   & L   & L    & L    & Short brake\\
 L    & L   & H   & OFF  & OFF  & Stop\\
-\bottomrule
+\hline
 \end{tabular}
+\caption{TB6612FNG Logic}
 \label{tab:label}
 \end{table}
 
@@ -245,9 +258,55 @@ L    & L   & H   & OFF  & OFF  & Stop\\
 \end{figure}
 \footnotetext{\url{https://de.pinout.xyz/pinout/}}
 
+\begin{itemize}
+
+\item Connecting M1 and M2\\
+M1 = Motor left and M2 = Motor right
+	\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.8]{Figures/ConnectM1M2.png}
+	\caption{Connecting Motor1 and Motor2}
+	\label{Connectng Motor1 and Motor2 }
+	\end{figure}
+	
+\item Connecting Motors PWR and Rpi PWR \\
+	\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.2]{Figures/ConnectPWR.png}
+	\caption{Connecting Motors PWR and Rpi PWR}
+	\label{Connecting Motors PWR and Rpi PWR }
+	\end{figure}
+
+\item Connecting Motor Driver Pins\\
+Note: Wiring the motor driver is only needed vor V01 of the board. Later releases of the board will incorporate those changes. 
+
+Please connect those pins below together:
+
+    M1 PwmPinAnnex = \textcolor{red}{5}    .......   m1pwmpin = \textcolor{red}{18}
+    
+    M2 PwmPinAnnex = \textcolor{blue}{26}   .....  m2pwmpin = \textcolor{blue}{13}
+    
+    
+\item Connecting the ultrasonic sensor
+	\begin{table}[H]
+	\centering
+	\begin{tabular}{ll}
+	\hline
+	   Function & Rpi Pin\\
+	\hline
+		VCC & +5V\\
+		TRIG & 15 \textcolor{red}{(Level converted)}\\
+		ECHO & 14 \textcolor{red}{(Level converted)}\\
+		GND & GND\\
+	\hline
+	\end{tabular}
+	\end{table}
+Refer to table ... to find out where GPIO14 and GPIO15 are routed
+\item Connecting the IR sensor for line following \\ 
+IR sensor can be connected to any available GPIO when used in digital mode. If you want more accuracy analog mode can also be used. Therefore the MCP3004 chip has to be used. Connect the sensor output to the available pins of the MCP3004
+\end{itemize}
 
 
-\subsection{Connecting additional components}
 
 
 \end{document}

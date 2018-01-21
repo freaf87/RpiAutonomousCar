@@ -1,0 +1,587 @@
+EESchema Schematic File Version 4
+LIBS:REV_B-cache
+EELAYER 26 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L REV_B-rescue:RPi_GPIO-RESCUE-REV_B J2
+U 1 1 5516AE26
+P 1675 1600
+F 0 "J2" H 2425 1850 60  0000 C CNN
+F 1 "RPi_GPIO" H 2425 1750 60  0000 C CNN
+F 2 "RPi_Hat:Pin_Header_Straight_2x20" H 1675 1600 60  0001 C CNN
+F 3 "" H 1675 1600 60  0000 C CNN
+	1    1675 1600
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR01
+U 1 1 5A64DB2F
+P 1175 3775
+F 0 "#PWR01" H 1175 3525 50  0001 C CNN
+F 1 "GND" H 1180 3602 50  0000 C CNN
+F 2 "" H 1175 3775 50  0001 C CNN
+F 3 "" H 1175 3775 50  0001 C CNN
+	1    1175 3775
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1175 3500 1175 3775
+Wire Wire Line
+	1175 3500 1475 3500
+Wire Wire Line
+	1475 2800 1175 2800
+Wire Wire Line
+	1175 2800 1175 3500
+Connection ~ 1175 3500
+Connection ~ 1175 2800
+Wire Wire Line
+	1475 2000 1175 2000
+Wire Wire Line
+	1175 2000 1175 2800
+Wire Wire Line
+	3375 3200 3725 3200
+Wire Wire Line
+	3725 3200 3725 3000
+Wire Wire Line
+	3725 2200 3375 2200
+Wire Wire Line
+	3725 2200 3725 1800
+Wire Wire Line
+	3725 1800 3375 1800
+Connection ~ 3725 2200
+$Comp
+L power:GND #PWR02
+U 1 1 5A64DD3C
+P 3725 3750
+F 0 "#PWR02" H 3725 3500 50  0001 C CNN
+F 1 "GND" H 3730 3577 50  0000 C CNN
+F 2 "" H 3725 3750 50  0001 C CNN
+F 3 "" H 3725 3750 50  0001 C CNN
+	1    3725 3750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3725 3200 3725 3750
+Connection ~ 3725 3200
+$Comp
+L power:+5V #PWR03
+U 1 1 5A64DE0F
+P 3725 1425
+F 0 "#PWR03" H 3725 1275 50  0001 C CNN
+F 1 "+5V" H 3740 1598 50  0000 C CNN
+F 2 "" H 3725 1425 50  0001 C CNN
+F 3 "" H 3725 1425 50  0001 C CNN
+	1    3725 1425
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3375 1700 3725 1700
+Wire Wire Line
+	3725 1700 3725 1600
+Connection ~ 3725 1600
+Wire Wire Line
+	3725 1600 3725 1425
+Wire Wire Line
+	3375 1600 3725 1600
+Wire Wire Line
+	1475 2400 1325 2400
+Wire Wire Line
+	1325 2400 1325 1600
+Wire Wire Line
+	1325 1600 1475 1600
+$Comp
+L power:+3.3V #PWR04
+U 1 1 5A64E243
+P 1325 1450
+F 0 "#PWR04" H 1325 1300 50  0001 C CNN
+F 1 "+3.3V" H 1340 1623 50  0000 C CNN
+F 2 "" H 1325 1450 50  0001 C CNN
+F 3 "" H 1325 1450 50  0001 C CNN
+	1    1325 1450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1325 1450 1325 1600
+Connection ~ 1325 1600
+$Comp
+L Driver_Motor:TB6612FNG U2
+U 1 1 5A64EA81
+P 10225 4500
+F 0 "U2" H 10225 5678 50  0000 C CNN
+F 1 "TB6612FNG" H 10225 5587 50  0000 C CNN
+F 2 "Package_SSOP:SSOP-24_5.3x8.2mm_P0.65mm" H 10675 5100 50  0001 C CNN
+F 3 "https://toshiba.semicon-storage.com/us/product/linear/motordriver/detail.TB6612FNG.html" H 10675 5100 50  0001 C CNN
+	1    10225 4500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Analog_ADC:MCP3004 U1
+U 1 1 5A64ECC8
+P 9800 2675
+F 0 "U1" H 9800 3253 50  0000 C CNN
+F 1 "MCP3004" H 9800 3162 50  0000 C CNN
+F 2 "Package_SSOP:TSSOP-14_4.4x5mm_P0.65mm" H 10700 2375 50  0001 C CNN
+F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/21295C.pdf" H 10700 2375 50  0001 C CNN
+	1    9800 2675
+	1    0    0    -1  
+$EndComp
+Text Label 975  1700 0    50   ~ 0
+GPIO2
+Text Label 975  1800 0    50   ~ 0
+GPIO3
+Text Label 975  1900 0    50   ~ 0
+GPIO4
+Text Label 975  2100 0    50   ~ 0
+GPIO17
+Text Label 975  2200 0    50   ~ 0
+GPIO27
+Text Label 975  2300 0    50   ~ 0
+GPIO22
+Text Label 1000 2500 0    50   ~ 0
+GPIO10
+Text Label 1000 2600 0    50   ~ 0
+GPIO9
+Text Label 1000 2700 0    50   ~ 0
+GPIO11
+Entry Wire Line
+	850  1600 950  1700
+Wire Wire Line
+	950  1700 1475 1700
+Entry Wire Line
+	850  1700 950  1800
+Entry Wire Line
+	850  1800 950  1900
+Entry Wire Line
+	850  2000 950  2100
+Entry Wire Line
+	850  2100 950  2200
+Wire Wire Line
+	950  1800 1475 1800
+Wire Wire Line
+	950  1900 1475 1900
+Wire Wire Line
+	950  2100 1475 2100
+Wire Wire Line
+	950  2200 1475 2200
+Entry Wire Line
+	850  2200 950  2300
+Entry Wire Line
+	850  2400 950  2500
+Entry Wire Line
+	850  2500 950  2600
+Entry Wire Line
+	850  2600 950  2700
+Wire Wire Line
+	950  2300 1475 2300
+Wire Wire Line
+	950  2500 1475 2500
+Wire Wire Line
+	950  2600 1475 2600
+Wire Wire Line
+	950  2700 1475 2700
+Text Label 1025 3000 0    50   ~ 0
+GPIO5
+Text Label 1025 3100 0    50   ~ 0
+GPIO6
+Text Label 1025 3200 0    50   ~ 0
+GPIO13
+Text Label 1025 3300 0    50   ~ 0
+GPIO19
+Text Label 1025 3400 0    50   ~ 0
+GPIO26
+Entry Wire Line
+	850  2900 950  3000
+Entry Wire Line
+	850  3000 950  3100
+Entry Wire Line
+	850  3100 950  3200
+Entry Wire Line
+	850  3200 950  3300
+Entry Wire Line
+	850  3300 950  3400
+Wire Wire Line
+	950  3000 1475 3000
+Wire Wire Line
+	950  3100 1475 3100
+Wire Wire Line
+	950  3200 1475 3200
+Wire Wire Line
+	950  3300 1475 3300
+Wire Wire Line
+	950  3400 1475 3400
+Wire Bus Line
+	850  825  4100 825 
+Wire Wire Line
+	3375 2500 3725 2500
+Connection ~ 3725 2500
+Wire Wire Line
+	3725 2500 3725 2200
+Wire Wire Line
+	3375 3000 3725 3000
+Connection ~ 3725 3000
+Wire Wire Line
+	3725 3000 3725 2500
+Text Label 3400 1900 0    50   ~ 0
+GPIO14
+Text Label 3400 2000 0    50   ~ 0
+GPIO15
+Text Label 3400 2100 0    50   ~ 0
+GPIO18
+Text Label 3400 2300 0    50   ~ 0
+GPIO23
+Text Label 3400 2400 0    50   ~ 0
+GPIO24
+Text Label 3400 2600 0    50   ~ 0
+GPIO25
+Text Label 3400 2700 0    50   ~ 0
+GPIO8
+Text Label 3400 2800 0    50   ~ 0
+GPIO7
+Text Label 3400 3100 0    50   ~ 0
+GPIO12
+Text Label 3400 3300 0    50   ~ 0
+GPIO16
+Text Label 3400 3400 0    50   ~ 0
+GPIO20
+Text Label 3400 3500 0    50   ~ 0
+GPIO21
+Entry Wire Line
+	4000 1900 4100 2000
+Wire Wire Line
+	3375 1900 4000 1900
+Entry Wire Line
+	4000 2000 4100 2100
+Entry Wire Line
+	4000 2100 4100 2200
+Entry Wire Line
+	4000 2300 4100 2400
+Entry Wire Line
+	4000 2400 4100 2500
+Entry Wire Line
+	4000 3300 4100 3400
+Entry Wire Line
+	4000 2600 4100 2700
+Entry Wire Line
+	4000 3100 4100 3200
+Entry Wire Line
+	4000 2700 4100 2800
+Entry Wire Line
+	4000 2800 4100 2900
+Entry Wire Line
+	4000 3400 4100 3500
+Entry Wire Line
+	4000 3500 4100 3600
+Wire Wire Line
+	3375 2000 4000 2000
+Wire Wire Line
+	3375 2100 4000 2100
+Wire Wire Line
+	3375 2300 4000 2300
+Wire Wire Line
+	3375 2400 4000 2400
+Wire Wire Line
+	3375 2600 4000 2600
+Wire Wire Line
+	3375 2700 4000 2700
+Wire Wire Line
+	3375 2800 4000 2800
+Wire Wire Line
+	3375 3100 4000 3100
+Wire Wire Line
+	3375 3300 4000 3300
+Wire Wire Line
+	3375 3400 4000 3400
+Wire Wire Line
+	3375 3500 4000 3500
+$Comp
+L Connector_Generic:Conn_02x20_Odd_Even J1
+U 1 1 5A6673A0
+P 5425 2450
+F 0 "J1" H 5475 3567 50  0000 C CNN
+F 1 "Conn_02x20_Odd_Even" H 5475 3476 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_2x20_P2.54mm_Vertical" H 5425 2450 50  0001 C CNN
+F 3 "~" H 5425 2450 50  0001 C CNN
+	1    5425 2450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5225 1550 4975 1550
+Wire Wire Line
+	5225 1650 4600 1650
+Wire Wire Line
+	5225 1750 4600 1750
+Wire Wire Line
+	5225 1850 4600 1850
+Wire Wire Line
+	5225 1950 5125 1950
+Wire Wire Line
+	5225 2050 4600 2050
+Wire Wire Line
+	5225 2150 4600 2150
+Wire Wire Line
+	5225 2250 4600 2250
+Wire Wire Line
+	5225 2350 4975 2350
+Wire Wire Line
+	5225 2450 4600 2450
+Wire Wire Line
+	5225 2550 4600 2550
+Wire Wire Line
+	5225 2650 4600 2650
+Wire Wire Line
+	5225 2750 5125 2750
+Wire Wire Line
+	5225 2950 4600 2950
+Wire Wire Line
+	5225 3050 4600 3050
+Wire Wire Line
+	5225 3150 4600 3150
+Wire Wire Line
+	5225 3250 4600 3250
+Wire Wire Line
+	5225 3350 4600 3350
+Wire Wire Line
+	5225 3450 5125 3450
+Wire Wire Line
+	5725 1550 5900 1550
+Wire Wire Line
+	5725 1650 5900 1650
+Wire Wire Line
+	5725 1750 5875 1750
+Wire Wire Line
+	5725 1850 6400 1850
+Wire Wire Line
+	5725 1950 6400 1950
+Wire Wire Line
+	5725 2050 6400 2050
+Wire Wire Line
+	5725 2150 5875 2150
+Wire Wire Line
+	5725 2250 6400 2250
+Wire Wire Line
+	5725 2350 6400 2350
+Wire Wire Line
+	5725 2450 5875 2450
+Wire Wire Line
+	5725 2550 6400 2550
+Wire Wire Line
+	5725 2650 6400 2650
+Wire Wire Line
+	5725 2750 6400 2750
+Wire Wire Line
+	5725 2950 5875 2950
+Wire Wire Line
+	5725 3050 6400 3050
+Wire Wire Line
+	5725 3150 5875 3150
+Wire Wire Line
+	5725 3250 6400 3250
+Wire Wire Line
+	5725 3350 6400 3350
+Wire Wire Line
+	5725 3450 6400 3450
+Wire Wire Line
+	4975 2350 4975 1550
+Wire Wire Line
+	4975 1550 4975 1275
+Connection ~ 4975 1550
+$Comp
+L power:+3.3V #PWR05
+U 1 1 5A6767B7
+P 4975 1275
+F 0 "#PWR05" H 4975 1125 50  0001 C CNN
+F 1 "+3.3V" H 4990 1448 50  0000 C CNN
+F 2 "" H 4975 1275 50  0001 C CNN
+F 3 "" H 4975 1275 50  0001 C CNN
+	1    4975 1275
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5900 1650 5900 1550
+Wire Wire Line
+	5900 1550 5900 1275
+Connection ~ 5900 1550
+$Comp
+L power:+5V #PWR06
+U 1 1 5A680DDD
+P 5900 1275
+F 0 "#PWR06" H 5900 1125 50  0001 C CNN
+F 1 "+5V" H 5915 1448 50  0000 C CNN
+F 2 "" H 5900 1275 50  0001 C CNN
+F 3 "" H 5900 1275 50  0001 C CNN
+	1    5900 1275
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5125 3450 5125 2750
+Wire Wire Line
+	5125 2750 5125 1950
+Connection ~ 5125 2750
+Wire Wire Line
+	5125 3450 5125 3725
+Connection ~ 5125 3450
+$Comp
+L power:GND #PWR07
+U 1 1 5A69DE58
+P 5125 3725
+F 0 "#PWR07" H 5125 3475 50  0001 C CNN
+F 1 "GND" H 5130 3552 50  0000 C CNN
+F 2 "" H 5125 3725 50  0001 C CNN
+F 3 "" H 5125 3725 50  0001 C CNN
+	1    5125 3725
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR08
+U 1 1 5A69DE6B
+P 5875 3675
+F 0 "#PWR08" H 5875 3425 50  0001 C CNN
+F 1 "GND" H 5880 3502 50  0000 C CNN
+F 2 "" H 5875 3675 50  0001 C CNN
+F 3 "" H 5875 3675 50  0001 C CNN
+	1    5875 3675
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5875 3675 5875 3150
+Wire Wire Line
+	5875 2950 5875 3150
+Connection ~ 5875 3150
+Wire Wire Line
+	5875 2450 5875 2950
+Connection ~ 5875 2950
+Wire Wire Line
+	5875 2150 5875 2450
+Connection ~ 5875 2450
+Wire Wire Line
+	5875 1750 5875 2150
+Connection ~ 5875 2150
+Text Label 4650 1650 0    50   ~ 0
+GPIO2
+Text Label 4650 1750 0    50   ~ 0
+GPIO3
+Text Label 4650 1850 0    50   ~ 0
+GPIO4
+Text Label 4650 2050 0    50   ~ 0
+GPIO17
+Text Label 4650 2150 0    50   ~ 0
+GPIO27
+Text Label 4650 2250 0    50   ~ 0
+GPIO22
+Text Label 4675 2450 0    50   ~ 0
+GPIO10
+Text Label 4675 2550 0    50   ~ 0
+GPIO9
+Text Label 4675 2650 0    50   ~ 0
+GPIO11
+Text Label 4700 2950 0    50   ~ 0
+GPIO5
+Text Label 4700 3050 0    50   ~ 0
+GPIO6
+Text Label 4700 3150 0    50   ~ 0
+GPIO13
+Text Label 4700 3250 0    50   ~ 0
+GPIO19
+Text Label 4700 3350 0    50   ~ 0
+GPIO26
+Text Label 6000 1850 0    50   ~ 0
+GPIO14
+Text Label 6000 1950 0    50   ~ 0
+GPIO15
+Text Label 6000 2050 0    50   ~ 0
+GPIO18
+Text Label 6000 2250 0    50   ~ 0
+GPIO23
+Text Label 6000 2350 0    50   ~ 0
+GPIO24
+Text Label 6000 2550 0    50   ~ 0
+GPIO25
+Text Label 6000 2650 0    50   ~ 0
+GPIO8
+Text Label 6000 2750 0    50   ~ 0
+GPIO7
+Text Label 6000 3050 0    50   ~ 0
+GPIO12
+Text Label 6000 3250 0    50   ~ 0
+GPIO16
+Text Label 6000 3350 0    50   ~ 0
+GPIO20
+Text Label 6000 3450 0    50   ~ 0
+GPIO21
+Wire Bus Line
+	4100 3600 4500 3600
+Entry Wire Line
+	4500 1550 4600 1650
+Entry Wire Line
+	4500 1650 4600 1750
+Entry Wire Line
+	4500 1750 4600 1850
+Entry Wire Line
+	4500 1950 4600 2050
+Entry Wire Line
+	4500 2050 4600 2150
+Entry Wire Line
+	4500 2150 4600 2250
+Entry Wire Line
+	4500 2350 4600 2450
+Entry Wire Line
+	4500 2450 4600 2550
+Entry Wire Line
+	4500 2550 4600 2650
+Entry Wire Line
+	4500 2850 4600 2950
+Entry Wire Line
+	4500 2950 4600 3050
+Entry Wire Line
+	4500 3050 4600 3150
+Entry Wire Line
+	4500 3150 4600 3250
+Entry Wire Line
+	4500 3250 4600 3350
+Entry Wire Line
+	6400 1850 6500 1950
+Entry Wire Line
+	6400 1950 6500 2050
+Entry Wire Line
+	6400 2050 6500 2150
+Entry Wire Line
+	6400 2250 6500 2350
+Entry Wire Line
+	6400 2350 6500 2450
+Entry Wire Line
+	6400 2550 6500 2650
+Entry Wire Line
+	6400 2650 6500 2750
+Entry Wire Line
+	6400 2750 6500 2850
+Entry Wire Line
+	6400 3050 6500 3150
+Entry Wire Line
+	6400 3250 6500 3350
+Entry Wire Line
+	6400 3350 6500 3450
+Entry Wire Line
+	6400 3450 6500 3550
+Wire Bus Line
+	4500 850  6500 850 
+Wire Bus Line
+	4100 825  4100 3600
+Wire Bus Line
+	850  825  850  3300
+Wire Bus Line
+	4500 850  4500 3600
+Wire Bus Line
+	6500 850  6500 3550
+$EndSCHEMATC
