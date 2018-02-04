@@ -629,7 +629,7 @@ U 1 1 5A6EDB49
 P 3150 5750
 F 0 "U1" H 3150 6928 50  0000 C CNN
 F 1 "TB6612FNG" H 3150 6837 50  0000 C CNN
-F 2 "Package_SSOP:SSOP-24_5.3x8.2mm_P0.65mm" H 3600 6350 50  0001 C CNN
+F 2 "Package_SO:SSOP-24_5.3x8.2mm_P0.65mm" H 3600 6350 50  0001 C CNN
 F 3 "https://toshiba.semicon-storage.com/us/product/linear/motordriver/detail.TB6612FNG.html" H 3600 6350 50  0001 C CNN
 	1    3150 5750
 	1    0    0    -1  
@@ -637,7 +637,7 @@ $EndComp
 Wire Wire Line
 	1900 4700 2050 4700
 Wire Wire Line
-	2050 4700 2050 6150
+	2050 4700 2050 6050
 Wire Wire Line
 	2050 6150 2550 6150
 Wire Wire Line
@@ -731,7 +731,7 @@ U 1 1 5A938E13
 P 3350 2700
 F 0 "U2" H 3350 3378 50  0000 C CNN
 F 1 "MCP3008" H 3350 3287 50  0000 C CNN
-F 2 "Package_SOIC:SOIC-16_3.9x9.9mm_P1.27mm" H 3450 2800 50  0001 C CNN
+F 2 "Package_SO:SOIC-16_3.9x9.9mm_P1.27mm" H 3450 2800 50  0001 C CNN
 F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/21295d.pdf" H 3450 2800 50  0001 C CNN
 	1    3350 2700
 	-1   0    0    -1  
@@ -1672,7 +1672,7 @@ U 1 1 5A73ACB0
 P 5700 5600
 F 0 "U3" H 5700 6778 50  0000 C CNN
 F 1 "PCA9685PW" H 5700 6687 50  0000 C CNN
-F 2 "Package_SSOP:TSSOP-28_4.4x9.7mm_P0.65mm" H 5725 4625 50  0001 L CNN
+F 2 "Package_SO:TSSOP-28_4.4x9.7mm_P0.65mm" H 5725 4625 50  0001 L CNN
 F 3 "http://www.nxp.com/documents/data_sheet/PCA9685.pdf" H 5300 6300 50  0001 C CNN
 	1    5700 5600
 	1    0    0    -1  
@@ -1730,21 +1730,6 @@ F 3 "~" H 6850 6900 50  0001 C CNN
 	1    6850 6900
 	1    0    0    -1  
 $EndComp
-$Comp
-L Connector_Generic:Conn_01x03 J12
-U 1 1 5AE2095A
-P 6850 7250
-F 0 "J12" H 6930 7292 50  0000 L CNN
-F 1 "Conn_01x03" H 6930 7201 50  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical" H 6850 7250 50  0001 C CNN
-F 3 "~" H 6850 7250 50  0001 C CNN
-	1    6850 7250
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	6400 6400 6400 7150
-Wire Wire Line
-	6400 7150 6650 7150
 Wire Wire Line
 	6400 6300 6430 6300
 Wire Wire Line
@@ -1766,11 +1751,6 @@ Wire Wire Line
 Wire Wire Line
 	6500 6900 6650 6900
 Connection ~ 6500 6550
-Wire Wire Line
-	6500 6900 6500 7250
-Wire Wire Line
-	6500 7250 6650 7250
-Connection ~ 6500 6900
 Wire Wire Line
 	5700 4600 5700 4550
 Wire Wire Line
@@ -1794,14 +1774,7 @@ Wire Wire Line
 Wire Wire Line
 	6550 7000 6650 7000
 Connection ~ 6550 6650
-Wire Wire Line
-	6550 7000 6550 7350
-Wire Wire Line
-	6550 7350 6650 7350
 Connection ~ 6550 7000
-Wire Wire Line
-	6550 7350 6550 7550
-Connection ~ 6550 7350
 $Comp
 L power:GND #PWR016
 U 1 1 5B0389C3
@@ -1847,4 +1820,6 @@ Wire Wire Line
 Wire Wire Line
 	4100 4600 3800 4600
 Connection ~ 3800 4600
+Wire Wire Line
+	6550 7000 6550 7550
 $EndSCHEMATC
