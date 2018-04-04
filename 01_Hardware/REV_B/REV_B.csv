@@ -1,0 +1,17 @@
+"Id";"Designator";"Package";"Quantity";"Designation";"Supplier and ref";
+1;"100n1";"C_0603_1608Metric";1;"C";;;
+2;"C1";"CP_Elec_4x4.5";1;"10u";;;
+3;"C2";"C_0603_1608Metric";1;"100n";;;
+4;"C3,C4,C5,C6,C7,C8,C9,C10";"C_0603_1608Metric";8;"10n";;;
+5;"J1";"PinSocket_2x20_P2.54mm_Vertical";1;"RaspberryPi";;;
+6;"J2,J3,J4";"Molex_KK-254_AE-6410-02A_1x02_P2.54mm_Vertical";3;"Conn_01x02";;;
+7;"J6,J7,J8,J9,J10,J11,J13,J14,J15";"PinHeader_1x03_P2.54mm_Vertical";9;"Conn_01x03";;;
+8;"J16";"PinHeader_1x08_P2.54mm_Vertical";1;"Conn_01x08_Male";;;
+9;"R1,R2,R3,R4,R9,R10,R11,R12";"R_0603_1608Metric";8;"1k";;;
+10;"R5,R6,R7,R8,R17,R18,R19,R20,R21,R22,R23,R24,R25,R26,R27,R28,R29,R30,R31,R32";"R_0603_1608Metric";20;"10k";;;
+11;"R13,R14,R15,R16";"R_0603_1608Metric";4;"22k";;;
+12;"U5,U6,U7,U8";"SOT-363_SC-70-6";4;"BSS138PS";;;
+13;"U1";"SSOP-24_5.3x8.2mm_P0.65mm";1;"TB6612FNG";;;
+14;"U2";"SOIC-16_3.9x9.9mm_P1.27mm";1;"MCP3008";;;
+15;"U3";"TSSOP-28_4.4x9.7mm_P0.65mm";1;"PCA9685PW";;;
+16;"J5";"PinHeader_1x08_P2.54mm_Vertical_SMD_Pin1Right";1;"Conn_01x08_Male";;;
