@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source /home/freaf87/Projects/FullStackEmbedded/RpiAutonomousCar/01_Hardware/REV_B/REV_B.sch)
-    (date "Sa 21 Apr 2018 23:17:08 CEST")
+    (date "So 22 Apr 2018 23:13:46 CEST")
     (tool "Eeschema 5.0.0-rc2-dev-unknown-c960d67~64~ubuntu17.10.1")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -377,7 +377,7 @@
       (tstamp 5ADE5AFB))
     (comp (ref J6)
       (value Conn_02x04_Counter_Clockwise)
-      (footprint Connector_PinHeader_2.54mm:PinHeader_2x04_P2.54mm_Vertical)
+      (footprint Connector_PinHeader_2.54mm:PinHeader_2x04_P2.54mm_Vertical_SMD)
       (libsource (lib Connector_Generic) (part Conn_02x04_Counter_Clockwise))
       (sheetpath (names /) (tstamps /))
       (tstamp 5AED0511))
