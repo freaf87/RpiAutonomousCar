@@ -2153,4 +2153,97 @@ Text GLabel 2150 3100 2    50   Input ~ 0
 PUSH_BUTTON
 Wire Wire Line
 	1900 3100 2150 3100
+$Comp
+L Regulator_Linear:L7805 U8
+U 1 1 5B12AECD
+P 1200 6150
+F 0 "U8" H 1200 6392 50  0000 C CNN
+F 1 "L7805" H 1200 6301 50  0000 C CNN
+F 2 "Package_TO_SOT_SMD:TO-252-3_TabPin2" H 1225 6000 50  0001 L CIN
+F 3 "http://www.st.com/content/ccc/resource/technical/document/datasheet/41/4f/b3/b0/12/d4/47/88/CD00000444.pdf/files/CD00000444.pdf/jcr:content/translations/en.CD00000444.pdf" H 1200 6100 50  0001 C CNN
+	1    1200 6150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C13
+U 1 1 5B12B512
+P 1550 6400
+F 0 "C13" H 1665 6446 50  0000 L CNN
+F 1 "10n" H 1665 6355 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 1588 6250 50  0001 C CNN
+F 3 "" H 1550 6400 50  0001 C CNN
+	1    1550 6400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C12
+U 1 1 5B12B69A
+P 800 6400
+F 0 "C12" H 915 6446 50  0000 L CNN
+F 1 "0.33u" H 915 6355 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 838 6250 50  0001 C CNN
+F 3 "" H 800 6400 50  0001 C CNN
+	1    800  6400
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0102
+U 1 1 5B12B786
+P 1200 6700
+F 0 "#PWR0102" H 1200 6450 50  0001 C CNN
+F 1 "GND" H 1205 6527 50  0000 C CNN
+F 2 "" H 1200 6700 50  0001 C CNN
+F 3 "" H 1200 6700 50  0001 C CNN
+	1    1200 6700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	800  6250 800  6150
+Wire Wire Line
+	800  6150 900  6150
+Wire Wire Line
+	1500 6150 1550 6150
+Wire Wire Line
+	1550 6150 1550 6250
+Wire Wire Line
+	800  6550 800  6600
+Wire Wire Line
+	800  6600 1200 6600
+Wire Wire Line
+	1550 6600 1550 6550
+Wire Wire Line
+	1200 6700 1200 6600
+Connection ~ 1200 6600
+Wire Wire Line
+	1200 6600 1550 6600
+Wire Wire Line
+	1200 6450 1200 6600
+$Comp
+L power:+5V #PWR0103
+U 1 1 5B12F9C0
+P 1550 6050
+F 0 "#PWR0103" H 1550 5900 50  0001 C CNN
+F 1 "+5V" H 1565 6223 50  0000 C CNN
+F 2 "" H 1550 6050 50  0001 C CNN
+F 3 "" H 1550 6050 50  0001 C CNN
+	1    1550 6050
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+BATT #PWR0104
+U 1 1 5B12FC6B
+P 800 6050
+F 0 "#PWR0104" H 800 5900 50  0001 C CNN
+F 1 "+BATT" H 815 6223 50  0000 C CNN
+F 2 "" H 800 6050 50  0001 C CNN
+F 3 "" H 800 6050 50  0001 C CNN
+	1    800  6050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	800  6050 800  6150
+Connection ~ 800  6150
+Wire Wire Line
+	1550 6050 1550 6150
+Connection ~ 1550 6150
 $EndSCHEMATC
