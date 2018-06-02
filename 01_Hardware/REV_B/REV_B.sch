@@ -194,8 +194,6 @@ Connection ~ 3350 6850
 Wire Wire Line
 	3350 6850 3450 6850
 Wire Wire Line
-	3450 6850 3450 6750
-Wire Wire Line
 	3150 7000 3150 6850
 $Comp
 L Connector_Generic:Conn_01x02 J3
@@ -288,8 +286,6 @@ Wire Wire Line
 	3800 4600 3800 4700
 Connection ~ 3450 4600
 Wire Wire Line
-	3800 5050 3800 4950
-Wire Wire Line
 	4100 4950 4100 5050
 $Comp
 L RpiAutonousCar:BSS138PS U5
@@ -336,14 +332,7 @@ F 3 "" H 9300 700 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	9300 800  9300 750 
-Wire Wire Line
 	9550 1000 9550 750 
-Wire Wire Line
-	9550 750  9300 750 
-Connection ~ 9300 750 
-Wire Wire Line
-	9300 750  9300 700 
 Wire Wire Line
 	9550 1100 9300 1100
 Wire Wire Line
@@ -352,8 +341,6 @@ Wire Wire Line
 	9300 1200 9150 1200
 Wire Wire Line
 	9150 1200 9150 750 
-Wire Wire Line
-	9150 750  9300 750 
 Wire Wire Line
 	9550 1300 9550 1500
 Wire Wire Line
@@ -418,14 +405,7 @@ F 3 "" H 9250 1750 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	9250 1850 9250 1800
-Wire Wire Line
 	9500 2050 9500 1800
-Wire Wire Line
-	9500 1800 9250 1800
-Connection ~ 9250 1800
-Wire Wire Line
-	9250 1800 9250 1750
 Wire Wire Line
 	9500 2150 9250 2150
 Wire Wire Line
@@ -437,8 +417,6 @@ Wire Wire Line
 	9250 2250 9100 2250
 Wire Wire Line
 	9100 2250 9100 1800
-Wire Wire Line
-	9100 1800 9250 1800
 Wire Wire Line
 	9500 2350 9500 2550
 Wire Wire Line
@@ -494,14 +472,7 @@ F 3 "" H 9350 3950 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	9350 4050 9350 4000
-Wire Wire Line
 	9600 4250 9600 4000
-Wire Wire Line
-	9600 4000 9350 4000
-Connection ~ 9350 4000
-Wire Wire Line
-	9350 4000 9350 3950
 Wire Wire Line
 	9600 4350 9350 4350
 Wire Wire Line
@@ -512,8 +483,6 @@ Wire Wire Line
 	9350 4450 9200 4450
 Wire Wire Line
 	9200 4450 9200 4000
-Wire Wire Line
-	9200 4000 9350 4000
 Wire Wire Line
 	9600 4550 9600 4750
 Wire Wire Line
@@ -560,12 +529,12 @@ $EndComp
 $Comp
 L power:+3.3V #PWR020
 U 1 1 5A7366D3
-P 9300 2850
-F 0 "#PWR020" H 9300 2700 50  0001 C CNN
-F 1 "+3.3V" H 9315 3023 50  0000 C CNN
-F 2 "" H 9300 2850 50  0001 C CNN
-F 3 "" H 9300 2850 50  0001 C CNN
-	1    9300 2850
+P 9300 2800
+F 0 "#PWR020" H 9300 2650 50  0001 C CNN
+F 1 "+3.3V" H 9315 2973 50  0000 C CNN
+F 2 "" H 9300 2800 50  0001 C CNN
+F 3 "" H 9300 2800 50  0001 C CNN
+	1    9300 2800
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
@@ -575,8 +544,6 @@ Wire Wire Line
 Wire Wire Line
 	9550 2900 9300 2900
 Connection ~ 9300 2900
-Wire Wire Line
-	9300 2900 9300 2850
 Wire Wire Line
 	9550 3250 9300 3250
 Wire Wire Line
@@ -755,14 +722,9 @@ F 3 "" H 3500 3550 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	3500 3550 3500 3450
-Wire Wire Line
 	3200 3300 3200 3450
 Wire Wire Line
 	3200 3450 3500 3450
-Connection ~ 3500 3450
-Wire Wire Line
-	3500 3450 3500 3300
 $Comp
 L power:+3.3V #PWR08
 U 1 1 5AB32885
@@ -775,18 +737,13 @@ F 3 "" H 3750 1550 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	3750 1550 3750 1650
-Wire Wire Line
 	3200 2200 3200 2000
 Wire Wire Line
 	3200 2000 3350 2000
 Wire Wire Line
 	3500 2000 3500 2200
 Wire Wire Line
-	3750 1650 3350 1650
-Wire Wire Line
 	3350 1650 3350 2000
-Connection ~ 3750 1650
 Wire Wire Line
 	3750 1650 3750 1700
 Connection ~ 3350 2000
@@ -1448,12 +1405,12 @@ Connection ~ 9350 4750
 $Comp
 L power:GND #PWR015
 U 1 1 5A7BB0A2
-P 5700 7500
-F 0 "#PWR015" H 5700 7250 50  0001 C CNN
-F 1 "GND" H 5705 7327 50  0000 C CNN
-F 2 "" H 5700 7500 50  0001 C CNN
-F 3 "" H 5700 7500 50  0001 C CNN
-	1    5700 7500
+P 5700 6800
+F 0 "#PWR015" H 5700 6550 50  0001 C CNN
+F 1 "GND" H 5705 6627 50  0000 C CNN
+F 2 "" H 5700 6800 50  0001 C CNN
+F 3 "" H 5700 6800 50  0001 C CNN
+	1    5700 6800
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -1594,8 +1551,6 @@ Wire Wire Line
 	10150 6050 10400 6050
 Connection ~ 10150 6150
 Wire Wire Line
-	5700 6700 5700 7100
-Wire Wire Line
 	6400 4900 6600 4900
 Wire Wire Line
 	6400 5000 6600 5000
@@ -1637,7 +1592,7 @@ F 3 "~" H 3900 4350 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	3700 4350 3350 4350
+	3700 4350 3565 4350
 Connection ~ 3350 4350
 Wire Wire Line
 	3350 4350 3350 4600
@@ -1647,7 +1602,6 @@ Wire Wire Line
 	3600 4450 3600 4950
 Wire Wire Line
 	3600 4950 3800 4950
-Connection ~ 3800 4950
 Wire Wire Line
 	3800 4950 3800 4900
 Wire Wire Line
@@ -1721,17 +1675,6 @@ Wire Wire Line
 	7600 4900 7450 4900
 Wire Wire Line
 	6400 5600 6600 5600
-$Comp
-L Driver_LED:PCA9685PW U3
-U 1 1 5A73ACB0
-P 5700 5600
-F 0 "U3" H 5700 6778 50  0000 C CNN
-F 1 "PCA9685PW" H 5700 6687 50  0000 C CNN
-F 2 "Package_SO:TSSOP-28_4.4x9.7mm_P0.65mm" H 5725 4625 50  0001 L CNN
-F 3 "http://www.nxp.com/documents/data_sheet/PCA9685.pdf" H 5300 6300 50  0001 C CNN
-	1    5700 5600
-	1    0    0    -1  
-$EndComp
 Text GLabel 2750 2600 1    50   Input ~ 0
 SPI0_CLK_LV
 Text GLabel 2650 2700 1    50   Input ~ 0
@@ -1768,7 +1711,7 @@ U 1 1 5ACC8E0A
 P 6700 2900
 F 0 "J5" H 6780 2892 50  0000 L CNN
 F 1 "Conn_01x08" H 6780 2801 50  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical_SMD_Pin1Left" H 6700 2900 50  0001 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical_SMD_Pin1Right" H 6700 2900 50  0001 C CNN
 F 3 "~" H 6700 2900 50  0001 C CNN
 	1    6700 2900
 	1    0    0    -1  
@@ -1934,7 +1877,7 @@ Wire Wire Line
 	4900 5650 4800 5650
 Connection ~ 4800 5650
 Wire Wire Line
-	4800 5650 4800 6700
+	4800 5650 4800 5800
 Wire Wire Line
 	6400 5700 6600 5700
 Wire Wire Line
@@ -2010,17 +1953,6 @@ Wire Wire Line
 	7350 6100 7350 6400
 Connection ~ 7350 6400
 $Comp
-L Device:LED_CRGB D1
-U 1 1 5B05ADA8
-P 6150 7100
-F 0 "D1" H 6150 7597 50  0000 C CNN
-F 1 "LED_CRGB" H 6150 7506 50  0000 C CNN
-F 2 "LED_SMD:LED_Avago_PLCC4_3.2x2.8mm_CW" H 6150 7050 50  0001 C CNN
-F 3 "~" H 6150 7050 50  0001 C CNN
-	1    6150 7100
-	1    0    0    -1  
-$EndComp
-$Comp
 L Device:R R20
 U 1 1 5B05B512
 P 6600 7300
@@ -2057,17 +1989,6 @@ Wire Wire Line
 	6850 7300 6750 7300
 Wire Wire Line
 	6800 7100 6750 7100
-Wire Wire Line
-	6350 6900 6450 6900
-Wire Wire Line
-	6350 7100 6450 7100
-Wire Wire Line
-	6350 7300 6450 7300
-Wire Wire Line
-	5950 7100 5700 7100
-Connection ~ 5700 7100
-Wire Wire Line
-	5700 7100 5700 7500
 $Comp
 L Device:R R46
 U 1 1 5AE07CE9
@@ -2246,4 +2167,147 @@ Connection ~ 800  6150
 Wire Wire Line
 	1550 6050 1550 6150
 Connection ~ 1550 6150
+Wire Wire Line
+	6350 6900 6450 6900
+Wire Wire Line
+	6350 7100 6450 7100
+Wire Wire Line
+	6350 7300 6450 7300
+Wire Wire Line
+	5950 7100 5850 7100
+Wire Wire Line
+	5850 7100 5850 6900
+$Comp
+L power:+5V #PWR0105
+U 1 1 5B280780
+P 5850 6900
+F 0 "#PWR0105" H 5850 6750 50  0001 C CNN
+F 1 "+5V" H 5865 7073 50  0000 C CNN
+F 2 "" H 5850 6900 50  0001 C CNN
+F 3 "" H 5850 6900 50  0001 C CNN
+	1    5850 6900
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:LED_ARGB D1
+U 1 1 5B282168
+P 6150 7100
+F 0 "D1" H 6150 6633 50  0000 C CNN
+F 1 "LED_ARGB" H 6150 6724 50  0000 C CNN
+F 2 "LED_SMD:LED_Avago_PLCC4_3.2x2.8mm_CW" H 6150 7050 50  0001 C CNN
+F 3 "~" H 6150 7050 50  0001 C CNN
+	1    6150 7100
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	5000 5800 4800 5800
+Connection ~ 4800 5800
+Wire Wire Line
+	4800 5800 4800 5900
+Wire Wire Line
+	5000 5900 4800 5900
+Connection ~ 4800 5900
+Wire Wire Line
+	4800 5900 4800 6100
+Wire Wire Line
+	5000 6100 4800 6100
+Connection ~ 4800 6100
+Wire Wire Line
+	4800 6100 4800 6300
+Wire Wire Line
+	5000 6300 4800 6300
+Connection ~ 4800 6300
+Wire Wire Line
+	4800 6300 4800 6700
+$Comp
+L power:+5V #PWR0106
+U 1 1 5B214226
+P 4950 5700
+F 0 "#PWR0106" H 4950 5550 50  0001 C CNN
+F 1 "+5V" H 4965 5873 50  0000 C CNN
+F 2 "" H 4950 5700 50  0001 C CNN
+F 3 "" H 4950 5700 50  0001 C CNN
+	1    4950 5700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5000 6000 4950 6000
+Wire Wire Line
+	4950 6000 4950 5700
+Wire Wire Line
+	5000 6200 4950 6200
+Wire Wire Line
+	4950 6200 4950 6000
+Connection ~ 4950 6000
+Wire Wire Line
+	3450 6750 3450 6850
+Wire Wire Line
+	9300 2800 9300 2900
+Wire Wire Line
+	9150 750  9300 750 
+Wire Wire Line
+	9300 750  9300 800 
+Wire Wire Line
+	9300 750  9550 750 
+Connection ~ 9300 750 
+Wire Wire Line
+	9300 700  9300 750 
+Wire Wire Line
+	9100 1800 9250 1800
+Wire Wire Line
+	9250 1800 9250 1850
+Wire Wire Line
+	9250 1800 9500 1800
+Connection ~ 9250 1800
+Wire Wire Line
+	9250 1750 9250 1800
+Wire Wire Line
+	9200 4000 9350 4000
+Wire Wire Line
+	9350 4000 9350 4050
+Wire Wire Line
+	9350 4000 9600 4000
+Connection ~ 9350 4000
+Wire Wire Line
+	9350 4000 9350 3950
+Wire Wire Line
+	3350 1650 3750 1650
+Wire Wire Line
+	3750 1650 3750 1550
+Connection ~ 3750 1650
+Wire Wire Line
+	3800 4950 3800 5050
+Connection ~ 3800 4950
+Wire Wire Line
+	3500 3550 3500 3450
+Wire Wire Line
+	3500 3450 3500 3300
+Connection ~ 3500 3450
+Wire Wire Line
+	5700 6800 5700 6700
+$Comp
+L Driver_LED:PCA9685PW U3
+U 1 1 5A73ACB0
+P 5700 5600
+F 0 "U3" H 5700 6778 50  0000 C CNN
+F 1 "PCA9685PW" H 5700 6687 50  0000 C CNN
+F 2 "Package_SO:TSSOP-28_4.4x9.7mm_P0.65mm" H 5725 4625 50  0001 L CNN
+F 3 "http://www.nxp.com/documents/data_sheet/PCA9685.pdf" H 5300 6300 50  0001 C CNN
+	1    5700 5600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J14
+U 1 1 5B15D87F
+P 3565 4150
+F 0 "J14" V 3531 4062 50  0000 R CNN
+F 1 "Conn_01x01" V 3440 4062 50  0000 R CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical" H 3565 4150 50  0001 C CNN
+F 3 "~" H 3565 4150 50  0001 C CNN
+	1    3565 4150
+	0    -1   -1   0   
+$EndComp
+Connection ~ 3565 4350
+Wire Wire Line
+	3565 4350 3350 4350
 $EndSCHEMATC
