@@ -28,27 +28,23 @@ from gpio_manager import GPIO_Manager
 class MotorDriver(GPIO_Manager):
     """Interface with 2 TB6612FNG DC Motor drivers."""
     # Configure motor 1
-    _m1_dir1_pin = 6
-    _m1_dir2_pin = 12
-    _m1_pwm_pin_annex = 5  # solve error mapping (Vers.01)
-    _m1_pwm_pin = 18
+    _m1_dir1_pin = 19
+    _m1_dir2_pin = 16
+    _m1_pwm_pin = 12 # Alternate function PWM0
 
     # Configure motor 2
-    _m2_dir1_pin = 19
-    _m2_dir2_pin = 16
-    _m2_pwm_pin_annex = 26  # solve error mapping (Vers.01)
-    _m2_pwm_pin = 13
+    _m2_dir1_pin = 26
+    _m2_dir2_pin = 20
+    _m2_pwm_pin = 13 # Alternate function PWM1
 
-    _standby_pin = 20
+    _standby_pin = 21
 
     PWM_OUTPUTS = [_m1_pwm_pin, _m2_pwm_pin]
-
-    INPUT_PINS = [_m1_pwm_pin_annex, _m2_pwm_pin_annex]
 
     OUTPUT_PINS = [_m1_dir1_pin, _m1_dir2_pin,
                    _m2_dir1_pin, _m2_dir2_pin,
                    _standby_pin]
-    _pins = PWM_OUTPUTS + INPUT_PINS + OUTPUT_PINS
+    _pins = PWM_OUTPUTS + OUTPUT_PINS
 
     @staticmethod
     def to_dc(dc):
@@ -63,33 +59,28 @@ class MotorDriver(GPIO_Manager):
 
         for pin in self.PWM_OUTPUTS:
             wiringpi.pinMode(pin, wiringpi.PWM_OUTPUT)
-
-        for pin in self.INPUT_PINS:
-            wiringpi.pinMode(pin, wiringpi.INPUT)
-            # Make sure all annex_pin are set LOW
-            wiringpi.pullUpDnControl(pin, wiringpi.PUD_DOWN)
-
+    
     def right_forward(self):
         """Drive right motor forward."""
-        wiringpi.digitalWrite(self._m1_dir1_pin, wiringpi.LOW)
-        wiringpi.digitalWrite(self._m1_dir2_pin, wiringpi.HIGH)
-
-    def right_back(self):
-        """Drive right motor back."""
-        wiringpi.digitalWrite(self._m1_dir1_pin, wiringpi.HIGH)
-        wiringpi.digitalWrite(self._m1_dir2_pin, wiringpi.LOW)
-
-    def left_forward(self):
-        """Drive left motor forward."""
         wiringpi.digitalWrite(self._m2_dir1_pin, wiringpi.HIGH)
         wiringpi.digitalWrite(self._m2_dir2_pin, wiringpi.LOW)
 
-    def left_back(self):
-        """Drive left motor back."""
+    def right_back(self):
+        """Drive right motor back."""
         wiringpi.digitalWrite(self._m2_dir1_pin, wiringpi.LOW)
         wiringpi.digitalWrite(self._m2_dir2_pin, wiringpi.HIGH)
 
-    def forward(self, duty_cycle=25):
+    def left_forward(self):
+        """Drive left motor forward."""
+        wiringpi.digitalWrite(self._m1_dir1_pin, wiringpi.HIGH)
+        wiringpi.digitalWrite(self._m1_dir2_pin, wiringpi.LOW)
+
+    def left_back(self):
+        """Drive left motor back."""
+        wiringpi.digitalWrite(self._m1_dir1_pin, wiringpi.LOW)
+        wiringpi.digitalWrite(self._m1_dir2_pin, wiringpi.HIGH)
+
+    def forward(self, duty_cycle=50):
         """Drive chassis forward."""
         self.right_forward()
         self.left_forward()
@@ -97,7 +88,7 @@ class MotorDriver(GPIO_Manager):
         wiringpi.pwmWrite(self._m2_pwm_pin, self.to_dc(duty_cycle))
         wiringpi.digitalWrite(self._standby_pin, wiringpi.HIGH)
 
-    def reverse(self, duty_cycle=25):
+    def reverse(self, duty_cycle=50):
         """Drive chassis back."""
         self.right_back()
         self.left_back()
@@ -105,18 +96,18 @@ class MotorDriver(GPIO_Manager):
         wiringpi.pwmWrite(self._m2_pwm_pin, self.to_dc(duty_cycle))
         wiringpi.digitalWrite(self._standby_pin, wiringpi.HIGH)
 
-    def right(self, duty_cycle=25):
+    def right(self, duty_cycle=50):
         """Turn chassis clockwise."""
-        self.right_forward()
-        self.left_back()
+        self.right_back()
+        self.left_forward()
         wiringpi.pwmWrite(self._m1_pwm_pin, self.to_dc(duty_cycle))
         wiringpi.pwmWrite(self._m2_pwm_pin, self.to_dc(duty_cycle))
         wiringpi.digitalWrite(self._standby_pin, wiringpi.HIGH)
 
-    def left(self, duty_cycle=25):
+    def left(self, duty_cycle=50):
         """Turn chassis counterclockwise."""
-        self.right_back()
-        self.left_forward()
+        self.right_forward()
+        self.left_back()
         wiringpi.pwmWrite(self._m1_pwm_pin, self.to_dc(duty_cycle))
         wiringpi.pwmWrite(self._m2_pwm_pin, self.to_dc(duty_cycle))
         wiringpi.digitalWrite(self._standby_pin, wiringpi.HIGH)
