@@ -23,10 +23,10 @@ import spidev
 
 
 class AnalogToDigitalConverter():
-    """Class to represent MCP3004 analog to digital Converter"""
-    # Voltage dividers 1kOhm/1kOhm (channel 0-2) - 22kOhm/10kOhm(channel 3)
-    _facCh012 = 2
-    _facCh3 = 3.195
+    """Class to represent MCP3008 analog to digital Converter"""
+    # Voltage dividers 1kOhm/1kOhm (channel 0-3) - 22kOhm/10kOhm(channel 4-7)
+    _facCh0123 = 2
+    _facCh4567 = 3.195
     # Bytes for building read commands
     start_byte = 0x01
     channel_modifier = 0x08
@@ -48,16 +48,16 @@ class AnalogToDigitalConverter():
 
     def _process_adc_value(self, channel, value):
         """Return result of processing analog to digital converter value."""
-        if channel < 3:
-            coefficient = self._facCh012
+        if channel < 4:
+            coefficient = self._facCh0123
         else:
-            coefficient = self._facCh3
+            coefficient = self._facCh4567
         return (((value[1] & 3) << 8) + value[2]) * 0.00322 * coefficient
 
     def read_adc(self, channel):
         """Read ADC channel."""
-        if not 0 <= channel <= 3:
-            raise ValueError("ADC number must be a value of 0-3!")
+        if not 0 <= channel <= 7:
+            raise ValueError("ADC number must be a value of 0-7!")
         r = self._spi.xfer2(self._build_read_command(channel))
         return self._process_adc_value(channel, r)
 
@@ -69,9 +69,9 @@ class AnalogToDigitalConverter():
 
 
 if __name__ == '__main__':
-    with AnalogToDigitalConverter() as mcp3004:
+    with AnalogToDigitalConverter() as mcp3008:
         while True:
-            for ch in range(4):
-                print("ADC Ch{0}[V]: {1}".format(ch, mcp3004.read_adc(ch)))
+            for ch in range(8):
+                print("ADC Ch{0}[V]: {1}".format(ch, mcp3008.read_adc(ch)))
             print('-' * 80 + '\n')
             time.sleep(2)
